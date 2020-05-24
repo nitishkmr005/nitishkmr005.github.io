@@ -1,6 +1,4 @@
-###### Machine Learning Notes
-
-Mathematical intuition
+# Mathematics Behind Linear and Logistic Regression (DRAFT)
 
 ## 1) Hypothesis Function, Cost Function, Gradients, Thetas for single feature Linear Regression 
 

@@ -1,6 +1,6 @@
 # Mathematics Behind Linear and Logistic Regressions (DRAFT)
 
-## 1) Hypothesis Function, Cost Function, Gradients, Thetas/Weights for single feature Linear Regression 
+## 1) Hypothesis Function, Cost Function, Gradients, Thetas/Weights for Simple Linear Regression 
 
 - Hypothesis Function 
   
@@ -16,7 +16,7 @@
 
   ![image](https://user-images.githubusercontent.com/55267125/82761422-165fc400-9e18-11ea-9676-de276604b02d.png)
 
-## 2) Hypothesis Function, Cost Function, Gradients, Thetas for Multiple features Linear Regression
+## 2) Hypothesis Function, Cost Function, Gradients, Thetas for Multiple Linear Regression
 
 - Hypothesis Function 
 

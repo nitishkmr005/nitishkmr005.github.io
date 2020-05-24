@@ -1,9 +1,11 @@
 ###### Machine Learning Notes
 
+Mathematical intuition
+
 ## 1) Hypothesis Function, Cost Function, Gradients, Thetas for single feature Linear Regression 
 
 - Hypothesis Function 
-
+  
   ![image](https://user-images.githubusercontent.com/55267125/82761279-2c20b980-9e17-11ea-8a3e-dd216c573d3f.png)
 
 - Cost Function 

@@ -4,7 +4,7 @@
 
 - <ins> Hypothesis Function </ins>
   
-  ![image](https://user-images.githubusercontent.com/55267125/82837847-f3044a00-9ee7-11ea-9bee-31f4842e56bb.png)
+  ![image](https://user-images.githubusercontent.com/55267125/82838026-8178cb80-9ee8-11ea-81d8-81d6b96c27a7.png)
 
 - <ins> Cost Function </ins>
 

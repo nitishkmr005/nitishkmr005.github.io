@@ -94,3 +94,7 @@
   L = total number of layers in the network  
   Sl =  = number of units (not counting bias unit) in layer l  
   K = number of output units/classes
+
+- Gradients 
+
+ ![image](https://user-images.githubusercontent.com/55267125/82843753-d07c2c00-9efb-11ea-9b07-93cd45a9fdf3.png)

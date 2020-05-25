@@ -22,9 +22,11 @@
 
   ![image](https://user-images.githubusercontent.com/55267125/82761578-2035f700-9e19-11ea-8784-bc197dd8e40d.png)
 
+  Vectorized Form - 
+
   ![image](https://user-images.githubusercontent.com/55267125/82761585-317f0380-9e19-11ea-9a7e-d17dcb01b820.png)
 
-- Cost Function 
+- Cost Function in vectorized Form 
 
   ![image](https://user-images.githubusercontent.com/55267125/82761683-e7e2e880-9e19-11ea-9aa1-f4f2ff057e1e.png)
 
@@ -36,7 +38,7 @@
 
 ## 3) Hypothesis Function, Cost Function, Gradients, Thetas for Logistic Regression
 
-- Hypothesis Function 
+- Hypothesis Function in vectorized Form
  
   ![image](https://user-images.githubusercontent.com/55267125/82761950-96d3f400-9e1b-11ea-9f1f-2ab3d9788ed4.png)
 
@@ -46,6 +48,7 @@
 
   ![image](https://user-images.githubusercontent.com/55267125/82761824-f7166600-9e1a-11ea-9a7b-450fcbc09777.png)
 
+  Cost Function in Vectorized Form - 
   ![image](https://user-images.githubusercontent.com/55267125/82761834-0b5a6300-9e1b-11ea-983a-3cbbc7fb377a.png)
 
 - Theta - Gradient Descent Algorithm

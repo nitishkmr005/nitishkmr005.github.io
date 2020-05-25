@@ -90,6 +90,7 @@
 
   ![image](https://user-images.githubusercontent.com/55267125/82839205-3d87c580-9eec-11ea-8de3-c7211f4fde36.png)
 
-  Where L = total number of layers in the network
-        Sl =  = number of units (not counting bias unit) in layer l
-        K = number of output units/classes
+  Where   
+  L = total number of layers in the network  
+  Sl =  = number of units (not counting bias unit) in layer l  
+  K = number of output units/classes

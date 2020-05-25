@@ -49,6 +49,7 @@
   ![image](https://user-images.githubusercontent.com/55267125/82761824-f7166600-9e1a-11ea-9a7b-450fcbc09777.png)
 
   Cost Function in Vectorized Form - 
+  
   ![image](https://user-images.githubusercontent.com/55267125/82761834-0b5a6300-9e1b-11ea-983a-3cbbc7fb377a.png)
 
 - Theta - Gradient Descent Algorithm

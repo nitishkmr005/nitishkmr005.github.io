@@ -1,4 +1,4 @@
-# Mathematics Behind Linear and Logistic Regressions (DRAFT)
+# Mathematics Behind Linear, Logistic Regressions and Neural Networks (DRAFT)
 
 ## 1) Hypothesis Function, Cost Function, Gradients, Thetas/Weights for Simple Linear Regression 
 
@@ -83,3 +83,10 @@
   ![image](https://user-images.githubusercontent.com/55267125/82762143-fb438300-9e1c-11ea-88d6-0def346072fc.png)
   
   ![image](https://user-images.githubusercontent.com/55267125/82762152-0dbdbc80-9e1d-11ea-8a93-3ef77e06c5fd.png)
+
+## 6) Cost Function, Gradients, Thetas for Neural Network
+
+- <ins> Cost Function </ins>
+
+  ![image](https://user-images.githubusercontent.com/55267125/82839205-3d87c580-9eec-11ea-8de3-c7211f4fde36.png)
+

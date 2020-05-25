@@ -76,7 +76,7 @@
 
   ![image](https://user-images.githubusercontent.com/55267125/82762120-d7803d00-9e1c-11ea-8bc9-d76ad7fe4f2a.png)
 
-Note: The second term sum means to explicitly exclude the bias term,theta0.
+  Note: The second term sum means to explicitly exclude the bias term,theta0.
 
 - <ins> Gradients - Gradient Descent Algorithm </ins>
 

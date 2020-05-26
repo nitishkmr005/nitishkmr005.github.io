@@ -98,3 +98,32 @@
 - Gradients 
 
   ![image](https://user-images.githubusercontent.com/55267125/82843753-d07c2c00-9efb-11ea-9b07-93cd45a9fdf3.png)
+  
+  ## Forward Propagation of Neural Network - 
+  
+  Let's consider input X with 3 features and 3 samples i.e.(3*3) - 
+  
+  >> X=[1 2 3;4 5 6;7 8 9]  
+  X =  
+  
+   1   2   3  
+   4   5   6  
+   7   8   9  
+   
+   Neural Network Architecture -   
+   3 Layers - Input Layer(3 units), 1 Hidden Layer(3 Neurons), Output Layer(1 Class)  
+   Weight Matrix - theta1 = (3*4), theta2 = (1*4)  
+     
+   >> theta1 = [10 11 12 13;20 21 22 23;30 31 32 33]  
+   theta1 =  
+  
+   10   11   12   13  
+   20   21   22   23  
+   30   31   32   33  
+     
+   >> theta2=[10 11 12 13]  
+   theta2 =  
+  
+   10   11   12   13  
+   
+   

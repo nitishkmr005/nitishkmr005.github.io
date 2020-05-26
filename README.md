@@ -146,7 +146,7 @@
    1  
    2  
    3 </br>
-     
+   
    Neural Network Computation -   
    
    <br> >> Z2=theta1*X1  
@@ -156,4 +156,27 @@
    154  
    224  </br>
    
-   
+  <br> >> a2=sigmoid(Z2)  
+  a2 =  
+  
+  3.3057e-037  
+  1.3142e-067  
+  5.2244e-098  </br>
+  
+  We will add bias of 1.0 to a2  
+  
+  <br> >> a2 = [1;a2]  
+  a2 =  
+  
+  1.0000e+000  
+  3.3057e-037  
+  1.3142e-067   
+  5.2244e-098  </br>
+  
+  <br> >> Z3=theta2*a2  
+  Z3 =  10  </br> 
+  
+  <br> >> a3=sigmoid(Z3)  
+  a3 = 4.5398e-005  </br> 
+  
+  h(x) = a3  

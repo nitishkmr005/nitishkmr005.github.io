@@ -180,3 +180,11 @@
   a3 = 4.5398e-005  </br> 
   
   h(x) = a3  
+
+## BackPropagation of Neural Network - 
+
+   ![image](https://user-images.githubusercontent.com/55267125/82940417-68d4e800-9fb2-11ea-93dc-d98e71f26827.png)
+ 
+   ![image](https://user-images.githubusercontent.com/55267125/82940499-8e61f180-9fb2-11ea-9615-58722fb5c124.png)
+
+   ![image](https://user-images.githubusercontent.com/55267125/82940531-9d48a400-9fb2-11ea-8f8b-73fe71a27f26.png)

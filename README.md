@@ -101,7 +101,7 @@
   
   ## Forward Propagation of Neural Network - 
   
-  Let's consider input X with 3 features and 3 samples i.e.(3*3) - 
+  Let's consider input X with 3 features and 3 samples i.e.(3x3) - 
   
   <br> >> X=[1 2 3;4 5 6;7 8 9]  
   X =  
@@ -112,7 +112,7 @@
    
    Neural Network Architecture -   
    3 Layers - Input Layer(3 units), 1 Hidden Layer(3 Neurons), Output Layer(1 Class)  
-   Weight Matrix - theta1 = (3*4), theta2 = (1*4)  
+   Weight Matrix - theta1 = (3x4), theta2 = (1x4)
      
    <br> >> theta1 = [10 11 12 13;20 21 22 23;30 31 32 33]  
    theta1 =    
@@ -125,5 +125,35 @@
    theta2 =    
     
    10   11   12   13 </br>  
+   
+   <br> >> X=[ones(3,1) X]  
+   X =  
+  
+   1   1   2   3  
+   1   4   5   6  
+   1   7   8   9  </br>
+
+   <br> >> function g = sigmoid(z);  
+   > g=1.0./(1.0+exp(z));  
+   > end; </br>
+   
+   We will take only first sample of X and train the network.   
+   
+   <br> >> X1=X(1,:)'  
+   X1 =  
+   
+   1
+   1  
+   2  
+   3 </br>
+     
+   Neural Network Computation -   
+   
+   <br> >> Z2=theta1*X1  
+   Z2 =  
+  
+    84  
+   154  
+   224  </br>
    
    

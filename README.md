@@ -181,7 +181,9 @@
   
   h(x) = a3  
 
-## BackPropagation of Neural Network - 
+## BackPropagation of Neural Network (Classification Problem) - 
+
+  Assumptions - m=1 (Single Sample)  
 
   ![image](https://user-images.githubusercontent.com/55267125/82941063-5c04c400-9fb3-11ea-94a7-f4f978edd7a9.png)
 

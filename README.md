@@ -133,9 +133,9 @@
    1   4   5   6  
    1   7   8   9  </br>
 
-   <br> >> function g = sigmoid(z);  
-   > g=1.0./(1.0+exp(z));  
-   > end; </br>
+   <br> >> function g = sigmoid(z); </br>  
+   <br> > g=1.0./(1.0+exp(z)); </br>  
+   <br> > end; </br>
    
    We will take only first sample of X and train the network.   
    

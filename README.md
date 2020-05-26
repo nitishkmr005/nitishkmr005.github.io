@@ -185,5 +185,6 @@
 
   Assumptions - m=1 (Single Sample)  
 
-  ![image](https://user-images.githubusercontent.com/55267125/82941063-5c04c400-9fb3-11ea-94a7-f4f978edd7a9.png)
+  ![image](https://user-images.githubusercontent.com/55267125/82945977-324f9b00-9fbb-11ea-8069-205e5c05b6d1.png)
+
 

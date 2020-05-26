@@ -1,4 +1,4 @@
-# Mathematics Behind Linear, Logistic Regressions and Neural Networks (DRAFT)
+# Mathematics Behind Linear Regression, Logistic Regression and Neural Networks (DRAFT)
 
 ## 1) Hypothesis Function, Cost Function, Gradients, Thetas/Weights for Simple Linear Regression 
 

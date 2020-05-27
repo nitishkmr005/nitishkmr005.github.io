@@ -103,16 +103,16 @@
   
   Let's consider input X with (5000x400) -   
     
-  m = size(X, 1);                            #size(X)=5000*400, m=5000  
-  num_labels = size(Theta2, 1);              #num_labels=10  
+  m = size(X, 1);===========================> #size(X)=5000x400, m=5000  
+  num_labels = size(Theta2, 1);=============> #num_labels=10  
   p = zeros(size(X, 1), 1);                    
 						  		         
-  a1 = [ones(m,1) X];                        #5000*401  
-  z2 = a1 *Theta1';                          #5000*401 401*25 = 5000*25   
-  a2 = [ones(size(z2),1) sigmoid(z2)];       #5000*26  
-  z3 = a2*Theta2';                           #5000*26 26*10 = 5000*10  
-  a3 = sigmoid(z3);                          #5000*10 => hx   
-  [predict_max, index_max] = max(a3, [], 2); #predict_max gets max from each row of 5000rows, index_max gets index of predict_max  
+  a1 = [ones(m,1) X];=======================> #5000x401  
+  z2 = a1 *Theta1';=========================> #5000x401 401x25 = 5000x25   
+  a2 = [ones(size(z2),1) sigmoid(z2)];======> #5000x26  
+  z3 = a2*Theta2';==========================> #5000x26 26x10 = 5000x10  
+  a3 = sigmoid(z3);=========================> #5000x10 => hx   
+  [predict_max, index_max] = max(a3, [], 2);> #predict_max gets max from each row of 5000rows, index_max gets index of predict_max  
 
 ## BackPropagation of Neural Network (Classification Problem) - 
 
@@ -121,5 +121,3 @@
   Derivation of Gradients - 
 
   ![image](https://user-images.githubusercontent.com/55267125/82945977-324f9b00-9fbb-11ea-8069-205e5c05b6d1.png)
-
-

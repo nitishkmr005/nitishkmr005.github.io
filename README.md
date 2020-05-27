@@ -98,94 +98,27 @@
 - <ins> Backpropagation Algorithm </ins>
 
   ![image](https://user-images.githubusercontent.com/55267125/83002768-0ec43900-a02b-11ea-9df0-cab7935c1a98.png)
-
+  
 ## Forward Propagation Matrix Multiplication Example of Neural Network - 
   
-  Let's consider input X with 3 features and 3 samples i.e.(3x3) - 
+  Let's consider input X with (5000x400) - 
   
-  <br> >> X=[1 2 3;4 5 6;7 8 9]  
-  X =  
-  
-   1   2   3  
-   4   5   6  
-   7   8   9 </br>  
-   
-   Neural Network Architecture -   
-   3 Layers - Input Layer(3 units), 1 Hidden Layer(3 Neurons), Output Layer(1 Class)  
-   Weight Matrix - theta1 = (3x4), theta2 = (1x4)
-     
-   <br> >> theta1 = [10 11 12 13;20 21 22 23;30 31 32 33]  
-   theta1 =    
-    
-   10   11   12   13  
-   20   21   22   23  
-   30   31   32   33 </br> 
-     
-   <br> >> theta2=[10 11 12 13]    
-   theta2 =    
-    
-   10   11   12   13 </br>  
-   
-   <br> >> X=[ones(3,1) X]  
-   X =  
-  
-   1   1   2   3  
-   1   4   5   6  
-   1   7   8   9  </br>
-
-   function g = sigmoid(z);  
-   g=1.0./(1.0+exp(z));       
-   end;    
-   
-   We will take only first sample of X and train the network.   
-   
-   <br> >> X1=X(1,:)'  
-   X1 =  
-   
-   1
-   1  
-   2  
-   3 </br>
-   
-   Neural Network Computation -   
-   
-   <br> >> Z2=theta1*X1  
-   Z2 =  
-  
-    84  
-   154  
-   224  </br>
-   
-  <br> >> a2=sigmoid(Z2)  
-  a2 =  
-  
-  3.3057e-037  
-  1.3142e-067  
-  5.2244e-098  </br>
-  
-  We will add bias of 1.0 to a2  
-  
-  <br> >> a2 = [1;a2]  
-  a2 =  
-  
-  1.0000e+000  
-  3.3057e-037  
-  1.3142e-067   
-  5.2244e-098  </br>
-  
-  <br> >> Z3=theta2*a2  
-  Z3 =  10  </br> 
-  
-  <br> >> a3=sigmoid(Z3)  
-  a3 = 4.5398e-005  </br> 
-  
-  h(x) = a3  => Final Predicted Output 
+  m = size(X, 1);                            #size(X)=5000*400, m=5000
+  num_labels = size(Theta2, 1);              #num_labels=10
+  p = zeros(size(X, 1), 1);                  
+								         
+  a1 = [ones(m,1) X];                        #5000*401
+  z2 = a1 *Theta1';                          #5000*401 401*25 = 5000*25 
+  a2 = [ones(size(z2),1) sigmoid(z2)];       #5000*26
+  z3 = a2*Theta2';                           #5000*26 26*10 = 5000*10
+  a3 = sigmoid(z3);                          #5000*10 => hx 
+  [predict_max, index_max] = max(a3, [], 2); #predict_max gets max from each row of 5000rows, index_max gets index of predict_max
 
 ## BackPropagation of Neural Network (Classification Problem) - 
 
   Assumptions - m=1 (Single Sample)  
   
-  Derivation Gradients - 
+  Derivation of Gradients - 
 
   ![image](https://user-images.githubusercontent.com/55267125/82945977-324f9b00-9fbb-11ea-8069-205e5c05b6d1.png)
 

@@ -101,6 +101,8 @@
 
 ## Forward Propagation Matrix Multiplication Example in Neural Network - 
   
+ Let's consider input X with 20*20 5000 images
+ 
  ![image](https://user-images.githubusercontent.com/55267125/83004403-4207c780-a02d-11ea-90ee-cbc8f2dfa011.png)
 
 ## BackPropagation of Neural Network (Classification Problem) - 

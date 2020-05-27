@@ -103,7 +103,7 @@
   
  Let's consider input X with 20*20 5000 images
  
- ![image](https://user-images.githubusercontent.com/55267125/83004403-4207c780-a02d-11ea-90ee-cbc8f2dfa011.png)
+ ![image](https://user-images.githubusercontent.com/55267125/83005450-70d26d80-a02e-11ea-8c28-770d312a82c5.png)
 
 ## BackPropagation of Neural Network (Classification Problem) - 
 

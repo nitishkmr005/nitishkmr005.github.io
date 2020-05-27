@@ -97,22 +97,22 @@
 
 - <ins> Backpropagation Algorithm </ins>
 
-  ![image](https://user-images.githubusercontent.com/55267125/83002768-0ec43900-a02b-11ea-9df0-cab7935c1a98.png)
+  ![image](https://user-images.githubusercontent.com/55267125/83003717-54353600-a02c-11ea-880b-02f2419b5db1.png)
+
+## Forward Propagation Matrix Multiplication Example in Neural Network - 
   
-## Forward Propagation Matrix Multiplication Example of Neural Network - 
-  
-  Let's consider input X with (5000x400) - 
-  
-  m = size(X, 1);                            #size(X)=5000*400, m=5000
-  num_labels = size(Theta2, 1);              #num_labels=10
-  p = zeros(size(X, 1), 1);                  
-								         
-  a1 = [ones(m,1) X];                        #5000*401
-  z2 = a1 *Theta1';                          #5000*401 401*25 = 5000*25 
-  a2 = [ones(size(z2),1) sigmoid(z2)];       #5000*26
-  z3 = a2*Theta2';                           #5000*26 26*10 = 5000*10
-  a3 = sigmoid(z3);                          #5000*10 => hx 
-  [predict_max, index_max] = max(a3, [], 2); #predict_max gets max from each row of 5000rows, index_max gets index of predict_max
+  Let's consider input X with (5000x400) -   
+    
+  m = size(X, 1);                            #size(X)=5000*400, m=5000  
+  num_labels = size(Theta2, 1);              #num_labels=10  
+  p = zeros(size(X, 1), 1);                    
+						  		         
+  a1 = [ones(m,1) X];                        #5000*401  
+  z2 = a1 *Theta1';                          #5000*401 401*25 = 5000*25   
+  a2 = [ones(size(z2),1) sigmoid(z2)];       #5000*26  
+  z3 = a2*Theta2';                           #5000*26 26*10 = 5000*10  
+  a3 = sigmoid(z3);                          #5000*10 => hx   
+  [predict_max, index_max] = max(a3, [], 2); #predict_max gets max from each row of 5000rows, index_max gets index of predict_max  
 
 ## BackPropagation of Neural Network (Classification Problem) - 
 

@@ -89,17 +89,17 @@
 - <ins> Cost Function </ins>
 
   ![image](https://user-images.githubusercontent.com/55267125/82839205-3d87c580-9eec-11ea-8de3-c7211f4fde36.png)
-
+  
   Where   
   L = total number of layers in the network  
   Sl =  = number of units (not counting bias unit) in layer l  
   K = number of output units/classes
 
-- Gradients 
+- <ins> Backpropagation Algorithm </ins>
 
-  ![image](https://user-images.githubusercontent.com/55267125/82843753-d07c2c00-9efb-11ea-9b07-93cd45a9fdf3.png)
-  
-  ## Forward Propagation of Neural Network - 
+  ![image](https://user-images.githubusercontent.com/55267125/83002768-0ec43900-a02b-11ea-9df0-cab7935c1a98.png)
+
+## Forward Propagation Matrix Multiplication Example of Neural Network - 
   
   Let's consider input X with 3 features and 3 samples i.e.(3x3) - 
   
@@ -179,11 +179,13 @@
   <br> >> a3=sigmoid(Z3)  
   a3 = 4.5398e-005  </br> 
   
-  h(x) = a3  
+  h(x) = a3  => Final Predicted Output 
 
 ## BackPropagation of Neural Network (Classification Problem) - 
 
   Assumptions - m=1 (Single Sample)  
+  
+  Derivation Gradients - 
 
   ![image](https://user-images.githubusercontent.com/55267125/82945977-324f9b00-9fbb-11ea-8069-205e5c05b6d1.png)
 

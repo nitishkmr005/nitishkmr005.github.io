@@ -94,11 +94,14 @@ analytics:
 # Site Author
 author:
   name             : "Nitish Harsoor"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/images/bio-photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Data Science Portfolio"
   location         : "Bangalore"
   email            :
   links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/nitish-harsoor/"
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
       # url: "mailto:your.name@email.com"
@@ -117,9 +120,6 @@ author:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/in/nitish-harsoor/"
 
 # Site Footer
 footer:
@@ -282,7 +282,7 @@ defaults:
       comments: # true
       share: true
       related: true
-
+  # _pages
   - scope:
       path: ""
       type: pages

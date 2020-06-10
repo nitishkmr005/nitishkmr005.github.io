@@ -117,6 +117,9 @@ author:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
+      - label: "LinkedIn"
+        icon: "fab fa-fw fa-LinkedIn"
+        url: "https://www.linkedin.com/in/nitish-harsoor/"
 
 # Site Footer
 footer:

@@ -4,7 +4,7 @@ date: 2020-06-10
 tags: [machine learning, data science, neural networks, computer vision]
 header:
    image: "/images/image.jpg"
-excerpt: "Machine Learning, Data science"
+excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression, Neural Networks"
 ---
 ## 1) Hypothesis Function, Cost Function, Gradients, Thetas/Weights for Simple Linear Regression
 

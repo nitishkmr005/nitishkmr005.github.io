@@ -7,8 +7,8 @@ header:
    image: "/images/image.jpg"
 ---
 
-Coursera Certified – `Machine Learning` from Stanford University with 96.9% grade.
-IBM Certified - DB2 9 fundamentals.
+Coursera Certified – `Machine Learning` from Stanford University with 96.9% grade.  
+IBM Certified - DB2 9 fundamentals.  
 Udemy Certified –
 
 + `MySQL for Data Analytics and Business Intelligence`

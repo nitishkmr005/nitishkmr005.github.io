@@ -1,7 +1,7 @@
 ---
 layout: archive
 permalink: /my-skills/
-title: "My Skills"
+title: ""
 author_profile: true
 header:
    image: "/images/image.jpg"
@@ -25,4 +25,4 @@ header:
 	| Process Tools 		| Rational ClearQuest in IBM, JIRA, HP Service Manager and Service Now in Fidelity.	|
   | ---------------------------------------------------------------------------------------------------------------------------------	|
 	| Platforms and misc..		| Anaconda, Jupyter Notebook, Spyder IDE, Windows W10, Linux	|
-  | ---------------------------------------------------------------------------------------------------------------------------------	| 
+  | ---------------------------------------------------------------------------------------------------------------------------------	|

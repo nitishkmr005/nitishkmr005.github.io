@@ -8,7 +8,7 @@ header:
 ---
 
   | Programming Languages 	| Python, Machine Learning, Artificial Neural Networks, Convolutional Neural Networks, Sklearn Libraries,   
-  | TensorFlow, COBOL, JCL, CICS, Basics of Hadoop, Pyspark, Python Flask to design webpage for prediction 	| 
+    TensorFlow, COBOL, JCL, CICS, Basics of Hadoop, Pyspark, Python Flask to design webpage for prediction 	| 
 	| ---------------------------------------------------------------------------------------------------------------------------------	| 
 	| Databases		| SQL, Hive, MongoDB 	| 
   | ---------------------------------------------------------------------------------------------------------------------------------	|

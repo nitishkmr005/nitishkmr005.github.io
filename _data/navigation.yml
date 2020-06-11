@@ -2,14 +2,16 @@
 main:
   - title: "About"
     url: /about/
-  - title: "My Skills"
+  - title: "Skills"
     url: /my-skills/
-  - title: "My Certifications"
+  - title: "Education"
+    url: /education/
+  - title: "Certifications"
     url: /my-certifications/
-  - title: "My Posts"
-    url: /my-posts/
-  - title: "My Projects"
+  - title: "Projects"
     url: /my-projects/
+  - title: "Contact me"
+    url: /contact/
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"

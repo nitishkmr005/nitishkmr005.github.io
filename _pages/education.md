@@ -3,8 +3,6 @@ layout: archive
 permalink: /education/
 title: "Education"
 author_profile: true
-header:
-   image: "/images/image.jpg"
 ---
 
 |Course	|Name of the institution	|Name of the university/board	|Year of passing	|Percentage Secured|

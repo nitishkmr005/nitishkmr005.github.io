@@ -28,8 +28,8 @@ gallery:
     image_path: /assets/images/cert6.jpg
     alt: "placeholder image 6"
     title: "Learn Linux in 5 Days and Level Up Your Career"
-  - url: /assets/images/cert7.jpg
-    image_path: /assets/images/cert7.jpg
+  - url: /assets/images/cert7.png
+    image_path: /assets/images/cert7.png
     alt: "placeholder image 7"
     title: "Machine Learning"
 ---
@@ -41,5 +41,7 @@ gallery:
 
   * `MySQL for Data Analytics and Business Intelligence`
   * `Power BI A-Z: Hands-On Power BI Training for Data Science!`
+  *	`Power BI A-Z: Hands-On Power BI Training for Data Science!`
   *	`Complete SQL Bootcamp`
   *	`Learn Linux in 5 Days and Level Up Your Career`
+  * `Ultimate AWS Certified Solutions Architect Associate 2020`

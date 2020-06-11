@@ -295,9 +295,11 @@ defaults:
       related: true
 
 gallery:
-  - image_path: /assets/images/cert1.jpg
+  - url: /assets/images/cert1.jpg
+    image_path: /assets/images/cert1th.jpg
     alt: "placeholder image 1"
     title: "Tableau 10 A-Z: Hands-On Tableau Training for Data Science!"
-  - image_path: /assets/images/cert2.jpg
+  - url: /assets/images/cert2.jpg
+    image_path: /assets/images/cert2th.jpg
     alt: "placeholder image 2"
     title: "MySQL for Data Analytics and Business Intelligence"

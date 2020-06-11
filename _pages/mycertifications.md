@@ -6,7 +6,7 @@ author_profile: true
 header:
    image: "/images/image.jpg"
 ---
-![image](https://user-images.githubusercontent.com/55267125/84415053-d5e1b200-ac2f-11ea-88e9-166b6b6b8026.png)
+{% include gallery caption="Udemy Certifications" %}
 
 * Coursera Certified – `Machine Learning` from Stanford University with 96.9% grade.  
 * IBM Certified - `DB2 9 fundamentals`.  

@@ -28,8 +28,8 @@ gallery:
     image_path: /assets/images/cert6.jpg
     alt: "placeholder image 6"
     title: "Learn Linux in 5 Days and Level Up Your Career"
-  - url: /assets/images/cert7.png
-    image_path: /assets/images/cert7.png
+  - url: /assets/images/cert7.jpg
+    image_path: /assets/images/cert7.jpg
     alt: "placeholder image 7"
     title: "Machine Learning"
 ---

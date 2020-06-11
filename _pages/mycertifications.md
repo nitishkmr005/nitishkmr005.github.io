@@ -29,16 +29,16 @@ gallery:
     alt: "placeholder image 6"
     title: "Learn Linux in 5 Days and Level Up Your Career"
 ---
-{% include gallery caption="Udemy Certification" %}
+{% include gallery caption="Udemy Certifications" %}
 ![image](https://user-images.githubusercontent.com/55267125/84424205-5eb31a80-ac3d-11ea-9a0e-0863c3c3bfa0.png)
 
 * Coursera Certified – `Machine Learning` from Stanford University with 96.9% grade.  
 * IBM Certified - `DB2 9 fundamentals`.  
 * Udemy Certified –
 
-  * `MySQL for Data Analytics and Business Intelligence`
   * `Power BI A-Z: Hands-On Power BI Training for Data Science!`
   *	`Power BI A-Z: Hands-On Power BI Training for Data Science!`
+  * `MySQL for Data Analytics and Business Intelligence`
   *	`Complete SQL Bootcamp`
-  *	`Learn Linux in 5 Days and Level Up Your Career`
   * `Ultimate AWS Certified Solutions Architect Associate 2020`
+  *	`Learn Linux in 5 Days and Level Up Your Career`

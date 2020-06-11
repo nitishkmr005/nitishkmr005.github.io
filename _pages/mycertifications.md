@@ -11,7 +11,7 @@ header:
 * IBM Certified - `DB2 9 fundamentals`.  
 * Udemy Certified –
 
- * `MySQL for Data Analytics and Business Intelligence`
- * `Power BI A-Z: Hands-On Power BI Training for Data Science!`
- *	`Complete SQL Bootcamp`
- *	`Learn Linux in 5 Days and Level Up Your Career`
+  * `MySQL for Data Analytics and Business Intelligence`
+  * `Power BI A-Z: Hands-On Power BI Training for Data Science!`
+  *	`Complete SQL Bootcamp`
+  *	`Learn Linux in 5 Days and Level Up Your Career`

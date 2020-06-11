@@ -7,8 +7,8 @@ header:
    image: "/images/image.jpg"
 ---
 
-  | Programming Languages 	| Python, Machine Learning, Artificial Neural Networks, Convolutional Neural Networks, Sklearn Libraries,TensorFlow, COBOL, JCL, CICS, Basics of Hadoop, Pyspark, Python Flask to design webpage for prediction 	| 
-	| ---------------------------------------------------------------------------------------------------------------------------------	| 
+  | Programming Languages | Python, Machine Learning, Artificial Neural Networks, Convolutional Neural Networks, Sklearn Libraries,TensorFlow, COBOL, JCL, CICS, Basics of Hadoop, Pyspark, Python Flask used to design webpage for prediction| 
+	| ---------------------------------------------------------------------------------------------------------------------------------	--------------------------------------------------------------------------------------------------------| 
 	| Databases		| SQL, Hive, MongoDB 	| 
   | ---------------------------------------------------------------------------------------------------------------------------------	|
 	| Database tools		| PostgreSQL, MySQL, IBM DB2 Platinum	| 

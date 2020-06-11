@@ -28,12 +28,9 @@ gallery:
     image_path: /assets/images/cert6.jpg
     alt: "placeholder image 6"
     title: "Learn Linux in 5 Days and Level Up Your Career"
-  - url: /assets/images/cert7.jpg
-    image_path: /assets/images/cert7.jpg
-    alt: "placeholder image 7"
-    title: "Machine Learning"
 ---
 {% include gallery caption="Udemy Certification" %}
+![image](https://user-images.githubusercontent.com/55267125/84424205-5eb31a80-ac3d-11ea-9a0e-0863c3c3bfa0.png)
 
 * Coursera Certified – `Machine Learning` from Stanford University with 96.9% grade.  
 * IBM Certified - `DB2 9 fundamentals`.  

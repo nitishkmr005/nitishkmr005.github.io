@@ -6,7 +6,7 @@ author_profile: true
 header:
    image: "/images/image.jpg"
 ---
-{% include gallery caption="Udemy Certifications" %}
+{% include gallery caption="Udemy Certification" %}
 
 * Coursera Certified – `Machine Learning` from Stanford University with 96.9% grade.  
 * IBM Certified - `DB2 9 fundamentals`.  

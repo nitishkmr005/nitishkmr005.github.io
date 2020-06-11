@@ -7,6 +7,8 @@ header:
    image: "/images/image.jpg"
 ---
 
+  |                                                                                 My Skills                                                                                                                                                                                             | 
+  | ---------------------------------------------------------------------------------------------------------------------------------	--------------------------------------------------------------------------------------------------------|
   | Programming Languages | Python, Machine Learning, Artificial Neural Networks, Convolutional Neural Networks, Sklearn Libraries,TensorFlow, COBOL, JCL, CICS, Basics of Hadoop, Pyspark, Python Flask used to design webpage for prediction| 
 	| ---------------------------------------------------------------------------------------------------------------------------------	--------------------------------------------------------------------------------------------------------| 
 	| Databases		| SQL, Hive, MongoDB 	| 

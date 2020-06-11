@@ -6,7 +6,7 @@ author_profile: true
 header:
    image: "/images/image.jpg"
 ---
-{% include gallery caption="Udemy Certified - **Tableau 10 A-Z: Hands-On Tableau Training for Data Science!**." %}
+![image](https://user-images.githubusercontent.com/55267125/84415053-d5e1b200-ac2f-11ea-88e9-166b6b6b8026.png)
 
 * Coursera Certified – `Machine Learning` from Stanford University with 96.9% grade.  
 * IBM Certified - `DB2 9 fundamentals`.  

@@ -9,7 +9,7 @@ excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression
 
 ## 1) Hypothesis Function, Cost Function, Gradients, Thetas/Weights for Simple Linear Regression
 
-![image](https://user-images.githubusercontent.com/55267125/84930385-cca08b80-b0ee-11ea-8dc0-3569d447d88a.png)
+![image](https://user-images.githubusercontent.com/55267125/84930676-45074c80-b0ef-11ea-861d-817518e91972.png)
 
 ## 2) Hypothesis Function, Cost Function, Gradients, Thetas for Multiple Linear Regression
 

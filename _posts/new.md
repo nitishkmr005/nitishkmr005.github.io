@@ -1,14 +1,1 @@
-{
- "cells": [
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "$$h_\\theta(x) = \\theta_0 + \\theta_1x$$"
-   ]
-  }
- ],
- "nbformat": 4,
- "nbformat_minor": 5,
- "metadata": {}
-}
+*h*<sub>*θ*</sub>(*x*) = *θ*<sub>0</sub> + *θ*<sub>1</sub>*x*

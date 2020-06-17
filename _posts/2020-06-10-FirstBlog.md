@@ -8,7 +8,7 @@ excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression
 ---
 ## 1) Hypothesis Function, Cost Function, Gradients, Thetas/Weights for Simple Linear Regression
 
-Hypothesis Function
+- <ins> Hypothesis Function </ins> 
 $$
 h_\theta(x) = \theta_0 + \theta_1x
 $$

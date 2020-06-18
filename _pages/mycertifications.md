@@ -36,10 +36,9 @@ gallery:
     image_path: /assets/images/cert6.jpg
     alt: "placeholder image 8"
     title: "Learn Linux in 5 Days and Level Up Your Career"
-
 ---
-{% include gallery caption="Udemy Certifications" %}
-![image](https://user-images.githubusercontent.com/55267125/84424205-5eb31a80-ac3d-11ea-9a0e-0863c3c3bfa0.png)
+{% include gallery caption="LinkedIn Learning Certification" %}
+![image](https://user-images.githubusercontent.com/55267125/85079822-60ed1a00-b1e5-11ea-9cd2-b7ce4c6ce5b4.png)
 
 * Coursera Certified –
 

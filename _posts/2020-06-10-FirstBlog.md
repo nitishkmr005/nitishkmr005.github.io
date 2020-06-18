@@ -22,20 +22,15 @@ excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression
 
 ![image](https://user-images.githubusercontent.com/55267125/85019900-29eb1a00-b18d-11ea-9620-9975f439cc11.png)
 
-## 6) Neural Network
+![image](https://user-images.githubusercontent.com/55267125/85056952-b6153580-b1bd-11ea-933b-f692ba83d5fc.png)
 
-- Cost Function
+![image](https://user-images.githubusercontent.com/55267125/85056991-c3cabb00-b1bd-11ea-9986-7539384c1720.png)
 
-  ![image](https://user-images.githubusercontent.com/55267125/82839205-3d87c580-9eec-11ea-8de3-c7211f4fde36.png)
+![image](https://user-images.githubusercontent.com/55267125/85057023-cdecb980-b1bd-11ea-88fe-4b3b7e80f709.png)
 
-  Where   
-  L = total number of layers in the network  
-  Sl =  = number of units (not counting bias unit) in layer l  
-  K = number of output units/classes
+![image](https://user-images.githubusercontent.com/55267125/85057057-d8a74e80-b1bd-11ea-84c9-00a322402c63.png)
 
-- Backpropagation Algorithm
-
-  ![image](https://user-images.githubusercontent.com/55267125/83003717-54353600-a02c-11ea-880b-02f2419b5db1.png)
+![image](https://user-images.githubusercontent.com/55267125/85057085-e1982000-b1bd-11ea-968e-ac4ddb7dd5e1.png)
 
 ## Forward Propagation Matrix Multiplication Example in Neural Network -
 

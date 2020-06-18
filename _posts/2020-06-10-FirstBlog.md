@@ -26,16 +26,14 @@ excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression
 
 ![image](https://user-images.githubusercontent.com/55267125/85056991-c3cabb00-b1bd-11ea-9986-7539384c1720.png)
 
-![image](https://user-images.githubusercontent.com/55267125/85057023-cdecb980-b1bd-11ea-88fe-4b3b7e80f709.png)
+![image](https://user-images.githubusercontent.com/55267125/85078531-3ea5cd00-b1e2-11ea-9754-43c56fa5c5ae.png)
 
 ![image](https://user-images.githubusercontent.com/55267125/85057057-d8a74e80-b1bd-11ea-84c9-00a322402c63.png)
 
 ![image](https://user-images.githubusercontent.com/55267125/85058313-88c98700-b1bf-11ea-86b8-d535a86994fb.png)
 
-## Backpropagation of Neural Network (For Classification) -
+![image](https://user-images.githubusercontent.com/55267125/85078835-faff9300-b1e2-11ea-8f7c-7c8c9d5a43da.png)
 
-  Assumptions - m=1 (Single Sample)  
+![image](https://user-images.githubusercontent.com/55267125/85079078-96910380-b1e3-11ea-8291-ec256ea3e67a.png)
 
-  Derivation of Gradients -
-
-  ![image](https://user-images.githubusercontent.com/55267125/82945977-324f9b00-9fbb-11ea-8069-205e5c05b6d1.png)
+![image](https://user-images.githubusercontent.com/55267125/85079127-af99b480-b1e3-11ea-898e-cc75859ed48f.png)

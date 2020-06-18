@@ -20,7 +20,8 @@ excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression
 
 ![image](https://user-images.githubusercontent.com/55267125/85019061-cf9d8980-b18b-11ea-9148-50f71e364d74.png)
 
-![image](https://user-images.githubusercontent.com/55267125/85019109-e6dc7700-b18b-11ea-9b72-5af5af7338f4.png)
+![image](https://user-images.githubusercontent.com/55267125/85019900-29eb1a00-b18d-11ea-9620-9975f439cc11.png)
+
 ## 6) Neural Network
 
 - Cost Function

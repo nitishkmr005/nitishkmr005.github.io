@@ -36,10 +36,6 @@ gallery:
     image_path: /assets/images/cert6.jpg
     alt: "placeholder image 8"
     title: "Learn Linux in 5 Days and Level Up Your Career"
-  - url: /assets/images/cert9.jpg
-    image_path: /assets/images/cert9.jpg
-    alt: "placeholder image 9"
-    title: "NLP with Python for Machine Learning Essential Training"
 ---
 * Coursera Certified –
 

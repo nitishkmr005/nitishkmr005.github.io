@@ -18,7 +18,7 @@ excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression
 
 ## 6) Neural Network
 
-- <ins> Cost Function </ins>
+- <u>**<ins>Cost Function</ins>**</u>
 
   ![image](https://user-images.githubusercontent.com/55267125/82839205-3d87c580-9eec-11ea-8de3-c7211f4fde36.png)
 
@@ -27,7 +27,7 @@ excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression
   Sl =  = number of units (not counting bias unit) in layer l  
   K = number of output units/classes
 
-- <ins> Backpropagation Algorithm </ins>
+- <u>**<ins>Backpropagation Algorithm</ins>**</u>
 
   ![image](https://user-images.githubusercontent.com/55267125/83003717-54353600-a02c-11ea-880b-02f2419b5db1.png)
 

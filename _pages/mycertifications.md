@@ -1,7 +1,7 @@
 ---
 layout: archive
 permalink: /my-certifications/
-title: "My Certifications from Coursera and Udemy"
+title: "My Certifications from Coursera, LinkedIn Learning and Udemy"
 author_profile: true
 gallery:
   - url: /assets/images/cert7.jpg
@@ -56,4 +56,5 @@ gallery:
   *	`Learn Linux in 5 Days and Level Up Your Career`
 
 * LinkedIn Learning Certified - `NLP with Python for Machine Learning Essential Training`
+
 * IBM Certified - `DB2 9 fundamentals`.  

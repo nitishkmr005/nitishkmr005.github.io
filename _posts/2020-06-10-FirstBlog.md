@@ -6,15 +6,21 @@ header:
    image: "/images/image.jpg"
 excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression, Neural Networks"
 ---
-<img src="https://user-images.githubusercontent.com/55267125/85016033-97e01300-b186-11ea-8216-24ae05b92543.png" alt="image" style="zoom:200%;" />
+![image](https://user-images.githubusercontent.com/55267125/85018684-3b332700-b18b-11ea-9802-ff226de267a6.png)
 
-<img src="https://user-images.githubusercontent.com/55267125/85016132-bd6d1c80-b186-11ea-8659-3f15ed441982.png" alt="image" style="zoom:200%;" />
+![image](https://user-images.githubusercontent.com/55267125/85018735-4ede8d80-b18b-11ea-9407-2aabf25e2c68.png)
 
-<img src="https://user-images.githubusercontent.com/55267125/85016535-8a775880-b187-11ea-99f7-f25ecb683cea.png" alt="image" style="zoom:200%;" />
+![image](https://user-images.githubusercontent.com/55267125/85018820-6c135c00-b18b-11ea-8cfc-0e85eaf2905c.png)
 
-<img src="https://user-images.githubusercontent.com/55267125/85016592-a418a000-b187-11ea-8cd0-85bff45dbdde.png" alt="image" style="zoom:200%;" />
+![image](https://user-images.githubusercontent.com/55267125/85018903-906f3880-b18b-11ea-9703-2cfc17a7574f.png)
 
-<img src="https://user-images.githubusercontent.com/55267125/85016857-31f48b00-b188-11ea-95ff-5b5a65d763b7.png" alt="image" style="zoom:200%;" />
+![image](https://user-images.githubusercontent.com/55267125/85018962-a8df5300-b18b-11ea-9b42-22651807d4a8.png)
+
+![image](https://user-images.githubusercontent.com/55267125/85019032-bf85aa00-b18b-11ea-93e7-3dd4fe28315f.png)
+
+![image](https://user-images.githubusercontent.com/55267125/85019061-cf9d8980-b18b-11ea-9148-50f71e364d74.png)
+
+![image](https://user-images.githubusercontent.com/55267125/85019109-e6dc7700-b18b-11ea-9b72-5af5af7338f4.png)
 
 ## 6) Neural Network
 

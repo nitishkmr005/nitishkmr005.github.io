@@ -30,9 +30,9 @@ excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression
 
 ![image](https://user-images.githubusercontent.com/55267125/85057057-d8a74e80-b1bd-11ea-84c9-00a322402c63.png)
 
-![image](https://user-images.githubusercontent.com/55267125/85057085-e1982000-b1bd-11ea-968e-ac4ddb7dd5e1.png)
+![image](https://user-images.githubusercontent.com/55267125/85058313-88c98700-b1bf-11ea-86b8-d535a86994fb.png)
 
-## Backpropagation of Neural Network (Classification Problem) -
+## Backpropagation of Neural Network (For Classification) -
 
   Assumptions - m=1 (Single Sample)  
 

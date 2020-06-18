@@ -32,13 +32,7 @@ excerpt: "Machine Learning, Data science, Linear Regression, Logistic Regression
 
 ![image](https://user-images.githubusercontent.com/55267125/85057085-e1982000-b1bd-11ea-968e-ac4ddb7dd5e1.png)
 
-## Forward Propagation Matrix Multiplication Example in Neural Network -
-
- Let's consider input X with 20*20 5000 images
-
- ![image](https://user-images.githubusercontent.com/55267125/83005450-70d26d80-a02e-11ea-8c28-770d312a82c5.png)
-
-## BackPropagation of Neural Network (Classification Problem) -
+## Backpropagation of Neural Network (Classification Problem) -
 
   Assumptions - m=1 (Single Sample)  
 

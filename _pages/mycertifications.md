@@ -36,10 +36,11 @@ gallery:
     image_path: /assets/images/cert6.jpg
     alt: "placeholder image 8"
     title: "Learn Linux in 5 Days and Level Up Your Career"
+  - url: /assets/images/cert9.jpg
+    image_path: /assets/images/cert9.jpg
+    alt: "placeholder image 9"
+    title: "NLP with Python for Machine Learning Essential Training"
 ---
-{% include gallery caption="LinkedIn Learning Certification" %}
-![image](https://user-images.githubusercontent.com/55267125/85079822-60ed1a00-b1e5-11ea-9cd2-b7ce4c6ce5b4.png)
-
 * Coursera Certified –
 
   * `Machine Learning` from Stanford University with 96.9% grade.

@@ -41,13 +41,14 @@ gallery:
     alt: "placeholder image 9"
     title: "NLP with Python for Machine Learning Essential Training"
 ---
-* Coursera Certified –
+* Coursera Certified from Stanford University and deeplearning.ai –
 
-  * `Machine Learning` from Stanford University with 96.9% grade.
-  * `Neural Networks and Deep Learning` from deeplearning.ai with 98.6% grade.
-  * `Improving Deep Neural Networks Hyperparameter tuning, Regularization and Optimization` from deeplearning.ai.
-  * `Structuring Machine Learning Projects` from deeplearning.ai.
-  * `Convolutional Neural Networks` from deeplearning.ai.
+  * `Machine Learning` from Stanford University.
+    + Deeplearning specialization courses from deeplearning.ai -
+      * `Neural Networks and Deep Learning`.
+      * `Improving Deep Neural Networks Hyperparameter tuning, Regularization and Optimization`.
+      * `Structuring Machine Learning Projects`.
+      * `Convolutional Neural Networks`.
 
 * Udemy Certified –
 

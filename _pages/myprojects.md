@@ -7,5 +7,5 @@ author_profile: true
 
 Please refer below links for details about projects which I have implemented.
 
-* https://eportfolio.greatlearning.in/nitishkumar                             
-* https://github.com/nitishkmr005
+* `https://eportfolio.greatlearning.in/nitishkumar`                             
+* `https://github.com/nitishkmr005`

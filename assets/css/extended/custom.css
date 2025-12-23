@@ -87,21 +87,34 @@ body {
 /* Responsive Layout */
 @media (max-width: 1200px) {
     .three-column-layout {
-        grid-template-columns: 1fr 320px;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "left"
+            "main"
+            "right";
     }
     
     .left-sidebar {
-        display: none;
+        grid-area: left;
+        position: static;
+        max-width: 100%;
+        margin-bottom: var(--space-xl);
+    }
+    
+    .main-content {
+        grid-area: main;
+    }
+    
+    .right-sidebar {
+        grid-area: right;
+        position: static;
     }
 }
 
 @media (max-width: 768px) {
     .three-column-layout {
-        grid-template-columns: 1fr;
-    }
-    
-    .right-sidebar {
-        position: static;
+        padding: 1rem;
+        gap: var(--space-xl);
     }
 }
 
@@ -264,6 +277,61 @@ body {
 
 .profile-nav-link:hover svg {
     transform: scale(1.1);
+}
+
+/* Mobile Profile Card Optimizations */
+@media (max-width: 768px) {
+    .profile-card {
+        padding: var(--space-lg) var(--space-md);
+    }
+    
+    .profile-image {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .profile-name {
+        font-size: var(--text-xl);
+    }
+    
+    .profile-bio {
+        font-size: var(--text-xs);
+    }
+    
+    .profile-navigation {
+        flex-direction: row;
+        overflow-x: auto;
+        gap: var(--space-xs);
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .profile-nav-link {
+        flex-direction: column;
+        padding: var(--space-sm);
+        gap: var(--space-xs);
+        font-size: var(--text-xs);
+        white-space: nowrap;
+        min-width: fit-content;
+    }
+    
+    .profile-nav-link svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .profile-social-icons {
+        gap: var(--space-sm);
+    }
+    
+    .profile-social-icons a {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .profile-social-icons svg {
+        width: 18px;
+        height: 18px;
+    }
 }
 
 /* ==================== Variables ==================== */

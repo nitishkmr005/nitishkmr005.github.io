@@ -1,0 +1,30 @@
+<!-- Recently Updated Widget -->
+<div class="sidebar-widget recently-updated-widget">
+  <h3>Recently Updated</h3>
+  <ul class="widget-list">
+    {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+    {{- range first 5 $pages }}
+    <li>
+      <a href="{{ .Permalink }}" title="{{ .Title }}">
+        {{ .Title | truncate 60 }}
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</div>
+
+<!-- Trending Tags Widget -->
+<div class="sidebar-widget trending-tags-widget">
+  <h3>Trending Tags</h3>
+  <div class="tag-cloud">
+    {{- if site.Taxonomies.tags }}
+      {{- $tags := site.Taxonomies.tags.ByCount }}
+      {{- range first 15 $tags }}
+      <a href="{{ .Page.Permalink }}" class="tag-link">
+        <span>{{ .Page.Title }}</span>
+      </a>
+      {{- end }}
+    {{- end }}
+  </div>
+</div>
+

@@ -1,0 +1,137 @@
+baseURL = 'https://nitishkmr005.github.io/'
+languageCode = 'en-us'
+title = 'Data Science Portfolio'
+theme = 'PaperMod'
+
+[pagination]
+  pagerSize = 10
+
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+enableEmoji = true
+pygmentsUseClasses = true
+
+[minify]
+  disableXML = true
+  minifyOutput = true
+
+[params]
+  env = "production"
+  title = "Data Science Portfolio"
+  description = "A portfolio showcasing data science projects, machine learning experiments, and technical articles"
+  keywords = ["Data Science", "Machine Learning", "AI", "Python", "Analytics", "Portfolio"]
+  author = "Nitishkumar Harsoor"
+  mainSections = ["posts", "projects"]
+  
+  # Theme appearance
+  defaultTheme = "dark"
+  disableThemeToggle = false
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  UseHugoToc = true
+  disableSpecial1stPost = false
+  disableScrollToTop = false
+  comments = false
+  hidemeta = false
+  hideSummary = false
+  showtoc = true
+  tocopen = false
+  
+  # Cover image settings
+  cover.linkFullImages = true
+  cover.responsiveImages = true
+  cover.hidden = false
+
+  [params.assets]
+    favicon = "/favicon.ico"
+    favicon16x16 = "/favicon-16x16.png"
+    favicon32x32 = "/favicon-32x32.png"
+    apple_touch_icon = "/apple-touch-icon.png"
+
+  [params.label]
+    text = "Home"
+    icon = "/apple-touch-icon.png"
+    iconHeight = 35
+
+  [params.profileMode]
+    enabled = false
+    title = "Nitishkumar Harsoor"
+    subtitle = "Hands-On ML Engineering Meets Strategic Vision — Bridging Code and Cloud to Drive Enterprise AI for Real-World Impact"
+    imageUrl = "profile.JPG"
+    imageWidth = 150
+    imageHeight = 150
+    imageTitle = "Profile"
+    
+    [[params.profileMode.buttons]]
+      name = "Posts"
+      url = "/posts"
+    
+    [[params.profileMode.buttons]]
+      name = "Projects"
+      url = "/projects"
+    
+    [[params.profileMode.buttons]]
+      name = "About"
+      url = "/about"
+
+  [params.homeInfoParams]
+    Title = "Data Scientist & ML Engineer"
+    Content = "Welcome to my portfolio. I write about data science, machine learning, and software engineering."
+
+  [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://linkedin.com/in/yourprofile"
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/nitishkmr005"
+
+  [[params.socialIcons]]
+    name = "email"
+    url = "mailto:your.email@example.com"
+
+  [params.analytics.google]
+    SiteVerificationTag = "YOUR_GOOGLE_SITE_VERIFICATION_TAG"
+    GoogleAnalyticsID = "G-XXXXXXXXXX"
+
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 0
+    keys = ["title", "permalink", "summary", "content"]
+
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 10
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[markup]
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    noClasses = false
+    style = "monokai"
+    
+  [markup.goldmark.renderer]
+    unsafe = true

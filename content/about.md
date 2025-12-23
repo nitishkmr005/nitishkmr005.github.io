@@ -5,58 +5,122 @@ hidemeta: true
 showToc: false
 ---
 
-## Hi, I'm Nitish 👋
+## Hi, I'm Nitishkumar Harsoor 👋
 
-I'm a **Data Scientist** passionate about leveraging machine learning and data analytics to solve real-world problems. With expertise in Python, statistical modeling, and MLOps, I build end-to-end data solutions that drive business impact.
+I'm a **Lead AI/ML Engineer** specializing in GenAI, production ML systems, and MLOps. With over 12 years of experience in technology and 6+ years focused on AI/ML, I build enterprise-grade solutions that deliver measurable business impact—from $32M cost savings through GenAI pipelines to 2.13× CTR lifts with contextual bandits.
 
-### What I Do
+---
 
-- **Machine Learning**: Building predictive models, NLP applications, and computer vision systems
-- **Data Engineering**: Designing scalable data pipelines and ETL processes
-- **Analytics**: Extracting insights from complex datasets using statistical methods
-- **MLOps**: Deploying and monitoring production ML systems
+## 💼 Professional Experience
 
-### Technical Skills
+### Lead AI/ML Engineer
+**Fidelity Investments** | Bangalore, India | *October 2022 - Present*
 
-**Languages**: Python, R, SQL, JavaScript
+- **Led AgentBot 3.0 development**: Built an enterprise GenAI pipeline where LLM-extracted structured JSON from call transcripts powered downstream pre-call insights, in-call assistance, and post-call rep note/email generation—driving **$32M annual cost savings**, **44% reduction in after-call work**, and **1% increased appointment rate**
+- **Deployed Helios Collections recommender** to production using LinGreedy contextual multi-armed bandits, modeling each collection as an arm and learning context-aware rewards via ridge regression, resulting in a **2.13× lift in CTR@1** over the baseline in the Helios mobile app
+- **Fine-tuned T5 transformer models** for email summarization on noisy email chains, combining regex-based parsing and embedding-driven noise filtering to isolate salient content and improve summary quality
+- **Implemented model interpretability and fairness evaluation** for every recommender system using SHAP and Jurity libraries, improving transparency, reliability, and bias detection
+- **Built an end-to-end voice agent pipeline**—covering speech-to-text, turn detection, LLM-based tool calling, and text-to-speech—as part of a Fidelity GenAI hackathon initiative
 
-**ML/Data**: scikit-learn, TensorFlow, PyTorch, Pandas, NumPy, Spark
+### Lead Systems Analyst
+**Fidelity Investments** | Bangalore, India | *April 2021 - October 2022*
 
-**Tools**: Docker, Git, Airflow, MLflow, Jupyter
+- Built a **retrieval-and-re-ranker–based neural search engine** for the Gurubar tech support app, enabling associates to self-resolve laptop issues and **reducing ticket volume by ~40%** through relevant KB article recommendations
+- Built **enterprise-grade ML systems** including a holiday incident classifier and BERT-based clustering engine, automating manual ticket review and achieving **90%+ accuracy** in identifying repeated incidents during peak periods
+- Developed **ML-driven ticket routing models** (XGBoost + BERT NLP) that achieved **85%+ assignment accuracy**, reducing MTTR by routing tickets to correct teams automatically
+- **Architected and deployed to production Data Intelligence Platform** serving **720+ users**, implementing Dockerized infrastructure, NGINX load handling concurrent connections, and enterprise-grade SSO/SSL security
 
-**Cloud**: AWS, GCP, Azure
+### Software Engineer
+**Fidelity Investments** | Bangalore, India | *April 2016 - April 2021*
 
-### Experience
+- Worked on the **Purchase and Sales (P&S) application**, a trade processing system that captures trade data from multiple feeds such as order-entry systems, validates and processes trades, and delivers formatted transactions to back-office systems
+- Managed trade exceptions, supported reprocessing of failed transactions, and provided functionality to cancel or correct trades
+- Delivered **$197 Million in incremental P/W flows** through system enhancements
 
-#### Senior Data Scientist @ Tech Company
-*2022 - Present*
+### System Engineer
+**IBM** | Bangalore, India | *April 2013 - April 2016*
 
-- Led development of recommendation systems serving 1M+ users
-- Improved model performance by 35% through advanced feature engineering
-- Built MLOps pipeline reducing deployment time from weeks to hours
+- Worked on **Universal Payment System (UPS)** application, supporting large-scale cheque issuance, ACH payments, and generation of EOP/EOB statements for healthcare providers and members
+- Contributed to IBM's hybrid cloud and AI solutions portfolio
 
-#### Data Scientist @ Analytics Firm
-*2020 - 2022*
+---
 
-- Developed NLP models for sentiment analysis and entity extraction
-- Created interactive dashboards for executive decision-making
-- Mentored junior data scientists and led code reviews
+## 🚀 Key Projects
 
-### Education
+### AgentBot 3.0 - Contact Centre Automation with GenAI
+*October 2025*
 
-**Master of Science in Data Science** - University Name, 2020
+Streamlined contact centre associate tasks and routines by automating experiences at different stages of the call (pre-call, during, after) using state-of-the-art LLM models.
 
-**Bachelor of Science in Computer Science** - University Name, 2018
+- Designed a **two-stage GenAI pipeline** where structured JSON extraction served as a data foundation for downstream rep note, email, and pre-call insight generation
+- Built an **LLM-as-a-Judge evaluation framework** with attribute-level precision/recall, missing vs incorrect signals, and model leaderboards for systematic comparison
+- Built a **production-grade LLM validation platform** using Streamlit for validating **150+ extracted attributes across 2,000+ calls**, enabling hallucination detection, missing-field analysis, real-time dashboards, and automated prompt optimization
+- Leveraged **Claude 3.5 Sonnet** to extract **150+ structured attributes** from call transcripts, enforcing output correctness through **Pydantic-based JSON schema validation**
 
-### Get In Touch
+### Contextual Multi-Armed Bandit Recommender for Investment Collections
+*September 2024*
 
-I'm always interested in collaborating on exciting data science projects or discussing the latest in ML and AI.
+Personalized the Collections component in the Helios mobile app to increase customer engagement, where each collection represents an investment idea composed of thematically similar underlying products.
 
-- 📧 Email: your.email@example.com
-- 💼 LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
-- 🐙 GitHub: [github.com/yourusername](https://github.com/yourusername)
+- Implemented a **LinGreedy contextual multi-armed bandit**, modeling each investment collection as an arm with **per-arm ridge regression**
+- Utilized **Mab2Rec library** to evaluate linear policies from MABWiser and benchmarked these against non-contextual random policies
+- Achieved **2.13× lift in CTR@1** compared to baseline
+
+### Workplace Seminar Recommendation
+*November 2023*
+
+Identified the most relevant seminar topics for each participant and aggregated recommendations at the plan-sponsor level, enabling targeted and personalized communication campaigns.
+
+- Designed **two-stage modeling approach**: Stage 1 predicts likelihood of attending any seminar; Stage 2 predicts likelihood of attending a particular theme
+- Implemented a **LightGBM binary classifier** for Stage 1 and a **neural network–based multi-label classifier** for Stage 2
+- Trained on **two years of historical attendance data** and validated on out-of-time datasets with consistent performance
+
+---
+
+## 🏆 Awards & Recognition
+
+- **EIA Award 2025** - AgentBot 3.0 development and GenAI Capabilities
+- **Eureka Award H2 2024** - Charter Champion category for Workplace Seminar Recommendation
+- **EIA Award 2024** - AI model migration from CWE to EDL (WPS & Helios Collections)
+- **Excellent Performer 2025** - Year End Performance Rating
+
+---
+
+## 🛠️ Technical Skills
+
+**Languages**: Python, SQL, JavaScript
+
+**ML/AI Frameworks**: Transformers (Hugging Face), LightGBM, XGBoost, scikit-learn, TensorFlow, PyTorch
+
+**GenAI & LLMs**: Claude 3.5 Sonnet, GPT models, Prompt Engineering, RAG (Retrieval-Augmented Generation)
+
+**MLOps & Infrastructure**: Docker, NGINX, Kubernetes, CI/CD, Model Monitoring
+
+**ML Libraries**: SHAP, Jurity, MABWiser, Mab2Rec, Pydantic, Streamlit, Pandas, NumPy
+
+**Specialized Skills**: 
+- Contextual Multi-Armed Bandits
+- Model Interpretability & Fairness
+- Neural Search & Information Retrieval
+- NLP (BERT, T5, Entity Extraction)
+- Production ML Systems
+
+---
+
+## 🎓 Education
+
+**Master of Technology (M.Tech) in Digital Electronics**  
+PES Institute of Technology, Bangalore | *2010 - 2012*
+
+---
+
+## 📫 Get In Touch
+
+I'm always interested in collaborating on exciting AI/ML projects or discussing the latest in GenAI and production ML systems.
+
+- 💼 **LinkedIn**: [linkedin.com/in/nitish-harsoor](https://linkedin.com/in/nitish-harsoor)
+- 🐙 **GitHub**: [github.com/nitishkmr005](https://github.com/nitishkmr005)
 
 ---
 
 *Feel free to explore my [posts](/posts) and [projects](/projects) to see what I've been working on!*
-

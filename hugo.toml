@@ -2,6 +2,7 @@ baseURL = 'https://nitishkmr005.github.io/'
 languageCode = 'en-us'
 title = 'Data Science Portfolio'
 theme = 'PaperMod'
+copyright = "2025 Nitishkumar Harsoor"
 
 [pagination]
   pagerSize = 10
@@ -87,19 +88,15 @@ pygmentsUseClasses = true
 
   [[params.socialIcons]]
     name = "linkedin"
-    url = "https://linkedin.com/in/yourprofile"
+    url = "https://linkedin.com/in/nitish-harsoor"
 
   [[params.socialIcons]]
     name = "github"
     url = "https://github.com/nitishkmr005"
 
-  [[params.socialIcons]]
-    name = "email"
-    url = "mailto:your.email@example.com"
-
-  [params.analytics.google]
-    SiteVerificationTag = "YOUR_GOOGLE_SITE_VERIFICATION_TAG"
-    GoogleAnalyticsID = "G-XXXXXXXXXX"
+  # [params.analytics.google]
+  #   SiteVerificationTag = "YOUR_GOOGLE_SITE_VERIFICATION_TAG"
+  #   GoogleAnalyticsID = "G-XXXXXXXXXX"
 
   [params.fuseOpts]
     isCaseSensitive = false

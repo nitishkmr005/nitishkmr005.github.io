@@ -13,7 +13,7 @@ A modern, fast, and beautiful portfolio website built with Hugo and the PaperMod
 - ✅ **Trending Tags** - Quick navigation to popular topics
 - ✅ **Search Functionality** - Fast client-side search powered by Fuse.js
 - ✅ **Tags & Categories** - Organize content for easy discovery
-- ✅ **Contact Form** - Integrated with Formspree
+- ✅ **Contact Page** - Direct social media links
 - ✅ **Analytics** - Google Analytics support
 - ✅ **Dark Theme** - Professional dark mode as default
 - ✅ **Responsive Design** - Mobile-first and looks great on all devices
@@ -22,7 +22,7 @@ A modern, fast, and beautiful portfolio website built with Hugo and the PaperMod
 
 ## 📸 Demo
 
-Visit the live site: [https://yourusername.github.io](https://yourusername.github.io)
+Visit the live site: [https://nitishkmr005.github.io](https://nitishkmr005.github.io)
 
 ## 🚀 Quick Start
 
@@ -37,8 +37,8 @@ Visit the live site: [https://yourusername.github.io](https://yourusername.githu
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/portfolio.git
-cd portfolio
+git clone https://github.com/nitishkmr005/nitishkmr005.github.io.git
+cd nitishkmr005.github.io
 ```
 
 2. **Initialize theme submodule**
@@ -76,11 +76,11 @@ Navigate to [http://localhost:1313](http://localhost:1313)
 Edit `hugo.toml` to customize:
 
 ```toml
-baseURL = 'https://yourusername.github.io/'
-title = 'Your Name - Data Scientist'
+baseURL = 'https://nitishkmr005.github.io/'
+title = 'Nitishkumar Harsoor - Data Science Portfolio'
 [params]
-  author = "Your Name"
-  description = "Your portfolio description"
+  author = "Nitishkumar Harsoor"
+  description = "AI/ML Engineer specializing in GenAI and production ML systems"
 ```
 
 ### Social Links
@@ -90,15 +90,11 @@ Update social links in `hugo.toml`:
 ```toml
 [[params.socialIcons]]
   name = "linkedin"
-  url = "https://linkedin.com/in/yourprofile"
+  url = "https://linkedin.com/in/nitish-harsoor"
 
 [[params.socialIcons]]
   name = "github"
-  url = "https://github.com/yourusername"
-
-[[params.socialIcons]]
-  name = "email"
-  url = "mailto:your.email@example.com"
+  url = "https://github.com/nitishkmr005"
 ```
 
 ### Analytics
@@ -112,9 +108,7 @@ Add your Google Analytics ID:
 
 ### Contact Form
 
-1. Sign up at [Formspree](https://formspree.io/)
-2. Create a new form
-3. Update `content/contact.md` with your form ID
+The contact page provides direct social media links (LinkedIn and GitHub) for easy connection.
 
 ## 📁 Project Structure
 
@@ -226,7 +220,7 @@ Required files:
 
 ### Deploy to GitHub Pages
 
-1. **Create a GitHub repository** named `username.github.io`
+1. **Create a GitHub repository** named `nitishkmr005.github.io`
 
 2. **Enable GitHub Pages**
    - Go to repository Settings → Pages
@@ -237,13 +231,13 @@ Required files:
 ```bash
 git add .
 git commit -m "Initial commit"
-git remote add origin https://github.com/yourusername/username.github.io.git
+git remote add origin https://github.com/nitishkmr005/nitishkmr005.github.io.git
 git push -u origin main
 ```
 
 4. **Automatic deployment**
    - GitHub Actions will automatically build and deploy
-   - Site will be live at `https://yourusername.github.io`
+   - Site will be live at `https://nitishkmr005.github.io`
 
 ### Deploy to Netlify
 
@@ -351,13 +345,6 @@ This project is open source and available under the [MIT License](LICENSE).
 - [PaperMod](https://github.com/adityatelange/hugo-PaperMod) - Hugo theme
 - [Formspree](https://formspree.io/) - Contact form
 - [Fuse.js](https://fusejs.io/) - Search functionality
-
-## 📧 Contact
-
-- **Website**: [https://yourusername.github.io](https://yourusername.github.io)
-- **Email**: your.email@example.com
-- **LinkedIn**: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
-- **GitHub**: [github.com/yourusername](https://github.com/yourusername)
 
 ---
 

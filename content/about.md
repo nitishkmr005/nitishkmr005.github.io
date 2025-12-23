@@ -7,7 +7,7 @@ showToc: false
 
 ## Hi, I'm Nitishkumar Harsoor 👋
 
-I'm a **Lead AI/ML Engineer** specializing in GenAI, production ML systems, and MLOps. With over 12 years of experience in technology and 6+ years focused on AI/ML, I build enterprise-grade solutions that deliver measurable business impact—from $32M cost savings through GenAI pipelines to 2.13× CTR lifts with contextual bandits.
+I'm a **Data Scientist** specializing in GenAI, production ML systems, and MLOps. With over 12 years of experience in technology and 6+ years focused on AI/ML, I build enterprise-grade solutions that deliver measurable business impact—from $32M cost savings through GenAI pipelines to 2.13× CTR lifts with contextual bandits.
 
 ---
 

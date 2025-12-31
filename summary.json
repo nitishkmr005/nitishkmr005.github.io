@@ -1,0 +1,45 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "duration_ms": 11780,
+  "duration_api_ms": 21335,
+  "num_turns": 1,
+  "result": "This is a **Hugo configuration file** (config.toml) for a **Data Science Portfolio website** using the **PaperMod theme**. Here's a breakdown:\n\n## Basic Settings\n- **Site URL**: `https://nitishkmr005.github.io/`\n- **Theme**: PaperMod (dark mode by default)\n- **Owner**: Nitishkumar Harsoor\n- **Purpose**: Showcase data science projects, ML experiments, and technical articles\n\n## Key Features Enabled\n- **Content Display**: Reading time, word count, breadcrumbs, table of contents\n- **User Experience**: Code copy buttons, share buttons, post navigation, theme toggle\n- **SEO**: Robot.txt, RSS feeds, JSON output, minified HTML/CSS\n- **Search**: Fuse.js integration for fuzzy search across titles, summaries, and content\n\n## Site Structure\n- **Main Sections**: Posts and Projects\n- **Menu**: Single \"Home\" link\n- **Taxonomies**: Tags and Categories\n- **Profile Mode**: Currently disabled (would show profile with photo and buttons)\n\n## Technical Details\n- Pagination: 10 items per page\n- Syntax highlighting: Monokai style with line numbers\n- Social links: LinkedIn and GitHub\n- Analytics: Commented out (Google Analytics placeholder)\n\nThe configuration is production-ready with SEO optimizations and a clean, minimal design focused on technical content presentation.",
+  "session_id": "203768f9-0bdd-493f-b803-e4f3f62e1d54",
+  "total_cost_usd": 0.04161365,
+  "usage": {
+    "input_tokens": 3,
+    "cache_creation_input_tokens": 6537,
+    "cache_read_input_tokens": 12673,
+    "output_tokens": 325,
+    "server_tool_use": { "web_search_requests": 0, "web_fetch_requests": 0 },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 6537
+    }
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 886,
+      "outputTokens": 182,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0017959999999999999,
+      "contextWindow": 200000
+    },
+    "claude-sonnet-4-5-20250929": {
+      "inputTokens": 1019,
+      "outputTokens": 563,
+      "cacheReadInputTokens": 12673,
+      "cacheCreationInputTokens": 6537,
+      "webSearchRequests": 0,
+      "costUSD": 0.039817649999999996,
+      "contextWindow": 200000
+    }
+  },
+  "permission_denials": [],
+  "uuid": "f6d12177-c9ab-4f21-8b7f-efb6b50d34fa"
+}

@@ -60,9 +60,9 @@ body {
     grid-template-columns: 300px 1fr 320px;
     grid-template-areas: "left main right";
     gap: 2rem;
-    max-width: 1400px;
+    max-width: 1800px;
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: 2rem 2rem;
     width: 100%;
 }
 
@@ -1086,7 +1086,7 @@ textarea:focus {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    max-width: 1400px;
+    max-width: 1800px;
     margin: 0 auto;
 }
 

@@ -7,7 +7,7 @@ showToc: false
 
 ## Hi, I'm Nitishkumar Harsoor 👋
 
-I'm a **Data Scientist** specializing in GenAI, production ML systems, and MLOps. With over 12 years of experience in technology and 6+ years focused on AI/ML, I build enterprise-grade solutions that deliver measurable business impact—from $32M cost savings through GenAI pipelines to 2.13× CTR lifts with contextual bandits.
+I'm a **Data Scientist** specializing in GenAI and production ML systems. With over 12 years of experience in technology and 5+ years focused on AI/ML, I build enterprise-grade solutions that deliver measurable business impact—from $32M annual cost savings through GenAI pipelines to 2.13× CTR lifts with contextual bandits.
 
 ---
 
@@ -21,6 +21,7 @@ I'm a **Data Scientist** specializing in GenAI, production ML systems, and MLOps
 - **Fine-tuned T5 transformer models** for email summarization on noisy email chains, combining regex-based parsing and embedding-driven noise filtering to isolate salient content and improve summary quality
 - **Implemented model interpretability and fairness evaluation** for every recommender system using SHAP and Jurity libraries, improving transparency, reliability, and bias detection
 - **Built an end-to-end voice agent pipeline**—covering speech-to-text, turn detection, LLM-based tool calling, and text-to-speech—as part of a Fidelity GenAI hackathon initiative
+- Delivered **$197 Million in incremental P/W flows**
 
 ### Lead Systems Analyst
 **Fidelity Investments** | Bangalore, India | *April 2021 - October 2022*
@@ -35,7 +36,6 @@ I'm a **Data Scientist** specializing in GenAI, production ML systems, and MLOps
 
 - Worked on the **Purchase and Sales (P&S) application**, a trade processing system that captures trade data from multiple feeds such as order-entry systems, validates and processes trades, and delivers formatted transactions to back-office systems
 - Managed trade exceptions, supported reprocessing of failed transactions, and provided functionality to cancel or correct trades
-- Delivered **$197 Million in incremental P/W flows** through system enhancements
 
 ### System Engineer
 **IBM** | Bangalore, India | *April 2013 - April 2016*

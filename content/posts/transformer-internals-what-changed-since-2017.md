@@ -36,7 +36,7 @@ This post covers the specific modifications that make modern transformers work a
 
 ## 30-Second Attention Recap
 
-Every token computes attention to every other token:
+Every token computes attention to every other token. Quick reminder: **Q** (query) = "what am I looking for?", **K** (key) = "what do I contain?", **V** (value) = "what do I output if matched?".
 
 ```
 Attention(Q, K, V) = softmax(QK^T / √d_k) × V
@@ -60,6 +60,21 @@ Transformers process all tokens in parallel—no inherent notion of order. Witho
 | Sinusoidal  | Input embeddings   | Theoretical (poor) | Original Transformer |
 | ALiBi       | Attention bias     | Excellent          | BLOOM, MPT           |
 | RoPE        | Q/K rotation       | Good (with scaling)| LLaMA, Mistral, Qwen |
+
+```mermaid
+flowchart LR
+    subgraph Input["Added at Input Layer"]
+        A["Learned<br/>(2017)"] --> B["Sinusoidal<br/>(2017)"]
+    end
+    subgraph Attn["Added at Attention Layer"]
+        C["ALiBi<br/>(2022)"] --> D["RoPE<br/>(2021)"]
+    end
+    B -.->|"Key insight: inject position<br/>where attention happens"| C
+
+    style D fill:#28a745,color:#fff
+    style A fill:#6c757d,color:#fff
+    style B fill:#6c757d,color:#fff
+```
 
 ### Method 1: Learned Position Embeddings
 
@@ -89,7 +104,7 @@ PE(pos, 2i)   = sin(pos / 10000^(2i/d_model))
 PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
 ```
 
-**Key insight**: The dot product of position embeddings at positions m and n simplifies to a sum of cosines depending only on (m-n). Closer positions → higher similarity.
+**Key insight**: The dot product of position embeddings at positions m and n depends only on the *distance* (m-n), not absolute positions. This means the model learns "3 tokens apart" rather than "position 5 and position 8"—relative positioning emerges naturally.
 
 ```python
 # numpy implementation
@@ -114,7 +129,7 @@ Instead of modifying inputs, add a bias directly inside the attention computatio
 softmax(QK^T / √d + bias_matrix)
 ```
 
-The bias is simply `-m × |i - j|` where `m` is a head-specific slope. Linear penalty for distance.
+The bias is simply `-m × |i - j|` where `m` is a head-specific slope. Linear penalty for distance—tokens further apart get lower attention scores. Different heads use different slopes (geometric sequence from 2⁻¹ to 2⁻⁸), so some heads focus locally while others attend more broadly.
 
 ```python
 # alibi bias computation
@@ -133,7 +148,34 @@ def get_alibi_bias(seq_len, num_heads):
 
 Rotate query and key vectors by angles proportional to position. When you compute Q·K^T, the result depends only on relative position (m-n).
 
-**Math intuition**: In 2D, rotating vector v by angle θ uses a rotation matrix:
+**Intuition — The Clock Analogy** ([source](https://huggingface.co/blog/designing-positional-encoding)): Imagine a clock with multiple hands, each rotating at a different speed (seconds, minutes, hours). Each token's position is like reading the clock at a specific time—position 3 shows one configuration of hands, position 7 shows another.
+
+The key insight: **the angle between any two clock readings only depends on elapsed time (relative position), not the absolute time**. Whether you compare 2:00 vs 5:00 or 8:00 vs 11:00, the hands are 3 hours apart in both cases.
+
+RoPE works the same way. Each dimension pair is a "clock hand" rotating at its own frequency. When you compute Q·K (attention), the dot product depends on the *angle between* the rotated vectors—which encodes only relative distance.
+
+```mermaid
+flowchart TB
+    subgraph Clock["🕐 The Clock Analogy"]
+        direction LR
+        C1["Token at<br/>Position 3"] --> R1["Rotate Q<br/>by 3θ"]
+        C2["Token at<br/>Position 7"] --> R2["Rotate K<br/>by 7θ"]
+    end
+
+    subgraph Dot["Dot Product Q·K"]
+        R1 --> DP["Angle between vectors<br/>= (7-3)θ = 4θ"]
+        R2 --> DP
+    end
+
+    DP --> Result["Only relative position<br/>(distance = 4) affects attention"]
+
+    style Result fill:#28a745,color:#fff
+    style DP fill:#007bff,color:#fff
+```
+
+**Why rotation instead of addition?** Adding position vectors (like sinusoidal) pollutes the token's semantic meaning. Rotation is *multiplicative*—it changes the angle but preserves the vector's magnitude (semantic content intact).
+
+**Math details**: In 2D, rotating vector v by angle θ uses a rotation matrix:
 
 ```
 R(θ) = [[cos(θ), -sin(θ)],
@@ -141,6 +183,8 @@ R(θ) = [[cos(θ), -sin(θ)],
 ```
 
 Rotate Q by θ×m and K by θ×n. The dot product Q_rotated · K_rotated contains cos(θ×(m-n))—relative position encoded automatically.
+
+For higher dimensions, apply this rotation pairwise: dimensions (0,1) rotate together, (2,3) rotate together, etc. Each pair uses a different frequency (like sinusoidal embeddings), giving the model multiple "views" of position.
 
 ```python
 # rope implementation (simplified)
@@ -158,6 +202,28 @@ def apply_rope(x, positions, theta=10000.0):
 **Used by**: LLaMA, LLaMA-2, Mistral, Qwen, Phi, Yi—basically every modern open-source LLM.
 
 > **⚠ RoPE Extrapolation Warning**: RoPE trained at 4K context doesn't automatically work at 32K. You need techniques like YaRN or NTK-aware scaling to extend context. Don't assume position embeddings generalize to longer sequences without explicit extension methods.
+
+### Where Position Info Gets Injected
+
+```mermaid
+flowchart TD
+    subgraph Input["Input Processing"]
+        A[Token Embeddings] -->|"+Learned or Sinusoidal"| B[Combined Embedding]
+    end
+
+    subgraph Encoder["Transformer Block"]
+        B --> C[Self-Attention]
+        C --> D[Q, K, V Projections]
+        D -->|"RoPE: Rotate Q,K"| E[Attention Scores]
+        E -->|"+ALiBi: Add bias"| F[Softmax]
+        F --> G[Output]
+    end
+
+    style E fill:#28a745,color:#fff
+    style F fill:#007bff,color:#fff
+```
+
+**Key insight**: Modern methods (RoPE, ALiBi) inject position directly where similarity is computed—inside the attention mechanism—rather than at the input.
 
 ## Layer Normalization: From Post-Norm to RMSNorm
 
@@ -177,36 +243,38 @@ where μ = mean(x), σ = std(x), and γ, β are learnable (shape = d_model).
 
 ### Post-Norm vs Pre-Norm
 
+```mermaid
+flowchart TD
+    subgraph PostNorm["POST-NORM (Original 2017)"]
+        direction TB
+        P1[Input x] --> P2[Sublayer]
+        P2 --> P3((+))
+        P1 --> P3
+        P3 --> P4[LayerNorm]
+        P4 --> P5[Output]
+    end
+
+    subgraph PreNorm["PRE-NORM (Modern)"]
+        direction TB
+        R1[Input x] --> R2[RMSNorm]
+        R2 --> R3[Sublayer]
+        R3 --> R4((+))
+        R1 --> R4
+        R4 --> R5[Output]
+    end
+
+    style PreNorm fill:#1a472a,color:#fff
+    style R2 fill:#28a745,color:#fff
 ```
-POST-NORM (Original 2017)     PRE-NORM (Modern)
-─────────────────────────     ─────────────────────
 
-        x                             x
-        │                             │
-        ▼                      ├───────────┐
-   ┌─────────┐                 ▼           │
-   │ Sublayer│            ┌─────────┐      │
-   └────┬────┘            │LayerNorm│      │
-        │                 └────┬────┘      │
-    +  ←── x (residual)        ▼           │
-        │                 ┌─────────┐      │
-        ▼                 │ Sublayer│      │
-   ┌─────────┐            └────┬────┘      │
-   │LayerNorm│                 │           │
-   └────┬────┘             +  ←────────────┘
-        ▼                      │
-      output                   ▼
-                             output
-```
+**Post-Norm**: `LayerNorm(x + Sublayer(x))`
+**Pre-Norm**: `x + Sublayer(LayerNorm(x))`
 
-**Post-Norm**: LayerNorm(x + Sublayer(x))
-**Pre-Norm**: x + Sublayer(LayerNorm(x))
-
-**Why Pre-Norm wins**: Gradients flow more directly through residual connections. Training is more stable for deep networks (24+ layers). All modern LLMs use Pre-Norm.
+**Why Pre-Norm wins**: In Post-Norm, gradients must pass through LayerNorm before reaching the residual path. In Pre-Norm, the residual connection is a "gradient highway"—clean addition without any transformations. Training is more stable for deep networks (24+ layers). All modern LLMs use Pre-Norm.
 
 ### RMSNorm: Simpler and Faster
 
-Drop the mean subtraction, drop β. Just scale by RMS:
+Drop the mean subtraction, drop the β bias. Just scale by RMS. Why does this work? Empirically, the re-centering (subtracting mean) in LayerNorm provides minimal benefit—the scale normalization does the heavy lifting.
 
 ```
 RMSNorm(x) = γ × x / RMS(x)
@@ -254,13 +322,13 @@ t8  ■  ■  ■  ■  ■  ■  ■  ■  t8  ·  ·  ·  ·  ·  ■  ■  �
 64 computations                 24 computations
 ```
 
-**Effective receptive field**: With L layers and window w, a token can aggregate information from L×w positions. Mistral-7B uses w=4096 across 32 layers → effective context of 131K tokens per forward pass.
+**Effective receptive field**: Information propagates through layers. With L layers and window w, layer 1 sees w tokens, layer 2 sees 2w (via layer 1's aggregation), and so on. Mistral-7B uses w=4096 across 32 layers—so the final layer can theoretically access information from the entire 128K context, even though each individual attention only looks at 4K tokens.
 
 Modern architectures interleave local (sliding window) and global attention layers.
 
 ### MHA → GQA → MQA: Sharing Key/Value Heads
 
-During autoregressive decoding, you recompute attention for every new token. The KV cache stores past keys/values to avoid recomputation. Sharing K/V projections shrinks this cache.
+**The KV cache problem**: During autoregressive generation, each new token must attend to ALL previous tokens. Naively, you'd recompute K and V for the entire sequence at every step—wasteful since past tokens don't change. The solution: compute K and V once, cache them, reuse forever. But this cache grows fast: `sequence_length × num_layers × num_heads × head_dim × 2 (K+V) × bytes_per_param`. For LLaMA-70B at 8K context with fp16, that's ~4GB just for KV cache. Sharing K/V projections across query heads shrinks this cache dramatically.
 
 | Type | KV Heads      | Cache Size       | Example (32 Q heads)  |
 |------|---------------|------------------|-----------------------|
@@ -276,6 +344,33 @@ K: ████████      K: ██             K: █
 V: ████████      V: ██             V: █
 
 8 Q, 8 K, 8 V    8 Q, 2 K, 2 V     8 Q, 1 K, 1 V
+```
+
+```mermaid
+flowchart LR
+    subgraph MHA["MHA<br/>Full heads"]
+        Q1["Q: 8 heads"]
+        K1["K: 8 heads"]
+        V1["V: 8 heads"]
+    end
+
+    subgraph GQA["GQA<br/>Grouped KV"]
+        Q2["Q: 8 heads"]
+        K2["K: 2 heads"]
+        V2["V: 2 heads"]
+    end
+
+    subgraph MQA["MQA<br/>Single KV"]
+        Q3["Q: 8 heads"]
+        K3["K: 1 head"]
+        V3["V: 1 head"]
+    end
+
+    MHA -->|"4x smaller cache"| GQA
+    GQA -->|"2x smaller cache"| MQA
+
+    style GQA fill:#28a745,color:#fff
+    style MQA fill:#007bff,color:#fff
 ```
 
 **Why keep Q diverse but share K/V?** Each new token needs fresh queries ("what am I looking for?"). But the keys/values for past tokens stay constant—they're what gets cached and reused thousands of times during generation.
@@ -328,7 +423,7 @@ Three embeddings summed:
 
 1. **Token embeddings**: WordPiece vocabulary (~30K tokens)
 2. **Position embeddings**: Learned, max 512 positions
-3. **Segment embeddings**: Just 2 learned vectors—Segment A or Segment B. Same embedding for all tokens in a segment.
+3. **Segment embeddings**: Just 2 learned vectors—Segment A or Segment B. Used for tasks with two inputs (question-answering, sentence similarity) so the model knows which sentence each token belongs to.
 
 ```python
 # bert input processing
@@ -345,9 +440,31 @@ attention_mask:  [  1,    1,     1,    1,    1,     1,   1,    1, ...]  # 1=real
 - 10%: Replace with random token
 - 10%: Keep original
 
-Predict original tokens from context. Forces bidirectional understanding.
+Why not 100% `[MASK]`? During fine-tuning and inference, there are no `[MASK]` tokens—the model would never see real tokens in that position during training. The 10% random and 10% unchanged force the model to maintain good representations even for visible tokens.
 
 **Next Sentence Prediction (NSP)**: Given two sentences, predict if B follows A (50/50 real/random). *Spoiler*: later research (RoBERTa) shows this doesn't help.
+
+```mermaid
+flowchart LR
+    subgraph Input["Input Processing"]
+        A[Raw Text] --> B["Mask 15% tokens"]
+        B --> C["Add [CLS], [SEP]"]
+    end
+
+    subgraph BERT["BERT Encoder"]
+        C --> D[12 Transformer Layers]
+    end
+
+    subgraph Heads["Prediction Heads"]
+        D --> E["MLM Head"]
+        D --> F["NSP Head"]
+        E --> G["Predict [MASK]"]
+        F --> H["IsNext?"]
+    end
+
+    style E fill:#28a745,color:#fff
+    style F fill:#dc3545,color:#fff
+```
 
 ### Fine-tuning for Classification
 
@@ -383,9 +500,27 @@ If BERT predicts `[0.7 positive, 0.2 neutral, 0.1 negative]`, that's richer supe
 L_distill = KL(softmax(teacher_logits/T), softmax(student_logits/T))
 ```
 
-where T is temperature (T>1 softens distributions).
+where T is temperature. Higher T (e.g., T=4) "softens" the distribution—instead of [0.9, 0.05, 0.05], you get something like [0.5, 0.25, 0.25]. This reveals the teacher's uncertainty and relationships between classes, giving the student richer learning signal.
 
 **Result**: 6 layers vs 12, 66M params vs 110M, 60% faster, retains ~97% of BERT's performance on GLUE.
+
+```mermaid
+flowchart TD
+    subgraph Teacher["BERT (Teacher)"]
+        T1["12 Layers<br/>110M params"] --> T2["Soft Probabilities<br/>[0.7, 0.2, 0.1]"]
+    end
+
+    subgraph Student["DistilBERT (Student)"]
+        S1["6 Layers<br/>66M params"] --> S2["Learn to match<br/>distribution"]
+    end
+
+    T2 -->|"KL Divergence Loss"| S2
+    S2 --> Result["97% performance<br/>60% faster"]
+
+    style Teacher fill:#6c757d,color:#fff
+    style Student fill:#28a745,color:#fff
+    style Result fill:#007bff,color:#fff
+```
 
 #### RoBERTa: Training Done Right
 
@@ -422,6 +557,45 @@ graph TD
 - **Inference latency critical + long sequences?** → GQA or MQA
 - **Batch inference (high throughput)?** → MHA is fine, KV cache amortizes
 - **Memory constrained?** → MQA gives maximum KV cache savings
+
+## Modern LLM Block Architecture
+
+Here's what a single transformer block looks like in modern LLMs (LLaMA, Mistral, etc.):
+
+```mermaid
+flowchart TD
+    subgraph Block["Modern Transformer Block"]
+        A[Input] --> B["RMSNorm"]
+        B --> C["GQA Attention<br/>+ RoPE"]
+        C --> D((+))
+        A --> D
+        D --> E["RMSNorm"]
+        E --> F["SwiGLU FFN"]
+        F --> G((+))
+        D --> G
+        G --> H[Output]
+    end
+
+    subgraph Legend["Key Components"]
+        L1["RoPE: Rotary Position Embeddings"]
+        L2["GQA: Grouped Query Attention"]
+        L3["SwiGLU: Gated Linear Unit activation"]
+        L4["RMSNorm: Root Mean Square Normalization"]
+    end
+
+    style C fill:#28a745,color:#fff
+    style F fill:#007bff,color:#fff
+    style B fill:#ffc107,color:#000
+    style E fill:#ffc107,color:#000
+```
+
+**What's SwiGLU?** The FFN after attention applies two linear transformations with a non-linearity: `FFN(x) = W2 × activation(W1 × x)`. Original transformers used ReLU, then GELU became standard. SwiGLU adds a gating mechanism:
+
+```
+SwiGLU(x) = (Swish(W1 × x) ⊙ (W3 × x)) × W2
+```
+
+The gate (W3 projection) lets the network control information flow—learning which dimensions to amplify or suppress. LLaMA, Mistral, and most modern LLMs use SwiGLU. The tradeoff: 50% more parameters in FFN (three projections instead of two), but better performance per parameter.
 
 ## Quick Reference
 

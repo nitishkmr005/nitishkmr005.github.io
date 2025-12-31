@@ -1674,6 +1674,154 @@ html {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
+/* ==================== Sticky TOC with Scroll Spy ==================== */
+.post-single {
+    position: relative;
+}
+
+/* Hide right sidebar widgets on single post pages */
+.post-single ~ .right-sidebar,
+.post-single .right-sidebar,
+body:has(.post-single) .right-sidebar {
+    display: none !important;
+}
+
+/* Hide default TOC in content area */
+.post-single .toc {
+    display: none;
+}
+
+/* Sticky TOC container for single posts */
+.toc-sidebar {
+    position: fixed;
+    top: 148px;
+    right: calc((100vw - 1800px) / 2 + 40px);
+    width: 280px;
+    max-height: calc(100vh - 180px);
+    overflow-y: auto;
+    padding: var(--space-lg);
+    background: linear-gradient(135deg, var(--card-background) 0%, var(--background-color) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    z-index: 100;
+    transition: all var(--transition-base);
+}
+
+.toc-sidebar:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.toc-sidebar-title {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--secondary-color);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.toc-sidebar nav {
+    font-size: var(--text-sm);
+}
+
+.toc-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc-sidebar li {
+    margin-bottom: var(--space-xs);
+}
+
+.toc-sidebar li li {
+    padding-left: var(--space-md);
+}
+
+.toc-sidebar a {
+    display: block;
+    padding: var(--space-xs) var(--space-sm);
+    color: var(--secondary-color);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    border-radius: 0 4px 4px 0;
+    transition: all var(--transition-fast);
+    line-height: 1.4;
+}
+
+.toc-sidebar a:hover {
+    color: var(--primary-color);
+    background-color: var(--border-color);
+    border-left-color: var(--primary-color);
+}
+
+/* Active heading highlight */
+.toc-sidebar a.active {
+    color: var(--primary-color);
+    background: linear-gradient(90deg, rgba(77, 163, 255, 0.1), transparent);
+    border-left-color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Progress indicator for TOC */
+.toc-sidebar a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+    border-radius: 0 2px 2px 0;
+}
+
+/* Scrollbar styling for TOC */
+.toc-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-sidebar::-webkit-scrollbar-track {
+    background: var(--border-color);
+    border-radius: 2px;
+}
+
+.toc-sidebar::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 2px;
+}
+
+.toc-sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* Dark mode for TOC */
+[data-theme="dark"] .toc-sidebar {
+    background: linear-gradient(135deg, #1e1e1e 0%, #141414 100%);
+    border-color: #2d2d2d;
+}
+
+[data-theme="dark"] .toc-sidebar a.active {
+    background: linear-gradient(90deg, rgba(77, 163, 255, 0.15), transparent);
+}
+
+/* Responsive: Hide on smaller screens */
+@media (max-width: 1400px) {
+    .toc-sidebar {
+        right: 20px;
+        width: 250px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .toc-sidebar {
+        display: none;
+    }
+}
+
 /* ==================== About Page Styling ==================== */
 .about-content .post-content img {
     border-radius: 12px;

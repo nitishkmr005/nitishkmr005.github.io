@@ -25,6 +25,12 @@ From the slides and transcript, identify:
 2. **Key concepts and techniques** — Extract the main ideas with specific numbers/benchmarks
 3. **Implementation details** — Any code, architectures, or configs mentioned
 4. **Practical applications** — Real-world use cases and constraints
+5. **Diagram opportunities** — Identify concepts that would benefit from visual explanation:
+   - Any process with multiple steps → flowchart
+   - Any comparison between approaches → side-by-side diagram
+   - Any architecture description → block diagram
+   - Any decision logic → decision tree
+   - Any evolution/timeline → timeline diagram
 
 ### Step 3: Write the Blog Post
 
@@ -42,10 +48,52 @@ Follow this writing style strictly:
 
 **FORMATTING:**
 - Use tables for comparisons across multiple items
-- Use Mermaid diagrams for architecture flows and decision trees
+- **Use Mermaid diagrams liberally** (see MERMAID DIAGRAMS section below)
 - Code blocks with file names as comments and inline explanations
 - Bold key terms on first introduction only
 - Blockquotes for critical warnings
+- **Citations required**: When adding information from web search, always include inline citation: `([source](url))`
+
+**MERMAID DIAGRAMS (REQUIRED):**
+Always include Mermaid diagrams to visualize complex concepts. Add diagrams for:
+
+1. **Architecture flows** — How data/information flows through a system
+   ```mermaid
+   flowchart LR
+       A[Input] --> B[Process] --> C[Output]
+   ```
+
+2. **Decision trees** — When to use what (model selection, technique choice)
+   ```mermaid
+   flowchart TD
+       A[Task?] --> B[Generation]
+       A --> C[Classification]
+       B --> D[Use Decoder-Only]
+       C --> E[Use BERT]
+   ```
+
+3. **Component comparisons** — Side-by-side visual of alternatives
+   ```mermaid
+   flowchart LR
+       subgraph Old["Old Approach"]
+           A1[Component A]
+       end
+       subgraph New["New Approach"]
+           B1[Component B]
+       end
+   ```
+
+4. **Process pipelines** — Training loops, inference steps, data preprocessing
+5. **Timeline/evolution** — How techniques evolved over time
+6. **Block architectures** — Neural network layers, transformer blocks
+
+**Diagram guidelines:**
+- Minimum 3-5 Mermaid diagrams per blog post
+- Place diagrams immediately after explaining a concept (not all at the end)
+- Use colors to highlight key components: `style NodeName fill:#28a745,color:#fff`
+- Keep diagrams focused — one concept per diagram
+- Add subgraphs to group related components
+- Replace ASCII art with Mermaid whenever possible
 
 **TECHNICAL DEPTH:**
 - Show real model names, real GPU types, real numbers — no abstractions

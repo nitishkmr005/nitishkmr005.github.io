@@ -114,6 +114,24 @@ pygmentsUseClasses = true
     url = "/"
     weight = 10
 
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 20
+
+  [[menu.main]]
+    identifier = "projects"
+    name = "Projects"
+    url = "/projects/"
+    weight = 30
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 40
+
 [taxonomies]
   tag = "tags"
   category = "categories"

@@ -1,7 +1,7 @@
 ---
 title: "Real-Time Sentiment Analysis System"
 date: 2025-11-20
-draft: false
+draft: true
 tags: ["NLP", "Deep Learning", "Sentiment Analysis", "Production ML"]
 categories: ["Projects", "NLP"]
 description: "Production-ready sentiment analysis API serving 1000+ requests per second"

@@ -1,7 +1,7 @@
 ---
 title: "Getting Started with MLOps: A Practical Guide"
 date: 2025-12-01
-draft: false
+draft: true
 tags: ["MLOps", "DevOps", "Machine Learning", "Infrastructure"]
 categories: ["MLOps", "Tutorial"]
 description: "Learn the fundamentals of MLOps and how to build production-ready ML systems"

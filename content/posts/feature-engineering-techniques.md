@@ -1,7 +1,7 @@
 ---
 title: "Feature Engineering Techniques That Actually Work"
 date: 2025-12-15
-draft: false
+draft: true
 tags: ["Feature Engineering", "Machine Learning", "Data Science", "Python"]
 categories: ["Machine Learning", "Tutorial"]
 description: "Practical feature engineering techniques to improve your ML model performance"

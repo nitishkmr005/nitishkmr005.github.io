@@ -1,7 +1,7 @@
 ---
 title: "Python Tips Every Data Scientist Should Know"
 date: 2025-12-05
-draft: false
+draft: true
 tags: ["Python", "Pandas", "NumPy", "Tips", "Productivity"]
 categories: ["Python", "Tutorial"]
 description: "Practical Python tips to make your data science code faster, cleaner, and more efficient"

@@ -1,7 +1,7 @@
 ---
 title: "A Data Science Project Workflow That Actually Works"
 date: 2025-12-10
-draft: false
+draft: true
 tags: ["Data Science", "Workflow", "Best Practices", "Project Management"]
 categories: ["Data Science", "Process"]
 description: "A practical, battle-tested workflow for data science projects from ideation to deployment"

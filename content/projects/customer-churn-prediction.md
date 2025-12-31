@@ -1,7 +1,7 @@
 ---
 title: "Customer Churn Prediction with ML"
 date: 2025-10-15
-draft: false
+draft: true
 tags: ["Machine Learning", "Classification", "Business Analytics", "MLOps"]
 categories: ["Projects", "Machine Learning"]
 description: "ML-powered churn prediction system reducing customer attrition by 23%"

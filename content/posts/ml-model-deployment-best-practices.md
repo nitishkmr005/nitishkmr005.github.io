@@ -1,7 +1,7 @@
 ---
 title: "ML Model Deployment: Best Practices for Production"
 date: 2025-12-20
-draft: false
+draft: true
 tags: ["Machine Learning", "MLOps", "Deployment", "Production"]
 categories: ["Machine Learning", "Engineering"]
 description: "A comprehensive guide to deploying machine learning models in production environments"

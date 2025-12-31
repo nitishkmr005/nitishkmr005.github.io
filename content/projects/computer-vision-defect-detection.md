@@ -1,7 +1,7 @@
 ---
 title: "Computer Vision for Manufacturing Defect Detection"
 date: 2025-09-10
-draft: false
+draft: true
 tags: ["Computer Vision", "Deep Learning", "CNN", "Manufacturing", "PyTorch"]
 categories: ["Projects", "Computer Vision"]
 description: "CNN-based defect detection system achieving 97% accuracy in real-time manufacturing quality control"

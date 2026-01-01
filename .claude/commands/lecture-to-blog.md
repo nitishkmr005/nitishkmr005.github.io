@@ -54,8 +54,13 @@ Follow this writing style strictly:
 - Blockquotes for critical warnings
 - **Citations required**: When adding information from web search, always include inline citation: `([source](url))`
 
-**MERMAID DIAGRAMS (REQUIRED):**
-Always include Mermaid diagrams to visualize complex concepts. Add diagrams for:
+**MERMAID DIAGRAMS vs SVG:**
+- **Use Mermaid** for: Simple flowcharts, quick decision trees, basic process flows
+- **Use SVG** for: Complex architectures, detailed comparisons, polished visuals for key concepts
+- **Best practice**: Start with Mermaid during drafting, then upgrade important diagrams to SVG
+
+**MERMAID DIAGRAMS:**
+Include Mermaid diagrams for simpler visualizations. Add diagrams for:
 
 1. **Architecture flows** — How data/information flows through a system
    ```mermaid
@@ -88,12 +93,14 @@ Always include Mermaid diagrams to visualize complex concepts. Add diagrams for:
 6. **Block architectures** — Neural network layers, transformer blocks
 
 **Diagram guidelines:**
-- Minimum 3-5 Mermaid diagrams per blog post
+- Minimum 5-8 diagrams total per blog post (combination of Mermaid and SVG)
+- Create 3-5 custom SVG diagrams for key concepts (see Step 5)
+- Use Mermaid for simpler supporting diagrams
 - Place diagrams immediately after explaining a concept (not all at the end)
-- Use colors to highlight key components: `style NodeName fill:#28a745,color:#fff`
+- Use colors to highlight key components in Mermaid: `style NodeName fill:#28a745,color:#fff`
 - Keep diagrams focused — one concept per diagram
 - Add subgraphs to group related components
-- Replace ASCII art with Mermaid whenever possible
+- Replace ASCII art with Mermaid or SVG whenever possible
 
 **TECHNICAL DEPTH:**
 - Show real model names, real GPU types, real numbers — no abstractions
@@ -115,25 +122,112 @@ Create the blog post as a markdown file:
 - **Filename**: Use kebab-case based on the lecture topic (e.g., `attention-mechanisms-deep-dive.md`)
 - Include appropriate frontmatter (title, date, tags, description)
 
-### Step 5: Generate Thumbnail
+### Step 5: Create SVG Diagrams
+
+**IMPORTANT**: Create custom SVG diagrams to illustrate key concepts in the article. These should complement or replace Mermaid diagrams for better visual quality.
+
+**When to Create SVG Diagrams:**
+- Complex architectural diagrams (transformers, neural networks)
+- Visual comparisons (before/after, multiple approaches side-by-side)
+- Data flow diagrams with detailed annotations
+- Charts showing performance comparisons
+- Timeline or evolution diagrams
+- Any concept that benefits from professional-quality visuals
+
+**SVG Creation Guidelines:**
+
+1. **File Organization:**
+   - Create directory: `static/images/posts/[article-slug]/`
+   - Example: For article `transformer-internals.md` → `static/images/posts/transformer-internals/`
+   - Name files descriptively: `diagram_1_architecture.svg`, `diagram_2_attention_comparison.svg`
+   - Create overview diagram: `article-overview.svg` (shows all topics covered)
+
+2. **Design Principles:**
+   - **Viewbox sizing**: Use appropriate dimensions (1200-1600 width, adjust height as needed)
+   - **Color scheme**: Use professional, consistent colors
+     - Primary: `#3b82f6` (blue), `#10b981` (green), `#f59e0b` (orange)
+     - Backgrounds: `#f8fafc` (light gray), white for cards
+     - Text: `#1e293b` (dark), `#64748b` (gray for subtitles)
+   - **Typography**: Arial or sans-serif, sizes 12-36px depending on hierarchy
+   - **Spacing**: Generous padding and margins for clarity
+   - **Gradients**: Use linear gradients for depth and professional appearance
+
+3. **Required Elements:**
+   - **Title**: Clear, large title at top (32-36px)
+   - **Subtitle**: Context or explanation below title (16-18px)
+   - **Labels**: All components clearly labeled
+   - **Legends**: Include legend for colors/symbols used
+   - **Annotations**: Brief explanations where needed
+   - **Modern markers**: Use ⭐ to highlight modern/recommended approaches
+
+4. **Technical Structure:**
+   ```svg
+   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800">
+     <defs>
+       <!-- Define gradients, markers, etc. -->
+     </defs>
+     <rect width="1400" height="800" fill="#f8fafc"/>
+     <!-- Content groups -->
+   </svg>
+   ```
+
+5. **Common Diagram Types to Create:**
+   - **Overview diagram** - Shows all 5-7 main topics at article start
+   - **Architecture diagrams** - System components and data flow
+   - **Comparison diagrams** - Side-by-side feature/approach comparisons
+   - **Process flow** - Step-by-step workflows
+   - **Evolution timeline** - How technology changed over time
+   - **Summary diagram** - Quick reference table/visual at article end
+
+6. **Reference in Markdown:**
+   ```markdown
+   ![Description of diagram](/images/posts/article-slug/diagram_name.svg)
+   ```
+
+7. **Quality Checklist:**
+   - ☐ SVG is resolution-independent and scales well
+   - ☐ File size is reasonable (typically 10-20KB per diagram)
+   - ☐ Colors are consistent across all diagrams
+   - ☐ Text is readable at all zoom levels
+   - ☐ Diagram accurately represents the concept
+   - ☐ All diagrams follow same design language
+   - ☐ Diagrams are placed near relevant content in article
+
+**Example SVG Pattern:**
+Create diagrams that match the quality of `diagram_2_attention_sharing.svg`, `diagram_6_sliding_window.svg` in the transformers article - professional, clear, and informative.
+
+### Step 6: Generate Thumbnail
 
 Create a thumbnail image for the blog post:
 - Generate a visually appealing thumbnail that represents the lecture topic
 - Save to the appropriate assets/images directory used by the portfolio
 - Reference the thumbnail in the blog post frontmatter
 
-### Step 6: Update Portfolio Ordering
+### Step 7: Update Portfolio Ordering
 
 Ensure the new post appears at the top:
 - **Home section**: Update the home page to display this post first in the recent posts/featured section
 - **Posts section**: Verify posts are sorted by date (newest first) or manually update ordering if needed
 - Check frontmatter date is set to current date to ensure proper sorting
 
-### Step 7: Confirm Output
+### Step 8: Confirm Output
 
 After creating the file:
 1. Confirm the blog post file was created successfully
-2. Confirm the thumbnail was generated and linked
-3. Verify the post appears at the top in both home and posts sections
-4. Summarize the key topics covered
-5. Note any areas where the source material was unclear or could use additional research
+2. Confirm SVG diagrams were created and saved to `static/images/posts/[article-slug]/`
+3. Verify all SVG images are properly referenced in the markdown
+4. Confirm the thumbnail was generated and linked
+5. Verify the post appears at the top in both home and posts sections
+6. Summarize the key topics covered and diagrams created
+7. Note any areas where the source material was unclear or could use additional research
+
+**SVG Diagram Summary Template:**
+```
+Created [X] SVG diagrams:
+- article-overview.svg: Overview of all topics
+- diagram_1_[name].svg: [description]
+- diagram_2_[name].svg: [description]
+...
+Total size: ~[XX]KB
+All diagrams saved to: static/images/posts/[article-slug]/
+```

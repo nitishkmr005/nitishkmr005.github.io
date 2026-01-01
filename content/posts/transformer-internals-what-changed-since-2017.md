@@ -15,6 +15,8 @@ The original Transformer from 2017 had 65M parameters and a 512 token context. G
 
 This post covers the specific modifications that make modern transformers work at scale, with code you can run and numbers you can verify.
 
+![Transformer Modifications Overview: Five key areas that evolved from 2017 to 2024 - Position Embeddings, Layer Normalization, Attention Mechanisms, Architecture Types, and BERT Deep Dive](/images/posts/transformers/article-overview.svg)
+
 ## What We're Covering
 
 ```
@@ -305,22 +307,7 @@ Two orthogonal optimizations: (1) sparse attention patterns, (2) sharing key/val
 
 Each token only attends to w neighbors. Complexity drops from O(n²) to O(n×w).
 
-```
-Full Attention (n=8)         Sliding Window (w=3)
-────────────────────         ────────────────────
-    t1 t2 t3 t4 t5 t6 t7 t8      t1 t2 t3 t4 t5 t6 t7 t8
-t1  ■  ■  ■  ■  ■  ■  ■  ■  t1  ■  ■  ·  ·  ·  ·  ·  ·
-t2  ■  ■  ■  ■  ■  ■  ■  ■  t2  ■  ■  ■  ·  ·  ·  ·  ·
-t3  ■  ■  ■  ■  ■  ■  ■  ■  t3  ■  ■  ■  ■  ·  ·  ·  ·
-t4  ■  ■  ■  ■  ■  ■  ■  ■  t4  ·  ■  ■  ■  ■  ·  ·  ·
-t5  ■  ■  ■  ■  ■  ■  ■  ■  t5  ·  ·  ■  ■  ■  ■  ·  ·
-t6  ■  ■  ■  ■  ■  ■  ■  ■  t6  ·  ·  ·  ■  ■  ■  ■  ·
-t7  ■  ■  ■  ■  ■  ■  ■  ■  t7  ·  ·  ·  ·  ■  ■  ■  ■
-t8  ■  ■  ■  ■  ■  ■  ■  ■  t8  ·  ·  ·  ·  ·  ■  ■  ■
-
-■ = attention computed          ■ = attention computed
-64 computations                 24 computations
-```
+![Sliding Window Attention: Comparison of full attention (O(n²) = 64 computations) vs sliding window attention with w=3 (O(n×w) = 21 computations)](/images/posts/transformers/diagram_6_sliding_window.svg)
 
 **Effective receptive field**: Information propagates through layers. With L layers and window w, layer 1 sees w tokens, layer 2 sees 2w (via layer 1's aggregation), and so on. Mistral-7B uses w=4096 across 32 layers—so the final layer can theoretically access information from the entire 128K context, even though each individual attention only looks at 4K tokens.
 
@@ -336,42 +323,7 @@ Modern architectures interleave local (sliding window) and global attention laye
 | GQA  | Q / group_size| ÷ group_size     | 8 KV heads (4x smaller)|
 | MQA  | 1             | ÷ Q heads        | 1 KV head (32x smaller)|
 
-```
-MHA (h=8)        GQA (h=8, g=2)    MQA (h=8, g=1)
-─────────        ──────────────    ──────────────
-Q: ████████      Q: ████████       Q: ████████
-K: ████████      K: ██             K: █
-V: ████████      V: ██             V: █
-
-8 Q, 8 K, 8 V    8 Q, 2 K, 2 V     8 Q, 1 K, 1 V
-```
-
-```mermaid
-flowchart LR
-    subgraph MHA["MHA<br/>Full heads"]
-        Q1["Q: 8 heads"]
-        K1["K: 8 heads"]
-        V1["V: 8 heads"]
-    end
-
-    subgraph GQA["GQA<br/>Grouped KV"]
-        Q2["Q: 8 heads"]
-        K2["K: 2 heads"]
-        V2["V: 2 heads"]
-    end
-
-    subgraph MQA["MQA<br/>Single KV"]
-        Q3["Q: 8 heads"]
-        K3["K: 1 head"]
-        V3["V: 1 head"]
-    end
-
-    MHA -->|"4x smaller cache"| GQA
-    GQA -->|"2x smaller cache"| MQA
-
-    style GQA fill:#28a745,color:#fff
-    style MQA fill:#007bff,color:#fff
-```
+![Attention Head Sharing: MHA, GQA, and MQA comparison showing how key-value heads are shared across query heads](/images/posts/transformers/diagram_2_attention_sharing.svg)
 
 **Why keep Q diverse but share K/V?** Each new token needs fresh queries ("what am I looking for?"). But the keys/values for past tokens stay constant—they're what gets cached and reused thousands of times during generation.
 
@@ -379,27 +331,7 @@ flowchart LR
 
 ## Three Transformer Architectures
 
-```
-ENCODER-DECODER      ENCODER-ONLY       DECODER-ONLY
-(T5, BART)           (BERT, RoBERTa)    (GPT, LLaMA, Mistral)
-──────────────────   ──────────────     ──────────────────
-
-   ┌─────────┐       ┌─────────┐        ┌─────────┐
-   │ ENCODER │──┐    │ ENCODER │        │ DECODER │
-   └─────────┘  │    └────┬────┘        │ (causal │
-                │         │              │  mask)  │
-                │         ▼              └────┬────┘
-                │   [CLS] embed               │
-                │         │                   │
-   ┌─────────┐ │         ▼                   ▼
-   │ DECODER │ │   Classification      Next token
-   │ (cross- │ │
-   │  attn)  │ │
-   └────┬────┘ │
-        │      │
-        ▼      ▼
-  Output sequence
-```
+![Transformer Architecture Types: Encoder-Only, Decoder-Only, and Encoder-Decoder architectures with their use cases](/images/posts/transformers/diagram_4_architecture_types.svg)
 
 | Type            | Attention           | Use Case              | Examples        |
 |-----------------|---------------------|-----------------------|-----------------|
@@ -444,27 +376,7 @@ Why not 100% `[MASK]`? During fine-tuning and inference, there are no `[MASK]` t
 
 **Next Sentence Prediction (NSP)**: Given two sentences, predict if B follows A (50/50 real/random). *Spoiler*: later research (RoBERTa) shows this doesn't help.
 
-```mermaid
-flowchart LR
-    subgraph Input["Input Processing"]
-        A[Raw Text] --> B["Mask 15% tokens"]
-        B --> C["Add [CLS], [SEP]"]
-    end
-
-    subgraph BERT["BERT Encoder"]
-        C --> D[12 Transformer Layers]
-    end
-
-    subgraph Heads["Prediction Heads"]
-        D --> E["MLM Head"]
-        D --> F["NSP Head"]
-        E --> G["Predict [MASK]"]
-        F --> H["IsNext?"]
-    end
-
-    style E fill:#28a745,color:#fff
-    style F fill:#dc3545,color:#fff
-```
+![BERT Architecture: Input processing showing token, position, and segment embeddings, plus MLM and NSP pre-training tasks](/images/posts/transformers/diagram_5_bert.svg)
 
 ### Fine-tuning for Classification
 
@@ -598,6 +510,8 @@ SwiGLU(x) = (Swish(W1 × x) ⊙ (W3 × x)) × W2
 The gate (W3 projection) lets the network control information flow—learning which dimensions to amplify or suppress. LLaMA, Mistral, and most modern LLMs use SwiGLU. The tradeoff: 50% more parameters in FFN (three projections instead of two), but better performance per parameter.
 
 ## Quick Reference
+
+![Transformer Evolution 2017 to 2024: Summary of changes in position embeddings, normalization, attention, architecture, and context length](/images/posts/transformers/diagram_7_summary.svg)
 
 | Component      | 2017 (Original)         | 2024 (Modern)              |
 |----------------|-------------------------|----------------------------|

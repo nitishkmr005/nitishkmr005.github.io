@@ -2,10 +2,10 @@
 title: "AI-Powered Portfolio: Building with Claude Code"
 date: 2025-12-31
 draft: false
-tags: ["Claude Code", "AI", "Automation", "Hugo", "Technical Writing", "LLM"]
+tags: ["Claude Code", "AI", "Automation", "Hugo", "Technical Writing", "LLM", "PDF", "PPTX", "Skills"]
 categories: ["Projects", "AI/ML"]
-description: "How I built an automated content pipeline using Claude Code skills to transform Stanford lecture materials into technical blog posts"
-summary: "Leveraging Claude Code to automate technical blog generation from lecture materials, with custom skills for content creation and quality review"
+description: "How I built an automated content pipeline using Claude Code skills to transform Stanford lecture materials into technical blog posts, PDFs, and presentations"
+summary: "Leveraging Claude Code skills and commands to automate blog generation, PDF creation, PPTX presentations, and article reviews—all from a single source"
 weight: 1
 cover:
   image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80"
@@ -15,9 +15,13 @@ cover:
 
 ## Project Overview
 
-This portfolio itself is a demonstration of how AI can augment a data scientist's workflow. I built an automated content pipeline using **Claude Code slash commands** that transforms any learning material—YouTube transcripts, articles, lecture slides—into polished, diagram-rich technical blog posts.
+This portfolio demonstrates how Claude Code can transform a data scientist's content workflow. Using **skills** and **commands**, I built a pipeline that takes any learning material—YouTube transcripts, articles, lecture slides—and produces:
 
-**Key Innovation**: Reusable slash commands (`/lecture-to-blog`, `/review-article`) that work on any content added to the `data/` folder. Just drop in your source material and run the command.
+- **Technical blog posts** with custom SVG diagrams
+- **Professional PDFs** for offline reading
+- **PowerPoint presentations** for talks/sharing
+
+**Case Study**: The article "[Transformer Internals: What Actually Changed Since 2017](/posts/transformer-internals-what-changed-since-2017/)" was created entirely using this pipeline—blog, [PDF](/files/transformer-internals-what-changed-since-2017.pdf), and [PPTX](/files/transformer-internals-what-changed-since-2017.pptx)—from a Stanford CME 295 lecture transcript.
 
 ## The Problem
 
@@ -28,9 +32,9 @@ As a data scientist, I constantly consume technical content:
 - **Online courses**: Complete modules but never document learnings
 - **Conference talks**: Great slides, no time to synthesize
 
-**The gap**: Hours of learning → zero portfolio pieces
+**The gap**: Hours of learning → zero shareable artifacts
 
-**Goal**: Build a reusable pipeline where I can drop ANY learning material into a folder and run a single command to generate a publication-ready blog post.
+**Goal**: Build a reusable pipeline where I can drop ANY learning material and run simple commands to generate blog posts, PDFs, and presentations.
 
 ## Solution Architecture
 
@@ -39,196 +43,178 @@ flowchart TB
     subgraph Input["📥 Source Materials"]
         A[Lecture Slides<br/>data/llm/documents/]
         B[Transcripts<br/>data/llm/transcripts/]
+        C[Article Links<br/>URLs]
     end
 
-    subgraph Skills["🤖 Claude Code Skills"]
-        C["/lecture-to-blog<br/>Content Generation"]
-        D["/review-article<br/>Quality Review"]
+    subgraph Commands["⌨️ Commands"]
+        D["/lecture-to-blog<br/>Blog Generation"]
+        E["/review-article<br/>Quality Review"]
     end
 
-    subgraph Output["📤 Portfolio Content"]
-        E[Technical Blog Post<br/>content/posts/]
-        F[Mermaid Diagrams<br/>Embedded]
-        G[Cover Images<br/>Auto-selected]
+    subgraph Skills["🎨 Skills"]
+        F["pdf skill<br/>PDF Creation"]
+        G["pptx skill<br/>Presentation"]
+        H["nano-banana<br/>Image Gen"]
     end
 
-    A --> C
-    B --> C
-    C --> E
-    C --> F
-    C --> G
-    E --> D
-    D -->|"Feedback Loop"| E
+    subgraph Output["📤 Multi-Format Output"]
+        I[Blog Post<br/>+ SVG Diagrams]
+        J[PDF Document<br/>Styled & Formatted]
+        K[PPTX Slides<br/>25+ Slides]
+    end
 
-    style C fill:#28a745,color:#fff
-    style D fill:#007bff,color:#fff
+    A --> D
+    B --> D
+    C --> D
+    D --> I
+    I --> E
+    E -->|"Feedback Loop"| I
+    I --> F
+    I --> G
+    F --> J
+    G --> K
+    D -.->|"Thumbnails"| H
+
+    style D fill:#28a745,color:#fff
+    style E fill:#007bff,color:#fff
+    style F fill:#dc3545,color:#fff
+    style G fill:#fd7e14,color:#fff
 ```
+
+## Claude Code Skills vs Commands
+
+| Type | Location | Invocation | Purpose |
+|------|----------|------------|---------|
+| **Commands** | `.claude/commands/` | `/command-name` | User-invoked workflows (blog, review) |
+| **Skills** | `.claude/skills/` | Auto-triggered | Specialized capabilities (PDF, PPTX, images) |
+
+**Commands** are what you type. **Skills** are what Claude uses under the hood.
 
 ## Repository Structure
 
 ```
 portfolio/
-├── .claude/commands/           # Claude Code skill definitions
-│   ├── lecture-to-blog.md     # Blog generation skill
-│   └── review-article.md      # Quality review skill
-├── data/llm/                   # Source materials
-│   ├── documents/             # Lecture slides (.docx)
-│   └── transcripts/           # Lecture transcripts (.txt)
-├── content/
-│   ├── posts/                 # Generated blog posts
-│   └── projects/              # Project case studies
-├── layouts/                    # Custom Hugo templates
-│   ├── partials/              # Reusable components
-│   └── _default/              # Layout overrides
-├── assets/css/extended/       # Custom styling (1800+ lines)
+├── .claude/
+│   ├── commands/              # User-invoked workflows
+│   │   ├── lecture-to-blog.md # Blog generation command
+│   │   └── review-article.md  # Quality review command
+│   └── skills/                # Auto-triggered capabilities
+│       ├── pdf/               # PDF creation & manipulation
+│       ├── pptx/              # PowerPoint creation
+│       ├── nano-banana/       # Gemini image generation
+│       └── ... (16 skills)    # See full list below
+├── data/
+│   ├── llm/documents/         # Source slides (.docx)
+│   ├── llm/transcripts/       # YouTube transcripts (.txt)
+│   └── *.pdf, *.pptx          # Generated outputs
+├── content/posts/             # Generated blog posts
+├── static/images/posts/       # Custom SVG diagrams
 └── hugo.toml                  # Site configuration
 ```
 
-## Claude Code Slash Commands
+## Commands: User-Invoked Workflows
 
-### What Are Slash Commands?
+Commands live in `.claude/commands/` and are invoked with `/command-name`. They orchestrate multi-step workflows.
 
-Slash commands are reusable prompts stored in `.claude/commands/`. When I type `/lecture-to-blog 2`, Claude Code reads the command definition and executes it with my argument. This means:
+### Command 1: `/lecture-to-blog` — Blog Generation
 
-- **One-time setup**: Define the command once
-- **Infinite reuse**: Run on any new content
-- **Consistent output**: Same quality standards every time
+**Purpose**: Transform any learning material into a publication-ready blog post with SVG diagrams.
 
-### Command 1: `/lecture-to-blog` — Content Generation
-
-**Purpose**: Transform ANY learning material into a technical blog post.
-
-**Workflow**:
+**Usage**:
 ```bash
-# 1. Add source material to data folder
-#    - Copy YouTube transcript → data/llm/transcripts/lecture3.txt
-#    - Download slides/article → data/llm/documents/lecture3.docx
-
-# 2. Run the slash command
-/lecture-to-blog 3
-
-# 3. Blog post generated at content/posts/
+/lecture-to-blog 2   # Uses lecture2.txt + lecture2.docx
 ```
 
-**What It Does**:
+**Command Definition** (truncated from `.claude/commands/lecture-to-blog.md`):
 
-1. **Reads your source files** from `data/llm/documents/` and `data/llm/transcripts/`
-2. **Extracts key concepts**: problems, techniques, implementations, benchmarks
-3. **Identifies diagram opportunities**: processes → flowcharts, comparisons → tables
-4. **Writes the article** following strict style guidelines
-5. **Generates 3-5 Mermaid diagrams** automatically
-6. **Creates frontmatter** with tags, description, cover image
+```markdown
+# Generate Blog Post from LLM Lecture
 
-**Style Enforcement**:
+## Arguments
+- `$LECTURE_NUM`: Lecture number (e.g., "2" for lecture2)
 
-| Aspect | Rule |
-|--------|------|
-| Voice | Direct, conversational ("does" not "might") |
-| Structure | Problem → Theory → Code → Takeaways |
-| Numbers | Always specific (memory sizes, benchmarks) |
-| Diagrams | Minimum 3-5 Mermaid diagrams per post |
-| Opening | Concrete problem, NOT definitions |
+## Instructions
 
-**Example Output**: The blog post "Transformer Internals: What Actually Changed Since 2017" was generated from a Stanford CME 295 YouTube lecture transcript in under 5 minutes, complete with 8 Mermaid diagrams and working code examples.
+### Step 1: Locate Source Materials
+- **Document**: `data/llm/documents/lecture$LECTURE_NUM.docx`
+- **Transcript**: `data/llm/transcripts/lecture$LECTURE_NUM.txt`
+
+### Step 2: Extract Key Content
+1. **Core problem being solved** — What pain point?
+2. **Key concepts and techniques** — With numbers/benchmarks
+3. **Diagram opportunities** — Processes → flowcharts...
+
+### Step 3: Write the Blog Post
+**VOICE & TONE:**
+- Direct and conversational — like explaining to a colleague
+- Confident without hedging ("does" not "might")
+- Open with concrete problems, not definitions
+
+**MERMAID DIAGRAMS (REQUIRED):**
+- Minimum 5-8 diagrams per post
+- Place immediately after explaining concept
+
+### Step 5: Create SVG Diagrams
+Create custom SVG diagrams for key concepts:
+- **File Organization**: `static/images/posts/[article-slug]/`
+- **Design Principles**: Professional colors, clear typography
+- **Required Elements**: Title, subtitle, labels, legends
+...
+```
+
+**What It Produces**:
+
+| Output | Description |
+|--------|-------------|
+| Blog post | `content/posts/transformer-internals-*.md` (28KB) |
+| SVG diagrams | 7 custom diagrams in `static/images/posts/transformers/` |
+| Mermaid diagrams | Embedded in markdown |
+| Frontmatter | Tags, description, cover image |
 
 ### Command 2: `/review-article` — Quality Assurance
 
 **Purpose**: Systematic quality review with scoring and actionable improvements.
 
-**Workflow**:
-```bash
-# Review any article by name
-/review-article transformer-internals
-
-# Output: Structured review with scores, issues, and specific edits
-```
-
-**Review Criteria** (scored /5 each):
-
-```mermaid
-flowchart LR
-    subgraph Review["📋 Review Categories"]
-        A["Concept Breakdown<br/>Chunking, progression"]
-        B["Diagrams & Visuals<br/>Coverage, accuracy"]
-        C["Article Flow<br/>Problem→Code pattern"]
-        D["Readability<br/>Paragraphs, voice"]
-        E["Understanding<br/>Analogies, examples"]
-        F["Technical Accuracy<br/>Concepts, code"]
-    end
-
-    A --> Score["Overall<br/>Score /5"]
-    B --> Score
-    C --> Score
-    D --> Score
-    E --> Score
-    F --> Score
-
-    style Score fill:#28a745,color:#fff
-```
-
-**Output Format**:
-- Structured review report with scores
-- Critical issues (must fix)
-- Suggested improvements
-- Missing diagrams with recommendations
-- Specific text edits with rationale
-
-## The Data Pipeline
-
-### How It Works: 3 Simple Steps
-
-```mermaid
-flowchart LR
-    A["📺 Watch YouTube<br/>or read article"] --> B["📋 Copy transcript<br/>to data/ folder"]
-    B --> C["⌨️ Run<br/>/lecture-to-blog"]
-    C --> D["📝 Blog post<br/>ready!"]
-
-    style C fill:#28a745,color:#fff
-    style D fill:#007bff,color:#fff
-```
-
-### Step 1: Add Source Material
-
-The `data/llm/` folder accepts ANY learning content:
-
-```
-data/llm/
-├── documents/           # Slides, PDFs, articles
-│   ├── lecture2.docx   # Stanford CME 295 slides
-│   ├── paper-summary.md # Notes from a paper
-│   └── tutorial.pdf    # Downloaded guide
-└── transcripts/         # YouTube transcripts, notes
-    ├── lecture2.txt    # Copied from YouTube captions
-    ├── podcast.txt     # Podcast transcript
-    └── talk.txt        # Conference talk notes
-```
-
-**Getting YouTube Transcripts**:
-1. Open YouTube video → Click "..." → "Show transcript"
-2. Copy all text
-3. Paste into `data/llm/transcripts/lectureN.txt`
-
-**That's it.** No special formatting required.
-
-### Step 2: Run the Slash Command
-
-```bash
-/lecture-to-blog 2
-```
-
-Claude Code automatically:
-- Reads `lecture2.docx` and `lecture2.txt`
-- Extracts key concepts (position embeddings, layer norm, BERT...)
-- Generates 5-8 Mermaid diagrams
-- Creates `content/posts/transformer-internals-what-changed-since-2017.md`
-
-### Step 3: Review and Polish
-
+**Usage**:
 ```bash
 /review-article transformer-internals
 ```
 
-Output:
+**Command Definition** (truncated from `.claude/commands/review-article.md`):
+
+```markdown
+# Review Blog Article
+
+## Arguments
+- `$ARTICLE`: Article name or path
+
+## Review Criteria
+
+| Check | What to Look For |
+|-------|------------------|
+| Chunking | Complex ideas in digestible pieces |
+| Progression | Simple → complex, prerequisites first |
+| Definitions | Key terms bolded on first use |
+
+## Generate Review Report
+| Category | Score | Summary |
+|----------|:-----:|---------|
+| Concept Breakdown | /5 | |
+| Diagrams & Visuals | /5 | |
+| Article Flow | /5 | |
+| Readability | /5 | |
+| Technical Correctness | /5 | |
+| **Overall** | **/5** | |
+
+## Apply Fixes
+Ask: "Would you like me to apply these fixes?"
+- Apply requested edits to the article
+- Generate and insert missing diagrams
+- Add suggested analogies where appropriate
+...
+```
+
+**Review Output Example**:
 ```
 Overall: 4.7/5
 - Suggestion: Add KV cache explanation before GQA section
@@ -236,16 +222,159 @@ Overall: 4.7/5
 - Edit: Improve RoPE analogy with clock metaphor
 ```
 
-Claude Code then applies the fixes automatically, including web research for better analogies (with citations).
+## Skills: Auto-Triggered Capabilities
 
-### Real Example: Stanford CME 295 → Blog Post
+Skills live in `.claude/skills/` and are automatically invoked when Claude recognizes relevant tasks. You don't call them directly—Claude uses them when needed.
+
+### Skill 1: `pdf` — Professional PDF Creation
+
+**Purpose**: Generate styled PDFs from blog posts with proper formatting, tables, and images.
+
+**Trigger**: "Create a PDF from this article" or "Generate PDF version"
+
+**Skill Definition** (truncated from `.claude/skills/pdf/SKILL.md`):
+
+```markdown
+# PDF Processing Guide
+
+## Quick Start
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+
+doc = SimpleDocTemplate("report.pdf", pagesize=letter)
+styles = getSampleStyleSheet()
+story = []
+story.append(Paragraph("Report Title", styles['Title']))
+doc.build(story)
+
+## Key Libraries
+| Task | Best Tool |
+|------|-----------|
+| Create PDFs | reportlab (Canvas or Platypus) |
+| Extract text | pdfplumber |
+| Merge/Split | pypdf |
+| Extract tables | pdfplumber `page.extract_tables()` |
+...
+```
+
+**What It Produces**:
+
+The Transformer Internals article → `transformer-internals-*.pdf` (2.4 MB):
+- Custom color scheme matching blog theme
+- Converted SVG diagrams to PNG for PDF compatibility
+- Tables with proper formatting
+- Code blocks with syntax highlighting
+
+---
+
+### Skill 2: `pptx` — PowerPoint Presentations
+
+**Purpose**: Generate professional slide decks from blog content using HTML-to-PPTX workflow.
+
+**Trigger**: "Create a presentation" or "Generate slides from this article"
+
+**Skill Definition** (truncated from `.claude/skills/pptx/SKILL.md`):
+
+```markdown
+# PPTX creation, editing, and analysis
+
+## Creating without a template (html2pptx workflow)
+
+### Design Principles
+- Consider the subject matter and mood
+- Match palette to content
+- Use web-safe fonts only: Arial, Verdana, Georgia...
+
+### Color Palette Selection
+1. **Classic Blue**: Navy (#1C2833), slate (#2E4053)
+2. **Teal & Coral**: Teal (#5EA8A7), coral (#FE4447)
+3. **Bold Red**: Red (#C0392B), orange (#F39C12)
+...
+
+### Workflow
+1. Create HTML file for each slide (720pt × 405pt)
+2. Use `html2pptx.js` to convert HTML → PowerPoint
+3. Add charts/tables using PptxGenJS API
+4. Generate thumbnails for visual validation
+...
+```
+
+**What It Produces**:
+
+The Transformer Internals article → `transformer-internals-*.pptx` (778 KB):
+- 25 professionally designed slides
+- Consistent color theme throughout
+- Diagrams converted from SVG
+- Speaker notes included
+
+---
+
+### Skill 3: `nano-banana` — AI Image Generation
+
+**Purpose**: Generate images using Gemini for thumbnails and custom visuals.
+
+**Trigger**: "Generate an image of..." or "Create a thumbnail"
+
+**Skill Definition** (truncated from `.claude/skills/nano-banana/SKILL.md`):
+
+```markdown
+# Nano Banana Skill
+
+Python scripting with Gemini image generation using uv.
+
+## Basic Template
+uv run - << 'EOF'
+# /// script
+# dependencies = ["google-genai", "pillow"]
+# ///
+from google import genai
+from google.genai import types
+
+client = genai.Client()
+response = client.models.generate_content(
+    model="gemini-2.5-flash-image",
+    contents=["A cute banana character"],
+    config=types.GenerateContentConfig(
+        response_modalities=['IMAGE']
+    )
+)
+
+for part in response.parts:
+    if part.inline_data is not None:
+        image = part.as_image()
+        image.save("tmp/generated.png")
+EOF
+...
+```
+
+---
+
+## Complete Workflow: Source → Blog → PDF → PPTX
+
+```mermaid
+flowchart LR
+    A["📺 Watch YouTube"] --> B["📋 Copy transcript"]
+    B --> C["⌨️ /lecture-to-blog"]
+    C --> D["📝 Blog + SVGs"]
+    D --> E["🔍 /review-article"]
+    E --> F["📄 Ask: Create PDF"]
+    F --> G["📊 Ask: Create PPTX"]
+
+    style C fill:#28a745,color:#fff
+    style E fill:#007bff,color:#fff
+    style F fill:#dc3545,color:#fff
+    style G fill:#fd7e14,color:#fff
+```
+
+### Real Example: Stanford CME 295 → Multi-Format Output
 
 | Input | Output |
 |-------|--------|
-| 45-min YouTube lecture | 3200-word blog post |
-| Transcript (raw text) | 8 Mermaid diagrams |
-| Slide screenshots | Code examples |
-| **Time**: 5 minutes | **Quality**: 4.7/5 |
+| 45-min YouTube lecture | 28KB blog post with 7 SVG diagrams |
+| Raw transcript | 2.4 MB styled PDF |
+| Lecture slides | 778 KB PowerPoint (25 slides) |
+| **Time**: ~30 minutes total | **Review score**: 4.7/5 |
 
 ## Technical Implementation
 
@@ -367,110 +496,152 @@ This project showcases several data science competencies:
 - GitHub Actions for automated deployment
 - Makefile for build automation
 
-## Slash Command Definitions
+## Reusing for Future Articles
 
-Commands are defined in `.claude/commands/` as markdown files with structured instructions.
+The power of this setup is **zero configuration for new content**. Here's how to create your next article:
 
-### lecture-to-blog.md (Key Sections)
+### Quick Reference: Create Any Article
 
-**Location**: `.claude/commands/lecture-to-blog.md`
+```mermaid
+flowchart TD
+    subgraph Sources["📥 Any Source Works"]
+        A[YouTube Lecture]
+        B[Blog Post URL]
+        C[PDF Paper]
+        D[Conference Talk]
+        E[Your Notes]
+    end
 
-```markdown
-# Generate Blog Post from LLM Lecture
+    subgraph Process["⚡ Same Commands"]
+        F["1. Add to data/llm/"]
+        G["2. /lecture-to-blog N"]
+        H["3. /review-article name"]
+        I["4. Create PDF (ask Claude)"]
+        J["5. Create PPTX (ask Claude)"]
+    end
 
-## Arguments
-- `$LECTURE_NUM`: Lecture number (e.g., "2" for lecture2)
+    subgraph Output["📤 Full Package"]
+        K[Blog Post]
+        L[SVG Diagrams]
+        M[PDF Document]
+        N[Slide Deck]
+    end
 
-## Instructions
-
-### Step 1: Locate Source Materials
-- **Document**: `data/llm/documents/lecture$LECTURE_NUM.docx`
-- **Transcript**: `data/llm/transcripts/lecture$LECTURE_NUM.txt`
-
-### Step 2: Extract Key Content
-1. **Core problem being solved** — What pain point does this address?
-2. **Key concepts and techniques** — Main ideas with numbers/benchmarks
-3. **Diagram opportunities** — Identify visuals needed
-
-### Step 3: Write the Blog Post
-
-**MERMAID DIAGRAMS (REQUIRED):**
-- Minimum 3-5 diagrams per post
-- Place immediately after explaining concept
-
-**FORMATTING:**
-- Citations required: `([source](url))` for web-searched info
+    A --> F
+    B --> F
+    C --> F
+    D --> F
+    E --> F
+    F --> G --> H --> I --> J
+    J --> K & L & M & N
 ```
 
-### review-article.md (Key Sections)
+### Step-by-Step for Any New Article
 
-**Location**: `.claude/commands/review-article.md`
+| Step | Action | Example |
+|------|--------|---------|
+| 1 | **Get source material** | Copy YouTube transcript, download PDF, paste article text |
+| 2 | **Save to data folder** | `data/llm/transcripts/lecture3.txt` |
+| 3 | **Run blog command** | `/lecture-to-blog 3` |
+| 4 | **Review & refine** | `/review-article attention-mechanisms` |
+| 5 | **Generate PDF** | "Create a PDF from this article" |
+| 6 | **Generate PPTX** | "Create a presentation from this article" |
 
-```markdown
-# Review Blog Article
+### Available Skills (16 Total)
 
-## Arguments
-- `$ARTICLE`: Article name or path
+| Skill | Purpose | Trigger Phrase |
+|-------|---------|----------------|
+| `pdf` | Create/edit PDFs | "Create a PDF...", "Generate PDF..." |
+| `pptx` | PowerPoint presentations | "Create slides...", "Make a presentation..." |
+| `nano-banana` | Gemini image generation | "Generate an image...", "Create a picture..." |
+| `docx` | Word documents | "Create a document...", "Write to docx..." |
+| `xlsx` | Excel spreadsheets | "Create a spreadsheet...", "Analyze this CSV..." |
+| `frontend-design` | Web components/pages | "Build a landing page...", "Create a dashboard..." |
+| `canvas-design` | Visual art/posters | "Design a poster...", "Create artwork..." |
+| `theme-factory` | Apply themes to artifacts | "Apply a theme...", "Style this with..." |
 
-## Review Criteria
-
-| Check | What to Look For |
-|-------|------------------|
-| Chunking | Complex ideas in digestible pieces |
-| Progression | Simple → complex, prerequisites first |
-| Definitions | Key terms bolded on first use |
-
-**Good analogies should:**
-- Connect to everyday experiences
-- Highlight the KEY insight
-- Be brief — one sentence, not a paragraph
-```
-
-### Why This Approach Works
+### Why This Works
 
 1. **Arguments make commands reusable**: `$LECTURE_NUM` means one command works for all lectures
-2. **Structured instructions ensure consistency**: Every blog post follows the same quality standards
-3. **Stored in repo**: Commands travel with the project, shareable with team
+2. **Skills are auto-triggered**: Claude recognizes when to use PDF, PPTX, or image skills
+3. **Stored in repo**: Commands and skills travel with the project
 
 ## Future Enhancements
 
-- [ ] **Multi-lecture synthesis**: Combine related lectures into comprehensive guides
-- [ ] **Auto-tagging**: ML-based tag suggestions from content
-- [ ] **Image generation**: DALL-E integration for custom diagrams
-- [ ] **SEO optimization**: Automated meta description generation
-- [ ] **Analytics integration**: Track which content resonates
+### Content Pipeline Improvements
+
+- [ ] **URL-to-Blog Command**: `/article-from-url <url>` — Fetch any article, extract content, generate blog post
+- [ ] **Multi-source Synthesis**: Combine multiple lectures/papers into comprehensive guides
+- [ ] **Auto-citation Enrichment**: Web search for additional sources and automatically add inline citations
+- [ ] **Interactive Diagrams**: Upgrade static SVGs to interactive D3.js visualizations
+
+### New Output Formats
+
+- [ ] **Video Script Generation**: `/create-video-script` — Generate YouTube video scripts from articles
+- [ ] **Twitter Thread Generator**: Create tweetstorm summaries of technical articles
+- [ ] **Newsletter Format**: Weekly digest compilation from multiple sources
+- [ ] **Podcast Notes**: Structured episode summaries with timestamps
+
+### Quality & SEO
+
+- [ ] **Auto-SEO Optimization**: Meta descriptions, keyword density, structured data
+- [ ] **Readability Scoring**: Flesch-Kincaid integration in `/review-article`
+- [ ] **A/B Title Testing**: Generate multiple title variants for testing
+- [ ] **Analytics-Driven Topics**: Suggest topics based on search trends
+
+### Automation & Integration
+
+- [ ] **GitHub Actions Trigger**: Auto-generate blog when new file added to `data/`
+- [ ] **RSS Feed Ingestion**: Monitor tech blogs and auto-summarize new posts
+- [ ] **Notion/Obsidian Sync**: Two-way sync with note-taking apps
+- [ ] **Slack/Discord Bot**: Generate content summaries on demand
 
 ## Key Learnings
 
-1. **Slash commands are reusable investments**: One-time setup, infinite reuse. The `/lecture-to-blog` command works for any content I add to `data/`
+1. **Commands + Skills = Complete Pipeline**: Commands handle user workflows, skills handle specialized tasks. Together they produce blog + PDF + PPTX from a single source.
 
-2. **Structured prompts produce consistent output**: The command definition's strict format ensures every article follows the same quality standards
+2. **Structured prompts produce consistent output**: The command definition's strict format ensures every article follows the same quality standards.
 
-3. **The review loop catches blind spots**: `/review-article` systematically identifies gaps I would miss manually
+3. **The review loop catches blind spots**: `/review-article` systematically identifies gaps I would miss manually.
 
-4. **YouTube transcripts are underrated content sources**: Copy-paste transcript + slash command = blog post in minutes
+4. **YouTube transcripts are underrated content sources**: Copy-paste transcript + slash command = full content package in ~30 minutes.
 
-5. **Diagrams dramatically improve understanding**: Requiring Mermaid diagrams in the command definition ensures visual explanations in every post
+5. **SVG diagrams dramatically improve understanding**: Custom diagrams > generic stock images for technical content.
 
 ## Technologies Used
 
-`Claude Code` `Hugo` `PaperMod` `Mermaid.js` `JavaScript` `CSS Grid` `GitHub Actions` `Markdown` `Git`
+`Claude Code` `Skills` `Commands` `Hugo` `PaperMod` `Mermaid.js` `ReportLab` `PptxGenJS` `SVG` `GitHub Actions`
 
 ---
 
-*This project demonstrates how Claude Code slash commands can transform a data scientist's content workflow. Instead of hours synthesizing notes into blog posts, I now: (1) watch/read content, (2) copy transcript to `data/`, (3) run `/lecture-to-blog`. The AI handles formatting, diagrams, and consistency—I provide direction and quality judgment.*
-
 ## Try It Yourself
 
-1. Clone this portfolio repo
-2. Add your content to `data/llm/`
-3. Run `/lecture-to-blog <number>`
-4. Review with `/review-article <name>`
+```bash
+# 1. Clone this portfolio
+git clone https://github.com/nitishkmr005/portfolio
 
-The slash commands in `.claude/commands/` are fully customizable for your own content pipeline.
+# 2. Add your content
+cp transcript.txt data/llm/transcripts/lecture3.txt
 
-## Links
+# 3. Generate blog post
+/lecture-to-blog 3
 
-- 🔗 [Portfolio Site](https://nitishkmr005.github.io/)
-- 📁 [GitHub Repository](https://github.com/nitishkmr005)
-- 📝 [Generated Article: Transformer Internals](/posts/transformer-internals-what-changed-since-2017/)
+# 4. Review and refine
+/review-article your-article-name
+
+# 5. Ask Claude for PDF/PPTX
+"Create a PDF from this article"
+"Create a presentation from this article"
+```
+
+The commands in `.claude/commands/` and skills in `.claude/skills/` are fully customizable.
+
+## Links & Outputs
+
+| Resource | Link |
+|----------|------|
+| Portfolio Site | [nitishkmr005.github.io](https://nitishkmr005.github.io/) |
+| GitHub Repository | [github.com/nitishkmr005](https://github.com/nitishkmr005) |
+| **Example Article** | [Transformer Internals](/posts/transformer-internals-what-changed-since-2017/) |
+| **Example PDF** | [Download PDF](/files/transformer-internals-what-changed-since-2017.pdf) |
+| **Example PPTX** | [Download PPTX](/files/transformer-internals-what-changed-since-2017.pptx) |

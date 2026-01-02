@@ -15,6 +15,11 @@ The original Transformer from 2017 had 65M parameters and a 512 token context. G
 
 This post covers the specific modifications that make modern transformers work at scale, with code you can run and numbers you can verify. It also includes the 2024-2025 refinements (MLA, MoE, QK-Norm, and NoPE) that are showing up in flagship open models.
 
+## Downloads
+
+- [PDF](/files/transformer-internals-what-changed-since-2017.pdf)
+- [PPTX](/files/transformer-internals-what-changed-since-2017.pptx)
+
 ![Transformer Modifications Overview: Five key areas that evolved from 2017 to 2024 - Position Embeddings, Layer Normalization, Attention Mechanisms, Architecture Types, and BERT Deep Dive](/images/posts/transformers/article-overview.svg)
 
 ## What We're Covering

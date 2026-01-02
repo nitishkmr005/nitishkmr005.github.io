@@ -13,7 +13,7 @@ cover:
 
 The original Transformer from 2017 had 65M parameters and a 512 token context. GPT-4 reportedly has 1.7T parameters and handles 128K tokens. Same architecture? Mostly. The core attention mechanism is identical. What changed are the components around it: how we encode position, how we normalize activations, and how we avoid the O(n²) attention wall.
 
-This post covers the specific modifications that make modern transformers work at scale, with code you can run and numbers you can verify.
+This post covers the specific modifications that make modern transformers work at scale, with code you can run and numbers you can verify. It also includes the 2024-2025 refinements (MLA, MoE, QK-Norm, and NoPE) that are showing up in flagship open models.
 
 ![Transformer Modifications Overview: Five key areas that evolved from 2017 to 2024 - Position Embeddings, Layer Normalization, Attention Mechanisms, Architecture Types, and BERT Deep Dive](/images/posts/transformers/article-overview.svg)
 
@@ -205,6 +205,14 @@ def apply_rope(x, positions, theta=10000.0):
 
 > **⚠ RoPE Extrapolation Warning**: RoPE trained at 4K context doesn't automatically work at 32K. You need techniques like YaRN or NTK-aware scaling to extend context. Don't assume position embeddings generalize to longer sequences without explicit extension methods.
 
+### Method 5: NoPE (No Positional Embeddings)
+
+NoPE removes *all* explicit positional signals (no learned positions, no RoPE). Ordering still exists implicitly because causal masking enforces left-to-right attention. This can improve length generalization in smaller GPT-style models, but it is not yet a universal replacement for RoPE.
+
+SmolLM3 applies NoPE selectively (e.g., every 4th layer), which suggests a hybrid approach: keep RoPE for most layers, omit it occasionally to reduce positional overfitting.
+
+![NoPE vs Linear Attention Overview: No explicit positional embeddings and an emphasis on efficient attention variants](/images/posts/transformers/files/07_nope_linear_attention.svg)
+
 ### Where Position Info Gets Injected
 
 ```mermaid
@@ -274,6 +282,12 @@ flowchart TD
 
 **Why Pre-Norm wins**: In Post-Norm, gradients must pass through LayerNorm before reaching the residual path. In Pre-Norm, the residual connection is a "gradient highway"—clean addition without any transformations. Training is more stable for deep networks (24+ layers). All modern LLMs use Pre-Norm.
 
+### OLMo 2: Post-Norm (Inside Residual) + QK-Norm
+
+OLMo 2 revisits Post-Norm, but with a key change: RMSNorm sits *after* attention/FFN while still remaining **inside** the residual path. This reordering improves training stability versus classic Post-Norm, and the model also adds **QK-Norm**—an RMSNorm on queries and keys **before** RoPE inside attention.
+
+![Normalization Placement Comparison: Pre-Norm vs Post-Norm vs OLMo 2-style Post-Norm inside residual](/images/posts/transformers/files/05_normalization_placement.svg)
+
 ### RMSNorm: Simpler and Faster
 
 Drop the mean subtraction, drop the β bias. Just scale by RMS. Why does this work? Empirically, the re-centering (subtracting mean) in LayerNorm provides minimal benefit—the scale normalization does the heavy lifting.
@@ -307,7 +321,7 @@ Two orthogonal optimizations: (1) sparse attention patterns, (2) sharing key/val
 
 Each token only attends to w neighbors. Complexity drops from O(n²) to O(n×w).
 
-![Sliding Window Attention: Comparison of full attention (O(n²) = 64 computations) vs sliding window attention with w=3 (O(n×w) = 21 computations)](/images/posts/transformers/diagram_6_sliding_window.svg)
+![Sliding Window Attention: Comparison of full attention (O(n²) = 64 computations) vs sliding window attention with w=3 (O(n×w) = 21 computations)](/images/posts/transformers/files/04_sliding_window_attention.svg)
 
 **Effective receptive field**: Information propagates through layers. With L layers and window w, layer 1 sees w tokens, layer 2 sees 2w (via layer 1's aggregation), and so on. Mistral-7B uses w=4096 across 32 layers—so the final layer can theoretically access information from the entire 128K context, even though each individual attention only looks at 4K tokens.
 
@@ -323,11 +337,27 @@ Modern architectures interleave local (sliding window) and global attention laye
 | GQA  | Q / group_size| ÷ group_size     | 8 KV heads (4x smaller)|
 | MQA  | 1             | ÷ Q heads        | 1 KV head (32x smaller)|
 
-![Attention Head Sharing: MHA, GQA, and MQA comparison showing how key-value heads are shared across query heads](/images/posts/transformers/diagram_2_attention_sharing.svg)
+![Attention Head Sharing: MHA vs GQA comparison showing grouped sharing of key-value heads](/images/posts/transformers/files/01_mha_vs_gqa.svg)
 
 **Why keep Q diverse but share K/V?** Each new token needs fresh queries ("what am I looking for?"). But the keys/values for past tokens stay constant—they're what gets cached and reused thousands of times during generation.
 
 **Used by**: LLaMA-2 70B uses GQA (8 KV heads for 64 query heads). Falcon-40B uses MQA.
+
+### Multi-Head Latent Attention (MLA): DeepSeek V3/R1
+
+MLA takes a different route from GQA. Instead of sharing K/V heads, it **compresses K and V into a lower-dimensional latent space** for the KV cache, then projects them back at inference time. That adds an extra matrix multiply, but the cache is much smaller.
+
+DeepSeek V3 and R1 use MLA, and ablation results in the DeepSeek V2 paper suggest MLA can match or beat MHA while being more memory efficient. (Queries are also compressed during training; at inference, only K/V compression matters.)
+
+![Multi-Head Latent Attention: Compress K/V into a latent cache, then project back at inference](/images/posts/transformers/files/02_mla_deepseek.svg)
+
+### Mixture-of-Experts (MoE): Sparse Capacity, Dense Knowledge
+
+MoE replaces the single FFN block with multiple expert FFNs. A router activates only a small subset of experts per token, so you get **huge parameter capacity** without full inference cost.
+
+DeepSeek V3 is a good example: 256 experts per MoE layer, ~671B total parameters, but only ~37B active per token (one shared expert + 8 routed experts). This keeps throughput manageable while expanding model capacity.
+
+![Mixture-of-Experts: Multiple FFN experts with sparse routing per token](/images/posts/transformers/files/03_mixture_of_experts.svg)
 
 ## Three Transformer Architectures
 
@@ -513,6 +543,8 @@ The gate (W3 projection) lets the network control information flow—learning wh
 
 ![Transformer Evolution 2017 to 2024: Summary of changes in position embeddings, normalization, attention, architecture, and context length](/images/posts/transformers/diagram_7_summary.svg)
 
+![2025 Architecture Comparison: Modern blocks with MLA, MoE, and normalization tweaks across recent models](/images/posts/transformers/files/06_comprehensive_comparison.svg)
+
 | Component      | 2017 (Original)         | 2024 (Modern)              |
 |----------------|-------------------------|----------------------------|
 | Position       | Sinusoidal / Learned    | RoPE                       |
@@ -529,7 +561,7 @@ The gate (W3 projection) lets the network control information flow—learning wh
 - ☐ **Architecture**: Decoder-only for generation, BERT for classification
 - ☐ **BERT fine-tuning**: RoBERTa > BERT; DistilBERT if latency matters
 
-## Papers
+## References
 
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762) (Vaswani 2017) — Original transformer
 - [BERT](https://arxiv.org/abs/1810.04805) (Devlin 2019) — Encoder-only pre-training
@@ -538,3 +570,5 @@ The gate (W3 projection) lets the network control information flow—learning wh
 - [RoFormer](https://arxiv.org/abs/2104.09864) (Su 2021) — RoPE
 - [Train Short, Test Long](https://arxiv.org/abs/2108.12409) (Press 2022) — ALiBi
 - [GQA](https://arxiv.org/abs/2305.13245) (Ainslie 2023) — Grouped-query attention
+- [The Big LLM Architecture Comparison](https://magazine.sebastianraschka.com/p/the-big-llm-architecture-comparison?open=false#%C2%A7deepseek-vr) (Raschka 2025) — DeepSeek V3/R1 architecture notes
+- [LLM Architectures Playlist](https://www.youtube.com/playlist?list=PLuSOD6c5zNvyhcATQvJA8uzbWc-YCbs4y) — Video walkthroughs and diagrams

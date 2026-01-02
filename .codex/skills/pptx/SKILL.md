@@ -168,6 +168,31 @@ When creating a new PowerPoint presentation from scratch, use the **html2pptx** 
    - If issues found, adjust HTML margins/spacing/colors and regenerate the presentation
    - Repeat until all slides are visually correct
 
+## Additional Steps Used In This Project
+
+When generating a PPTX from HTML slides that include many SVG diagrams or when working on macOS with stricter permissions, perform these extra steps in addition to the core workflow:
+
+1. **Initialize a local Node project** (if one does not exist):
+   ```bash
+   npm init -y
+   ```
+2. **Install runtime dependencies locally** (avoid relying on global installs):
+   ```bash
+   npm install pptxgenjs playwright sharp
+   ```
+3. **Install Playwright browser binaries**:
+   ```bash
+   npx playwright install chromium
+   ```
+4. **Mac-specific Playwright workaround**: If system Chrome permissions block rendering, copy `html2pptx.js` to a local file and point your build script to it. Remove `channel = 'chrome'` so Playwright uses its bundled Chromium.
+5. **Run rendering with escalated permissions if needed** (when Playwright cannot launch under sandbox restrictions).
+6. **Ensure HTML validation passes**:
+   - All text must be wrapped in `<p>`, `<h1>`–`<h6>`, `<ul>`, `<ol>`.
+   - Do **not** apply backgrounds/borders to text elements; use `<div>` wrappers for shapes.
+   - Check for overflow; reduce margins, font size, or image height if needed.
+7. **Embed local images with file paths**: Use relative paths pointing to actual files (e.g., `../../static/images/...`) so html2pptx can read them.
+8. **Expand slide count for image-heavy sections**: Use dedicated diagram slides instead of squeezing visuals into text-heavy slides.
+
 ## Editing an existing PowerPoint presentation
 
 When edit slides in an existing PowerPoint presentation, you need to work with the raw Office Open XML (OOXML) format. This involves unpacking the .pptx file, editing the XML content, and repacking it.

@@ -25,6 +25,28 @@ for page in reader.pages:
     text += page.extract_text()
 ```
 
+## Additional Steps Used In This Project
+
+When generating a visually rich PDF from a Markdown article with diagrams, perform these extra steps in addition to the core PDF tooling:
+
+1. **Create a local Python venv** (to avoid PEP 668 system package restrictions):
+   ```bash
+   python3 -m venv .venv_pdf
+   source .venv_pdf/bin/activate
+   ```
+2. **Install PDF rendering dependencies in the venv**:
+   ```bash
+   pip install reportlab cairosvg
+   ```
+3. **Install Mermaid CLI for diagram rendering**:
+   ```bash
+   npm install -D @mermaid-js/mermaid-cli
+   ```
+4. **Rasterize SVGs to PNGs** (CairoSVG) so ReportLab can embed them.
+5. **Render Mermaid code blocks to PNGs** using `mmdc`, then embed the PNGs in the PDF.
+6. **Resolve local image paths** (e.g., `/images/...`) against the site’s `static/` folder before embedding.
+7. **Apply markdown-style code block styling** (padded, bordered, monospace) for a preview-like look.
+
 ## Python Libraries
 
 ### pypdf - Basic Operations

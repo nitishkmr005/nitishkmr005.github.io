@@ -7,7 +7,7 @@ showToc: false
 
 ## Hi, I'm Nitishkumar Harsoor 👋
 
-I'm a **Data Scientist** specializing in GenAI and production ML systems. With over 12 years of experience in technology and 5+ years focused on AI/ML, I build enterprise-grade solutions that deliver measurable business impact—from $32M annual cost savings through GenAI pipelines to 2.13× CTR lifts with contextual bandits.
+I'm a **Data Scientist** at Fidelity Investments specializing in GenAI and recommender systems. With over 12 years of experience in technology and 5+ years focused on AI/ML, I build enterprise-grade solutions that deliver measurable business impact—from $32M annual cost savings through GenAI pipelines to $197M+ in quarterly impact from recommender platforms..
 
 ---
 

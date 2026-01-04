@@ -18,7 +18,7 @@ I'm a **Data Scientist** specializing in GenAI and production ML systems. With o
 
 - **Led AgentBot 3.0 development**: Built an enterprise GenAI pipeline where LLM-extracted structured JSON from call transcripts powered downstream pre-call insights, in-call assistance, and post-call rep note/email generation—driving **$32M annual cost savings**, **44% reduction in after-call work**, and **1% increased appointment rate**
 - Developed the **Workplace Seminar Recommendation System** for over 15 million participants using two stage architecture utilizing LightGBM and
-neural network, delivering a 2.3× lift in event attendance, adding 64,600+ participants, and generating over $197 Million in incremental P/W flows.
+neural network, delivering a **2.3× lift in event attendance**, adding 64,600+ participants, and generating over **$197 Million in incremental P/W flows**.
 - **Deployed Helios Collections recommender** to production using LinGreedy contextual multi-armed bandits, modeling each collection as an arm and learning context-aware rewards via ridge regression, resulting in a **2.13× lift in CTR@1** over the baseline in the Helios mobile app
 - **Fine-tuned T5 transformer models** for email summarization on noisy email chains, combining regex-based parsing and embedding-driven noise filtering to isolate salient content and improve summary quality
 - **Implemented model interpretability and fairness evaluation** for every recommender system using SHAP and Jurity libraries, improving transparency, reliability, and bias detection
@@ -97,12 +97,10 @@ Agents, Information Extraction, Voice Agents, Speech to Text (STT), Text to Spee
 
 🔹 Machine Learning & NLP  
 Machine Learning, Recommender Systems, Two-Tower, LightGBM, XGBoost, Neural Networks, BERT, Feature Engineering, Model Explainability (SHAP),  
-Fairness and Bias Analysis (Jurity), Scikit-Learn, Pandas, Feature Selection, Sentence Transformers, Precision/Recall/F1/CTR Metrics, Lift Report Creation,  
-A/B Testing
+Fairness and Bias Analysis (Jurity), Scikit-Learn, Pandas, Feature Selection, Sentence Transformers, Precision/Recall/F1/CTR Metrics, Lift Report Creation, A/B Testing
 
 🔹 Engineering & MLOps  
-Python, PyTorch, Streamlit, FastAPI, Pydantic, Docker, Linux, AWS SageMaker, Bedrock, S3, Snowflake, SQL, SQL Joins, SQL CTE, SQL Window Functions,  
-Tableau
+Python, PyTorch, Streamlit, FastAPI, Pydantic, Docker, Linux, AWS SageMaker, Bedrock, S3, Snowflake, SQL, SQL Joins, SQL CTE, SQL Window Functions, Tableau
 
 🔹 Coursera Certifications  
 Natural Language Processing Specialization, Deep Learning Specialization, Machine Learning by Andrew Ng

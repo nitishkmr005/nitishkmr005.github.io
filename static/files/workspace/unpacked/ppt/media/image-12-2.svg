@@ -1,0 +1,257 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800">
+  <!-- Background -->
+  <rect width="1600" height="800" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="800" y="45" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#1e293b" text-anchor="middle">
+    Full Attention vs Sliding Window Attention
+  </text>
+  <text x="800" y="80" font-family="Arial, sans-serif" font-size="18" fill="#64748b" text-anchor="middle">
+    Breaking the O(n²) Complexity Barrier
+  </text>
+
+  <!-- Left side: Full Attention -->
+  <g id="full-attention">
+    <!-- Header -->
+    <rect x="50" y="120" width="700" height="60" rx="8" fill="#1e3a8a"/>
+    <text x="400" y="155" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">Full Attention</text>
+
+    <!-- Complexity -->
+    <rect x="150" y="200" width="500" height="40" rx="5" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+    <text x="400" y="226" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1e3a8a" text-anchor="middle">
+      O(n²) = 64 computations (n=8)
+    </text>
+
+    <!-- Grid -->
+    <g transform="translate(100, 260)">
+      <!-- Column headers -->
+      <text x="60" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t1</text>
+      <text x="120" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t2</text>
+      <text x="180" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t3</text>
+      <text x="240" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t4</text>
+      <text x="300" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t5</text>
+      <text x="360" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t6</text>
+      <text x="420" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t7</text>
+      <text x="480" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t8</text>
+
+      <!-- Row headers -->
+      <text x="20" y="60" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t1</text>
+      <text x="20" y="120" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t2</text>
+      <text x="20" y="180" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t3</text>
+      <text x="20" y="240" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t4</text>
+      <text x="20" y="300" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t5</text>
+      <text x="20" y="360" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t6</text>
+      <text x="20" y="420" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t7</text>
+      <text x="20" y="480" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t8</text>
+
+      <!-- Full grid - all filled -->
+      <rect x="30" y="30" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="90" y="30" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="150" y="30" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="210" y="30" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="270" y="30" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="330" y="30" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="390" y="30" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="450" y="30" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+
+      <rect x="30" y="90" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="90" y="90" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="150" y="90" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="210" y="90" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="270" y="90" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="330" y="90" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="390" y="90" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="450" y="90" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+
+      <rect x="30" y="150" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="90" y="150" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="150" y="150" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="210" y="150" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="270" y="150" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="330" y="150" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="390" y="150" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="450" y="150" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+
+      <rect x="30" y="210" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="90" y="210" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="150" y="210" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="210" y="210" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="270" y="210" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="330" y="210" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="390" y="210" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="450" y="210" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+
+      <rect x="30" y="270" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="90" y="270" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="150" y="270" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="210" y="270" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="270" y="270" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="330" y="270" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="390" y="270" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="450" y="270" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+
+      <rect x="30" y="330" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="90" y="330" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="150" y="330" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="210" y="330" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="270" y="330" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="330" y="330" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="390" y="330" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="450" y="330" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+
+      <rect x="30" y="390" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="90" y="390" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="150" y="390" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="210" y="390" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="270" y="390" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="330" y="390" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="390" y="390" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="450" y="390" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+
+      <rect x="30" y="450" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="90" y="450" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="150" y="450" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="210" y="450" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="270" y="450" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="330" y="450" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="390" y="450" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+      <rect x="450" y="450" width="50" height="50" fill="#1e3a8a" stroke="#1e40af" stroke-width="1.5"/>
+    </g>
+
+    <!-- Legend -->
+    <rect x="150" y="750" width="30" height="30" fill="#1e3a8a" stroke="#1e40af" stroke-width="2"/>
+    <text x="190" y="772" font-family="Arial, sans-serif" font-size="14" fill="#334155">= Attention computed</text>
+  </g>
+
+  <!-- Right side: Sliding Window -->
+  <g id="sliding-window">
+    <!-- Header -->
+    <rect x="850" y="120" width="700" height="60" rx="8" fill="#10b981"/>
+    <text x="1200" y="155" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">Sliding Window (w=3) ⭐</text>
+
+    <!-- Complexity -->
+    <rect x="950" y="200" width="500" height="40" rx="5" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+    <text x="1200" y="226" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#065f46" text-anchor="middle">
+      O(n×w) = 21 computations (67% reduction)
+    </text>
+
+    <!-- Grid -->
+    <g transform="translate(900, 260)">
+      <!-- Column headers -->
+      <text x="60" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t1</text>
+      <text x="120" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t2</text>
+      <text x="180" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t3</text>
+      <text x="240" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t4</text>
+      <text x="300" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t5</text>
+      <text x="360" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t6</text>
+      <text x="420" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t7</text>
+      <text x="480" y="20" font-family="monospace" font-size="14" fill="#475569" font-weight="bold" text-anchor="middle">t8</text>
+
+      <!-- Row headers -->
+      <text x="20" y="60" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t1</text>
+      <text x="20" y="120" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t2</text>
+      <text x="20" y="180" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t3</text>
+      <text x="20" y="240" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t4</text>
+      <text x="20" y="300" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t5</text>
+      <text x="20" y="360" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t6</text>
+      <text x="20" y="420" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t7</text>
+      <text x="20" y="480" font-family="monospace" font-size="14" fill="#475569" font-weight="bold">t8</text>
+
+      <!-- Row 1: t1 can see itself and next 2 (t1, t2) - window starts from current -->
+      <rect x="30" y="30" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="90" y="30" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="150" y="30" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="210" y="30" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="270" y="30" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="330" y="30" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="390" y="30" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="450" y="30" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+
+      <!-- Row 2: t2 can see t1, t2, t3 (1 before, self, 1 after) -->
+      <rect x="30" y="90" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="90" y="90" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="150" y="90" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="210" y="90" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="270" y="90" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="330" y="90" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="390" y="90" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="450" y="90" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+
+      <!-- Row 3: t3 can see t1, t2, t3, t4 -->
+      <rect x="30" y="150" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="90" y="150" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="150" y="150" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="210" y="150" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="270" y="150" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="330" y="150" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="390" y="150" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="450" y="150" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+
+      <!-- Row 4: t4 can see t2, t3, t4, t5 (window of 3 neighbors: 1 before, self, 1 after) -->
+      <rect x="30" y="210" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="90" y="210" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="150" y="210" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="210" y="210" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="270" y="210" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="330" y="210" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="390" y="210" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="450" y="210" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+
+      <!-- Row 5: t5 can see t3, t4, t5, t6 -->
+      <rect x="30" y="270" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="90" y="270" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="150" y="270" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="210" y="270" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="270" y="270" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="330" y="270" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="390" y="270" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="450" y="270" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+
+      <!-- Row 6: t6 can see t4, t5, t6, t7 -->
+      <rect x="30" y="330" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="90" y="330" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="150" y="330" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="210" y="330" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="270" y="330" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="330" y="330" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="390" y="330" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="450" y="330" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+
+      <!-- Row 7: t7 can see t5, t6, t7, t8 -->
+      <rect x="30" y="390" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="90" y="390" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="150" y="390" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="210" y="390" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="270" y="390" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="330" y="390" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="390" y="390" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="450" y="390" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+
+      <!-- Row 8: t8 can see t6, t7, t8 (1 before, self) -->
+      <rect x="30" y="450" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="90" y="450" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="150" y="450" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="210" y="450" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="270" y="450" width="50" height="50" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="330" y="450" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="390" y="450" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+      <rect x="450" y="450" width="50" height="50" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+    </g>
+
+    <!-- Legend -->
+    <rect x="950" y="750" width="30" height="30" fill="#10b981" stroke="#059669" stroke-width="2"/>
+    <text x="990" y="772" font-family="Arial, sans-serif" font-size="14" fill="#334155">= Attention computed</text>
+
+    <rect x="1200" y="750" width="30" height="30" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="1240" y="772" font-family="Arial, sans-serif" font-size="14" fill="#334155">= Not computed (sparse)</text>
+  </g>
+
+  <!-- Key benefit box -->
+  <rect x="450" y="730" width="700" height="60" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+  <text x="800" y="755" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#065f46" text-anchor="middle">
+    Sliding Window: Each token attends to w neighbors (w=3 window size)
+  </text>
+  <text x="800" y="777" font-family="Arial, sans-serif" font-size="13" fill="#047857" text-anchor="middle">
+    Mistral uses w=4096 across 32 layers → 128K effective context through layer stacking
+  </text>
+</svg>

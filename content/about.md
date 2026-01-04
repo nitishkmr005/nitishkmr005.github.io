@@ -92,12 +92,10 @@ Identified the most relevant seminar topics for each participant and aggregated 
 ## 🛠️ Technical Skills
 
 🔹 Generative AI & LLMs  
-Large Language Models (LLM), LLM as a Judge, LLM Evaluation, LLM Leaderboard, RAG, Prompt Engineering, Chain Of Thought Prompting, Reflection  
-Agents, Information Extraction, Voice Agents, Speech to Text (STT), Text to Speech (TTS), T5 Fine-tuning, LangChain, LangGraph, FAISS, Vector Databases, Transformers
+Large Language Models (LLM), LLM as a Judge, LLM Evaluation, LLM Leaderboard, RAG, Prompt Engineering, Chain Of Thought Prompting, Reflection Agents, Information Extraction, Voice Agents, Speech to Text (STT), Text to Speech (TTS), T5 Fine-tuning, LangChain, LangGraph, FAISS, Vector Databases, Transformers
 
 🔹 Machine Learning & NLP  
-Machine Learning, Recommender Systems, Two-Tower, LightGBM, XGBoost, Neural Networks, BERT, Feature Engineering, Model Explainability (SHAP),  
-Fairness and Bias Analysis (Jurity), Scikit-Learn, Pandas, Feature Selection, Sentence Transformers, Precision/Recall/F1/CTR Metrics, Lift Report Creation, A/B Testing
+Machine Learning, Recommender Systems, Two-Tower, LightGBM, XGBoost, Neural Networks, BERT, Feature Engineering, Model Explainability (SHAP), Fairness and Bias Analysis (Jurity), Scikit-Learn, Pandas, Feature Selection, Sentence Transformers, Precision/Recall/F1/CTR Metrics, Lift Report Creation, A/B Testing
 
 🔹 Engineering & MLOps  
 Python, PyTorch, Streamlit, FastAPI, Pydantic, Docker, Linux, AWS SageMaker, Bedrock, S3, Snowflake, SQL, SQL Joins, SQL CTE, SQL Window Functions, Tableau

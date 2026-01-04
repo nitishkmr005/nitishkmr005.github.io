@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <defs>
+    <linearGradient id="mhaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1D4ED8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gqaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="kvGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.2"/>
+    </filter>
+    <pattern id="gridPattern" patternUnits="userSpaceOnUse" width="30" height="30">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#E5E7EB" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#F8FAFC"/>
+  <rect width="1200" height="900" fill="url(#gridPattern)" opacity="0.5"/>
+  
+  <!-- Title -->
+  <text x="600" y="50" text-anchor="middle" font-size="32" font-weight="bold" fill="#1E293B">
+    Multi-Head Attention (MHA) vs Grouped-Query Attention (GQA)
+  </text>
+  <text x="600" y="80" text-anchor="middle" font-size="16" fill="#64748B">
+    How modern LLMs reduce KV cache memory while maintaining attention quality
+  </text>
+  
+  <!-- MHA Section -->
+  <g transform="translate(50, 120)">
+    <rect x="0" y="0" width="500" height="650" rx="16" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="500" height="60" rx="16" fill="url(#mhaGrad)"/>
+    <rect x="0" y="45" width="500" height="15" fill="url(#mhaGrad)"/>
+    <text x="250" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="white">
+      Multi-Head Attention (MHA)
+    </text>
+    
+    <!-- Input -->
+    <rect x="175" y="90" width="150" height="40" rx="8" fill="#E0E7FF" stroke="#6366F1" stroke-width="2"/>
+    <text x="250" y="116" text-anchor="middle" font-size="14" font-weight="600" fill="#4338CA">Input: h_t</text>
+    
+    <!-- Arrows down -->
+    <path d="M 250 130 L 250 160" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Projection matrices -->
+    <g transform="translate(50, 170)">
+      <!-- Q heads -->
+      <rect x="0" y="0" width="60" height="100" rx="6" fill="url(#mhaGrad)" opacity="0.9"/>
+      <text x="30" y="30" text-anchor="middle" font-size="11" fill="white" font-weight="600">Q₁</text>
+      <text x="30" y="55" text-anchor="middle" font-size="11" fill="white" font-weight="600">Q₂</text>
+      <text x="30" y="80" text-anchor="middle" font-size="11" fill="white" font-weight="600">Q₃</text>
+      <text x="30" y="105" text-anchor="middle" font-size="10" fill="white">...</text>
+      
+      <!-- K heads -->
+      <rect x="70" y="0" width="60" height="100" rx="6" fill="url(#kvGrad)" opacity="0.9"/>
+      <text x="100" y="30" text-anchor="middle" font-size="11" fill="white" font-weight="600">K₁</text>
+      <text x="100" y="55" text-anchor="middle" font-size="11" fill="white" font-weight="600">K₂</text>
+      <text x="100" y="80" text-anchor="middle" font-size="11" fill="white" font-weight="600">K₃</text>
+      <text x="100" y="105" text-anchor="middle" font-size="10" fill="white">...</text>
+      
+      <!-- V heads -->
+      <rect x="140" y="0" width="60" height="100" rx="6" fill="#EC4899" opacity="0.9"/>
+      <text x="170" y="30" text-anchor="middle" font-size="11" fill="white" font-weight="600">V₁</text>
+      <text x="170" y="55" text-anchor="middle" font-size="11" fill="white" font-weight="600">V₂</text>
+      <text x="170" y="80" text-anchor="middle" font-size="11" fill="white" font-weight="600">V₃</text>
+      <text x="170" y="105" text-anchor="middle" font-size="10" fill="white">...</text>
+    </g>
+    
+    <!-- Labels -->
+    <text x="80" y="300" text-anchor="middle" font-size="12" fill="#64748B">Queries</text>
+    <text x="150" y="300" text-anchor="middle" font-size="12" fill="#64748B">Keys</text>
+    <text x="220" y="300" text-anchor="middle" font-size="12" fill="#64748B">Values</text>
+    
+    <!-- KV Cache box -->
+    <rect x="280" y="170" width="180" height="100" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="370" y="195" text-anchor="middle" font-size="13" font-weight="600" fill="#92400E">KV Cache</text>
+    <text x="370" y="215" text-anchor="middle" font-size="11" fill="#92400E">n_h × d_h × l × 2</text>
+    <text x="370" y="240" text-anchor="middle" font-size="10" fill="#B45309">Each head has own K,V</text>
+    <text x="370" y="255" text-anchor="middle" font-size="10" fill="#B45309">High memory usage</text>
+    
+    <!-- Attention computation -->
+    <rect x="100" y="320" width="300" height="50" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2"/>
+    <text x="250" y="340" text-anchor="middle" font-size="12" fill="#475569">Attention(Q, K, V) = softmax(QK^T/√d)V</text>
+    <text x="250" y="358" text-anchor="middle" font-size="10" fill="#64748B">Computed separately for each head</text>
+    
+    <!-- Output -->
+    <rect x="175" y="390" width="150" height="40" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/>
+    <text x="250" y="416" text-anchor="middle" font-size="14" font-weight="600" fill="#1E40AF">Output</text>
+    
+    <!-- Explanation box -->
+    <rect x="20" y="450" width="460" height="180" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="40" y="480" font-size="14" font-weight="bold" fill="#1E293B">📌 Key Characteristics:</text>
+    <text x="40" y="505" font-size="12" fill="#475569">• Each attention head has its OWN Q, K, V projections</text>
+    <text x="40" y="525" font-size="12" fill="#475569">• Maximum expressiveness - each head learns independently</text>
+    <text x="40" y="545" font-size="12" fill="#475569">• KV cache grows linearly with number of heads</text>
+    <text x="40" y="565" font-size="12" fill="#DC2626">• Memory bottleneck for long sequences!</text>
+    <text x="40" y="595" font-size="11" fill="#64748B">Think of it like: Each student (head) has their own</text>
+    <text x="40" y="610" font-size="11" fill="#64748B">textbook (K) and notebook (V) - lots of redundancy!</text>
+  </g>
+  
+  <!-- GQA Section -->
+  <g transform="translate(650, 120)">
+    <rect x="0" y="0" width="500" height="650" rx="16" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="500" height="60" rx="16" fill="url(#gqaGrad)"/>
+    <rect x="0" y="45" width="500" height="15" fill="url(#gqaGrad)"/>
+    <text x="250" y="40" text-anchor="middle" font-size="22" font-weight="bold" fill="white">
+      Grouped-Query Attention (GQA)
+    </text>
+    
+    <!-- Input -->
+    <rect x="175" y="90" width="150" height="40" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="2"/>
+    <text x="250" y="116" text-anchor="middle" font-size="14" font-weight="600" fill="#047857">Input: h_t</text>
+    
+    <!-- Projection matrices with grouping -->
+    <g transform="translate(30, 170)">
+      <!-- Q heads (all separate) -->
+      <rect x="0" y="0" width="50" height="100" rx="6" fill="url(#gqaGrad)" opacity="0.9"/>
+      <text x="25" y="25" text-anchor="middle" font-size="10" fill="white" font-weight="600">Q₁</text>
+      <text x="25" y="45" text-anchor="middle" font-size="10" fill="white" font-weight="600">Q₂</text>
+      <text x="25" y="65" text-anchor="middle" font-size="10" fill="white" font-weight="600">Q₃</text>
+      <text x="25" y="85" text-anchor="middle" font-size="10" fill="white" font-weight="600">Q₄</text>
+      
+      <!-- Group 1: K,V shared -->
+      <g>
+        <rect x="60" y="0" width="80" height="50" rx="6" fill="url(#kvGrad)" opacity="0.9"/>
+        <text x="100" y="20" text-anchor="middle" font-size="10" fill="white" font-weight="600">K₁ (shared)</text>
+        <text x="100" y="40" text-anchor="middle" font-size="9" fill="white">→ Q₁, Q₂</text>
+        
+        <rect x="150" y="0" width="80" height="50" rx="6" fill="#EC4899" opacity="0.9"/>
+        <text x="190" y="20" text-anchor="middle" font-size="10" fill="white" font-weight="600">V₁ (shared)</text>
+        <text x="190" y="40" text-anchor="middle" font-size="9" fill="white">→ Q₁, Q₂</text>
+      </g>
+      
+      <!-- Group 2: K,V shared -->
+      <g>
+        <rect x="60" y="55" width="80" height="50" rx="6" fill="url(#kvGrad)" opacity="0.9"/>
+        <text x="100" y="75" text-anchor="middle" font-size="10" fill="white" font-weight="600">K₂ (shared)</text>
+        <text x="100" y="95" text-anchor="middle" font-size="9" fill="white">→ Q₃, Q₄</text>
+        
+        <rect x="150" y="55" width="80" height="50" rx="6" fill="#EC4899" opacity="0.9"/>
+        <text x="190" y="75" text-anchor="middle" font-size="10" fill="white" font-weight="600">V₂ (shared)</text>
+        <text x="190" y="95" text-anchor="middle" font-size="9" fill="white">→ Q₃, Q₄</text>
+      </g>
+      
+      <!-- Grouping brackets -->
+      <path d="M 55 0 Q 52 25 55 50" stroke="#059669" stroke-width="2" fill="none"/>
+      <path d="M 55 55 Q 52 80 55 105" stroke="#059669" stroke-width="2" fill="none"/>
+      <text x="45" y="25" text-anchor="end" font-size="9" fill="#059669">Group 1</text>
+      <text x="45" y="80" text-anchor="end" font-size="9" fill="#059669">Group 2</text>
+    </g>
+    
+    <!-- KV Cache box (smaller) -->
+    <rect x="280" y="170" width="180" height="100" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="370" y="195" text-anchor="middle" font-size="13" font-weight="600" fill="#047857">KV Cache</text>
+    <text x="370" y="215" text-anchor="middle" font-size="11" fill="#047857">n_g × d_h × l × 2</text>
+    <text x="370" y="240" text-anchor="middle" font-size="10" fill="#059669">Groups share K,V</text>
+    <text x="370" y="255" text-anchor="middle" font-size="10" fill="#059669" font-weight="bold">↓ Memory reduced!</text>
+    
+    <!-- Attention computation -->
+    <rect x="100" y="320" width="300" height="50" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2"/>
+    <text x="250" y="340" text-anchor="middle" font-size="12" fill="#475569">Same attention formula</text>
+    <text x="250" y="358" text-anchor="middle" font-size="10" fill="#64748B">But K,V are shared within groups</text>
+    
+    <!-- Output -->
+    <rect x="175" y="390" width="150" height="40" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="2"/>
+    <text x="250" y="416" text-anchor="middle" font-size="14" font-weight="600" fill="#047857">Output</text>
+    
+    <!-- Explanation box -->
+    <rect x="20" y="450" width="460" height="180" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="40" y="480" font-size="14" font-weight="bold" fill="#1E293B">📌 Key Characteristics:</text>
+    <text x="40" y="505" font-size="12" fill="#475569">• Multiple Q heads SHARE the same K,V projections</text>
+    <text x="40" y="525" font-size="12" fill="#475569">• Example: 4 Q heads, 2 KV groups → 50% memory savings</text>
+    <text x="40" y="545" font-size="12" fill="#10B981">• Used by: Llama 2/3/4, Qwen, Mistral, Gemma</text>
+    <text x="40" y="565" font-size="12" fill="#10B981">• Nearly matches MHA performance in practice!</text>
+    <text x="40" y="595" font-size="11" fill="#64748B">Think of it like: Students in groups share textbooks -</text>
+    <text x="40" y="610" font-size="11" fill="#64748B">each still asks unique questions (Q) but uses shared refs!</text>
+  </g>
+  
+  <!-- Comparison Arrow -->
+  <g transform="translate(555, 400)">
+    <path d="M 0 0 L 80 0" stroke="#6366F1" stroke-width="3" stroke-dasharray="8,4"/>
+    <polygon points="80,0 70,-8 70,8" fill="#6366F1"/>
+    <text x="40" y="-15" text-anchor="middle" font-size="11" fill="#6366F1" font-weight="bold">Evolution</text>
+  </g>
+  
+  <!-- Bottom summary -->
+  <rect x="50" y="800" width="1100" height="80" rx="12" fill="#1E293B"/>
+  <text x="600" y="830" text-anchor="middle" font-size="16" fill="white" font-weight="bold">
+    💡 Key Insight: GQA reduces KV cache by sharing K,V across query groups
+  </text>
+  <text x="600" y="855" text-anchor="middle" font-size="13" fill="#94A3B8">
+    With n_h=32 heads and n_g=8 groups (4x reduction), memory drops by 75% with minimal quality loss!
+  </text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94A3B8"/>
+    </marker>
+  </defs>
+</svg>

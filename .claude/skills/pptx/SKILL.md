@@ -6,6 +6,10 @@ license: Proprietary. LICENSE.txt has complete terms
 
 # PPTX creation, editing, and analysis
 
+## Arguments
+
+- `$num-slides`: Number of slides to generate (optional, default: determined by content). Use this to explicitly specify how many slides the presentation should have.
+
 ## Overview
 
 A user may ask you to create, edit, or analyze the contents of a .pptx file. A .pptx file is essentially a ZIP archive containing XML files and other resources that you can read or edit. You have different tools and workflows available for different tasks.
@@ -149,16 +153,17 @@ When creating a new PowerPoint presentation from scratch, use the **html2pptx** 
 
 ### Workflow
 1. **MANDATORY - READ ENTIRE FILE**: Read [`html2pptx.md`](html2pptx.md) completely from start to finish. **NEVER set any range limits when reading this file.** Read the full file content for detailed syntax, critical formatting rules, and best practices before proceeding with presentation creation.
-2. Create an HTML file for each slide with proper dimensions (e.g., 720pt × 405pt for 16:9)
+2. **Plan slide count**: If `$num-slides` is specified, plan your presentation to have exactly that many slides. Structure the content appropriately to fill the requested number of slides without padding or cramming. If not specified, determine the optimal number based on content.
+3. Create an HTML file for each slide with proper dimensions (e.g., 720pt × 405pt for 16:9)
    - Use `<p>`, `<h1>`-`<h6>`, `<ul>`, `<ol>` for all text content
    - Use `class="placeholder"` for areas where charts/tables will be added (render with gray background for visibility)
    - **CRITICAL**: Rasterize gradients and icons as PNG images FIRST using Sharp, then reference in HTML
    - **LAYOUT**: For slides with charts/tables/images, use either full-slide layout or two-column layout for better readability
-3. Create and run a JavaScript file using the [`html2pptx.js`](scripts/html2pptx.js) library to convert HTML slides to PowerPoint and save the presentation
+4. Create and run a JavaScript file using the [`html2pptx.js`](scripts/html2pptx.js) library to convert HTML slides to PowerPoint and save the presentation
    - Use the `html2pptx()` function to process each HTML file
    - Add charts and tables to placeholder areas using PptxGenJS API
    - Save the presentation using `pptx.writeFile()`
-4. **Visual validation**: Generate thumbnails and inspect for layout issues
+5. **Visual validation**: Generate thumbnails and inspect for layout issues
    - Create thumbnail grid: `python scripts/thumbnail.py output.pptx workspace/thumbnails --cols 4`
    - Read and carefully examine the thumbnail image for:
      - **Text cutoff**: Text being cut off by header bars, shapes, or slide edges
@@ -212,6 +217,7 @@ When you need to create a presentation that follows an existing template's desig
    * This inventory file is REQUIRED for selecting appropriate templates in the next step
 
 3. **Create presentation outline based on template inventory**:
+   * If `$num-slides` is specified, plan your presentation to have exactly that many slides. Structure the content and select templates accordingly.
    * Review available templates from step 2.
    * Choose an intro or title template for the first slide. This should be one of the first templates.
    * Choose safe, text-based layouts for the other slides.

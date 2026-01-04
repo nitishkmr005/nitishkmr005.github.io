@@ -1,0 +1,438 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1100" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1400" height="1100" fill="#F8FAFC"/>
+  
+  <!-- Title -->
+  <rect x="0" y="0" width="1400" height="80" fill="url(#headerGrad)"/>
+  <text x="700" y="35" text-anchor="middle" font-size="28" font-weight="bold" fill="white">
+    The Big LLM Architecture Comparison (2024-2025)
+  </text>
+  <text x="700" y="60" text-anchor="middle" font-size="14" fill="#E0E7FF">
+    From DeepSeek V3 to Kimi K2: Key architectural innovations across 11 modern LLMs
+  </text>
+  
+  <!-- Legend -->
+  <g transform="translate(50, 95)">
+    <rect x="0" y="0" width="1300" height="35" rx="6" fill="#F1F5F9"/>
+    <text x="20" y="23" font-size="11" font-weight="bold" fill="#475569">LEGEND:</text>
+    
+    <rect x="100" y="8" width="18" height="18" rx="3" fill="#3B82F6"/>
+    <text x="125" y="22" font-size="10" fill="#475569">MHA</text>
+    
+    <rect x="170" y="8" width="18" height="18" rx="3" fill="#10B981"/>
+    <text x="195" y="22" font-size="10" fill="#475569">GQA</text>
+    
+    <rect x="240" y="8" width="18" height="18" rx="3" fill="#8B5CF6"/>
+    <text x="265" y="22" font-size="10" fill="#475569">MLA</text>
+    
+    <rect x="310" y="8" width="18" height="18" rx="3" fill="#F97316"/>
+    <text x="335" y="22" font-size="10" fill="#475569">MoE</text>
+    
+    <rect x="380" y="8" width="18" height="18" rx="3" fill="#EC4899"/>
+    <text x="405" y="22" font-size="10" fill="#475569">Sliding Window</text>
+    
+    <rect x="510" y="8" width="18" height="18" rx="3" fill="#06B6D4"/>
+    <text x="535" y="22" font-size="10" fill="#475569">Pre-Norm</text>
+    
+    <rect x="610" y="8" width="18" height="18" rx="3" fill="#F59E0B"/>
+    <text x="635" y="22" font-size="10" fill="#475569">Post-Norm</text>
+    
+    <rect x="720" y="8" width="18" height="18" rx="3" fill="#A855F7"/>
+    <text x="745" y="22" font-size="10" fill="#475569">QK-Norm</text>
+    
+    <rect x="820" y="8" width="18" height="18" rx="3" fill="#EF4444"/>
+    <text x="845" y="22" font-size="10" fill="#475569">RoPE</text>
+    
+    <rect x="900" y="8" width="18" height="18" rx="3" fill="#6B7280"/>
+    <text x="925" y="22" font-size="10" fill="#475569">NoPE</text>
+    
+    <rect x="980" y="8" width="18" height="18" rx="3" fill="#FBBF24"/>
+    <text x="1005" y="22" font-size="10" fill="#475569">Shared Expert</text>
+  </g>
+  
+  <!-- Table Header -->
+  <g transform="translate(50, 145)">
+    <rect x="0" y="0" width="1300" height="40" fill="#1E293B" rx="6"/>
+    <text x="80" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Model</text>
+    <text x="185" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Total/Active</text>
+    <text x="290" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Attention</text>
+    <text x="395" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Architecture</text>
+    <text x="520" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Normalization</text>
+    <text x="660" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Position Enc</text>
+    <text x="790" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Special Features</text>
+    <text x="1050" y="26" text-anchor="middle" font-size="11" font-weight="bold" fill="white">Key Innovation</text>
+  </g>
+  
+  <!-- Row 1: DeepSeek V3/R1 -->
+  <g transform="translate(50, 185)">
+    <rect x="0" y="0" width="1300" height="75" fill="white" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="75" fill="#EDE9FE" rx="4"/>
+    <text x="70" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="#5B21B6">DeepSeek</text>
+    <text x="70" y="48" text-anchor="middle" font-size="11" fill="#7C3AED">V3 / R1</text>
+    <text x="70" y="65" text-anchor="middle" font-size="9" fill="#8B5CF6">Dec 2024</text>
+    
+    <text x="185" y="35" text-anchor="middle" font-size="11" fill="#475569">671B / 37B</text>
+    <text x="185" y="52" text-anchor="middle" font-size="9" fill="#94A3B8">(~5.5% active)</text>
+    
+    <rect x="255" y="20" width="65" height="22" rx="4" fill="#8B5CF6"/>
+    <text x="287" y="36" text-anchor="middle" font-size="10" fill="white" font-weight="bold">MLA</text>
+    
+    <rect x="355" y="12" width="75" height="22" rx="4" fill="#F97316"/>
+    <text x="392" y="28" text-anchor="middle" font-size="9" fill="white" font-weight="bold">MoE (256)</text>
+    <rect x="355" y="38" width="75" height="22" rx="4" fill="#FBBF24"/>
+    <text x="392" y="54" text-anchor="middle" font-size="9" fill="#1E293B" font-weight="bold">+Shared Exp</text>
+    
+    <rect x="475" y="25" width="55" height="20" rx="3" fill="#06B6D4"/>
+    <text x="502" y="40" text-anchor="middle" font-size="9" fill="white">Pre-Norm</text>
+    
+    <rect x="620" y="25" width="60" height="20" rx="3" fill="#EF4444"/>
+    <text x="650" y="40" text-anchor="middle" font-size="9" fill="white">RoPE</text>
+    
+    <text x="790" y="30" text-anchor="middle" font-size="9" fill="#475569">256 experts, 8+1 active</text>
+    <text x="790" y="45" text-anchor="middle" font-size="9" fill="#475569">KV compression to latent</text>
+    <text x="790" y="60" text-anchor="middle" font-size="9" fill="#475569">Aux-loss-free load balance</text>
+    
+    <text x="1050" y="35" text-anchor="middle" font-size="10" fill="#5B21B6" font-weight="bold">MLA + Shared Expert</text>
+    <text x="1050" y="52" text-anchor="middle" font-size="9" fill="#64748B">10x KV cache reduction</text>
+  </g>
+  
+  <!-- Row 2: OLMo 2 -->
+  <g transform="translate(50, 265)">
+    <rect x="0" y="0" width="1300" height="65" fill="#F8FAFC" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="65" fill="#DCFCE7" rx="4"/>
+    <text x="70" y="28" text-anchor="middle" font-size="12" font-weight="bold" fill="#166534">OLMo 2</text>
+    <text x="70" y="45" text-anchor="middle" font-size="9" fill="#22C55E">Jan 2025</text>
+    
+    <text x="185" y="30" text-anchor="middle" font-size="11" fill="#475569">7B / 13B</text>
+    <text x="185" y="45" text-anchor="middle" font-size="9" fill="#94A3B8">(Dense)</text>
+    
+    <rect x="255" y="20" width="65" height="22" rx="4" fill="#3B82F6"/>
+    <text x="287" y="36" text-anchor="middle" font-size="10" fill="white" font-weight="bold">MHA</text>
+    
+    <text x="395" y="35" text-anchor="middle" font-size="10" fill="#475569">Dense</text>
+    
+    <rect x="460" y="15" width="55" height="18" rx="3" fill="#F59E0B"/>
+    <text x="487" y="28" text-anchor="middle" font-size="8" fill="white">Post-Norm</text>
+    <rect x="520" y="15" width="55" height="18" rx="3" fill="#A855F7"/>
+    <text x="547" y="28" text-anchor="middle" font-size="8" fill="white">QK-Norm</text>
+    
+    <rect x="620" y="20" width="60" height="20" rx="3" fill="#EF4444"/>
+    <text x="650" y="35" text-anchor="middle" font-size="9" fill="white">RoPE</text>
+    
+    <text x="790" y="30" text-anchor="middle" font-size="9" fill="#475569">Post-Norm inside residual</text>
+    <text x="790" y="45" text-anchor="middle" font-size="9" fill="#475569">Transparent training data</text>
+    
+    <text x="1050" y="30" text-anchor="middle" font-size="10" fill="#166534" font-weight="bold">Training Stability</text>
+    <text x="1050" y="45" text-anchor="middle" font-size="9" fill="#64748B">QK-Norm + Post-Norm</text>
+  </g>
+  
+  <!-- Row 3: Gemma 3 -->
+  <g transform="translate(50, 335)">
+    <rect x="0" y="0" width="1300" height="65" fill="white" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="65" fill="#FCE7F3" rx="4"/>
+    <text x="70" y="28" text-anchor="middle" font-size="12" font-weight="bold" fill="#BE185D">Gemma 3</text>
+    <text x="70" y="45" text-anchor="middle" font-size="9" fill="#EC4899">Mar 2025</text>
+    
+    <text x="185" y="30" text-anchor="middle" font-size="11" fill="#475569">1B-27B</text>
+    <text x="185" y="45" text-anchor="middle" font-size="9" fill="#94A3B8">(Dense)</text>
+    
+    <rect x="245" y="12" width="85" height="18" rx="3" fill="#10B981"/>
+    <text x="287" y="25" text-anchor="middle" font-size="8" fill="white" font-weight="bold">GQA + Sliding</text>
+    <rect x="255" y="33" width="65" height="18" rx="3" fill="#EC4899"/>
+    <text x="287" y="46" text-anchor="middle" font-size="8" fill="white">5:1 ratio</text>
+    
+    <text x="395" y="35" text-anchor="middle" font-size="10" fill="#475569">Dense</text>
+    
+    <rect x="460" y="15" width="55" height="18" rx="3" fill="#06B6D4"/>
+    <text x="487" y="28" text-anchor="middle" font-size="8" fill="white">Pre+Post</text>
+    <rect x="520" y="15" width="55" height="18" rx="3" fill="#A855F7"/>
+    <text x="547" y="28" text-anchor="middle" font-size="8" fill="white">QK-Norm</text>
+    
+    <rect x="620" y="20" width="60" height="20" rx="3" fill="#EF4444"/>
+    <text x="650" y="35" text-anchor="middle" font-size="9" fill="white">RoPE</text>
+    
+    <text x="790" y="30" text-anchor="middle" font-size="9" fill="#475569">5 local : 1 global attention</text>
+    <text x="790" y="45" text-anchor="middle" font-size="9" fill="#475569">Window size: 1024</text>
+    
+    <text x="1050" y="30" text-anchor="middle" font-size="10" fill="#BE185D" font-weight="bold">Sliding Window</text>
+    <text x="1050" y="45" text-anchor="middle" font-size="9" fill="#64748B">Massive KV cache savings</text>
+  </g>
+  
+  <!-- Row 4: Mistral Small 3.1 -->
+  <g transform="translate(50, 405)">
+    <rect x="0" y="0" width="1300" height="65" fill="#F8FAFC" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="65" fill="#FEF3C7" rx="4"/>
+    <text x="70" y="28" text-anchor="middle" font-size="11" font-weight="bold" fill="#92400E">Mistral 3.1</text>
+    <text x="70" y="45" text-anchor="middle" font-size="9" fill="#F59E0B">Mar 2025</text>
+    
+    <text x="185" y="30" text-anchor="middle" font-size="11" fill="#475569">24B</text>
+    <text x="185" y="45" text-anchor="middle" font-size="9" fill="#94A3B8">(Dense)</text>
+    
+    <rect x="255" y="20" width="65" height="22" rx="4" fill="#10B981"/>
+    <text x="287" y="36" text-anchor="middle" font-size="10" fill="white" font-weight="bold">GQA</text>
+    
+    <text x="395" y="35" text-anchor="middle" font-size="10" fill="#475569">Dense</text>
+    
+    <rect x="475" y="20" width="55" height="20" rx="3" fill="#06B6D4"/>
+    <text x="502" y="35" text-anchor="middle" font-size="9" fill="white">Pre-Norm</text>
+    
+    <rect x="620" y="20" width="60" height="20" rx="3" fill="#EF4444"/>
+    <text x="650" y="35" text-anchor="middle" font-size="9" fill="white">RoPE</text>
+    
+    <text x="790" y="30" text-anchor="middle" font-size="9" fill="#475569">No sliding window (disabled)</text>
+    <text x="790" y="45" text-anchor="middle" font-size="9" fill="#475569">Focus on speed</text>
+    
+    <text x="1050" y="30" text-anchor="middle" font-size="10" fill="#92400E" font-weight="bold">Inference Speed</text>
+    <text x="1050" y="45" text-anchor="middle" font-size="9" fill="#64748B">Faster than Gemma 3</text>
+  </g>
+  
+  <!-- Row 5: Llama 4 -->
+  <g transform="translate(50, 475)">
+    <rect x="0" y="0" width="1300" height="65" fill="white" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="65" fill="#DBEAFE" rx="4"/>
+    <text x="70" y="28" text-anchor="middle" font-size="12" font-weight="bold" fill="#1D4ED8">Llama 4</text>
+    <text x="70" y="45" text-anchor="middle" font-size="9" fill="#3B82F6">Apr 2025</text>
+    
+    <text x="185" y="30" text-anchor="middle" font-size="11" fill="#475569">400B / 17B</text>
+    <text x="185" y="45" text-anchor="middle" font-size="9" fill="#94A3B8">(Maverick)</text>
+    
+    <rect x="255" y="20" width="65" height="22" rx="4" fill="#10B981"/>
+    <text x="287" y="36" text-anchor="middle" font-size="10" fill="white" font-weight="bold">GQA</text>
+    
+    <rect x="355" y="20" width="75" height="22" rx="4" fill="#F97316"/>
+    <text x="392" y="36" text-anchor="middle" font-size="9" fill="white" font-weight="bold">MoE (128)</text>
+    
+    <rect x="475" y="20" width="55" height="20" rx="3" fill="#06B6D4"/>
+    <text x="502" y="35" text-anchor="middle" font-size="9" fill="white">Pre-Norm</text>
+    
+    <rect x="620" y="20" width="60" height="20" rx="3" fill="#EF4444"/>
+    <text x="650" y="35" text-anchor="middle" font-size="9" fill="white">RoPE</text>
+    
+    <text x="790" y="30" text-anchor="middle" font-size="9" fill="#475569">128 experts, 2 active</text>
+    <text x="790" y="45" text-anchor="middle" font-size="9" fill="#475569">Alt MoE/Dense layers</text>
+    
+    <text x="1050" y="30" text-anchor="middle" font-size="10" fill="#1D4ED8" font-weight="bold">MoE Adoption</text>
+    <text x="1050" y="45" text-anchor="middle" font-size="9" fill="#64748B">Meta's first MoE</text>
+  </g>
+  
+  <!-- Row 6: Qwen3 -->
+  <g transform="translate(50, 545)">
+    <rect x="0" y="0" width="1300" height="70" fill="#F8FAFC" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="70" fill="#FEE2E2" rx="4"/>
+    <text x="70" y="28" text-anchor="middle" font-size="12" font-weight="bold" fill="#B91C1C">Qwen3</text>
+    <text x="70" y="45" text-anchor="middle" font-size="9" fill="#EF4444">Apr 2025</text>
+    
+    <text x="185" y="25" text-anchor="middle" font-size="10" fill="#475569">0.6B-235B</text>
+    <text x="185" y="40" text-anchor="middle" font-size="9" fill="#94A3B8">Dense + MoE</text>
+    <text x="185" y="55" text-anchor="middle" font-size="8" fill="#94A3B8">(22B active)</text>
+    
+    <rect x="255" y="22" width="65" height="22" rx="4" fill="#10B981"/>
+    <text x="287" y="38" text-anchor="middle" font-size="10" fill="white" font-weight="bold">GQA</text>
+    
+    <rect x="355" y="22" width="75" height="22" rx="4" fill="#F97316"/>
+    <text x="392" y="38" text-anchor="middle" font-size="9" fill="white" font-weight="bold">MoE (128)</text>
+    
+    <rect x="475" y="22" width="55" height="20" rx="3" fill="#06B6D4"/>
+    <text x="502" y="37" text-anchor="middle" font-size="9" fill="white">Pre-Norm</text>
+    
+    <rect x="620" y="22" width="60" height="20" rx="3" fill="#EF4444"/>
+    <text x="650" y="37" text-anchor="middle" font-size="9" fill="white">RoPE</text>
+    
+    <text x="790" y="30" text-anchor="middle" font-size="9" fill="#475569">No shared expert</text>
+    <text x="790" y="45" text-anchor="middle" font-size="9" fill="#475569">Deeper than wider</text>
+    
+    <text x="1050" y="30" text-anchor="middle" font-size="10" fill="#B91C1C" font-weight="bold">Model Variety</text>
+    <text x="1050" y="45" text-anchor="middle" font-size="9" fill="#64748B">7 dense + 2 MoE sizes</text>
+  </g>
+  
+  <!-- Row 7: SmolLM3 -->
+  <g transform="translate(50, 620)">
+    <rect x="0" y="0" width="1300" height="65" fill="white" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="65" fill="#E0E7FF" rx="4"/>
+    <text x="70" y="28" text-anchor="middle" font-size="12" font-weight="bold" fill="#4338CA">SmolLM3</text>
+    <text x="70" y="45" text-anchor="middle" font-size="9" fill="#6366F1">May 2025</text>
+    
+    <text x="185" y="30" text-anchor="middle" font-size="11" fill="#475569">3B</text>
+    <text x="185" y="45" text-anchor="middle" font-size="9" fill="#94A3B8">(Dense)</text>
+    
+    <rect x="255" y="20" width="65" height="22" rx="4" fill="#10B981"/>
+    <text x="287" y="36" text-anchor="middle" font-size="10" fill="white" font-weight="bold">GQA</text>
+    
+    <text x="395" y="35" text-anchor="middle" font-size="10" fill="#475569">Dense</text>
+    
+    <rect x="460" y="15" width="55" height="18" rx="3" fill="#06B6D4"/>
+    <text x="487" y="28" text-anchor="middle" font-size="8" fill="white">Pre-Norm</text>
+    <rect x="520" y="15" width="55" height="18" rx="3" fill="#A855F7"/>
+    <text x="547" y="28" text-anchor="middle" font-size="8" fill="white">QK-Norm</text>
+    
+    <rect x="610" y="12" width="40" height="18" rx="3" fill="#EF4444"/>
+    <text x="630" y="25" text-anchor="middle" font-size="8" fill="white">RoPE</text>
+    <rect x="655" y="12" width="40" height="18" rx="3" fill="#6B7280"/>
+    <text x="675" y="25" text-anchor="middle" font-size="8" fill="white">NoPE</text>
+    <text x="660" y="48" text-anchor="middle" font-size="8" fill="#64748B">(3:1 ratio)</text>
+    
+    <text x="790" y="30" text-anchor="middle" font-size="9" fill="#475569">NoPE in 3/4 layers</text>
+    <text x="790" y="45" text-anchor="middle" font-size="9" fill="#475569">Great length generalization</text>
+    
+    <text x="1050" y="30" text-anchor="middle" font-size="10" fill="#4338CA" font-weight="bold">NoPE Layers</text>
+    <text x="1050" y="45" text-anchor="middle" font-size="9" fill="#64748B">No position encoding!</text>
+  </g>
+  
+  <!-- Row 8: Kimi K2 -->
+  <g transform="translate(50, 690)">
+    <rect x="0" y="0" width="1300" height="70" fill="#F8FAFC" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="70" fill="#D1FAE5" rx="4"/>
+    <text x="70" y="28" text-anchor="middle" font-size="12" font-weight="bold" fill="#047857">Kimi K2</text>
+    <text x="70" y="45" text-anchor="middle" font-size="9" fill="#10B981">Jun 2025</text>
+    
+    <text x="185" y="25" text-anchor="middle" font-size="11" fill="#475569">1T / 32B</text>
+    <text x="185" y="40" text-anchor="middle" font-size="9" fill="#16A34A" font-weight="bold">Largest!</text>
+    <text x="185" y="55" text-anchor="middle" font-size="8" fill="#94A3B8">(~3% active)</text>
+    
+    <rect x="255" y="22" width="65" height="22" rx="4" fill="#8B5CF6"/>
+    <text x="287" y="38" text-anchor="middle" font-size="10" fill="white" font-weight="bold">MLA</text>
+    
+    <rect x="355" y="15" width="75" height="18" rx="3" fill="#F97316"/>
+    <text x="392" y="28" text-anchor="middle" font-size="8" fill="white" font-weight="bold">MoE (384)</text>
+    <rect x="355" y="36" width="75" height="18" rx="3" fill="#FBBF24"/>
+    <text x="392" y="49" text-anchor="middle" font-size="8" fill="#1E293B" font-weight="bold">+Shared Exp</text>
+    
+    <rect x="475" y="22" width="55" height="20" rx="3" fill="#06B6D4"/>
+    <text x="502" y="37" text-anchor="middle" font-size="9" fill="white">Pre-Norm</text>
+    
+    <rect x="620" y="22" width="60" height="20" rx="3" fill="#EF4444"/>
+    <text x="650" y="37" text-anchor="middle" font-size="9" fill="white">RoPE</text>
+    
+    <text x="790" y="25" text-anchor="middle" font-size="9" fill="#475569">384 experts, 8+1 active</text>
+    <text x="790" y="40" text-anchor="middle" font-size="9" fill="#475569">DeepSeek V3 architecture</text>
+    <text x="790" y="55" text-anchor="middle" font-size="9" fill="#475569">Muon optimizer</text>
+    
+    <text x="1050" y="30" text-anchor="middle" font-size="10" fill="#047857" font-weight="bold">Scale + Optimizer</text>
+    <text x="1050" y="45" text-anchor="middle" font-size="9" fill="#64748B">1T params, Muon opt</text>
+  </g>
+  
+  <!-- Row 9: gpt-oss -->
+  <g transform="translate(50, 765)">
+    <rect x="0" y="0" width="1300" height="65" fill="white" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="65" fill="#F3F4F6" rx="4"/>
+    <text x="70" y="28" text-anchor="middle" font-size="12" font-weight="bold" fill="#1F2937">gpt-oss</text>
+    <text x="70" y="45" text-anchor="middle" font-size="9" fill="#6B7280">Aug 2025</text>
+    
+    <text x="185" y="30" text-anchor="middle" font-size="11" fill="#475569">20B / 120B</text>
+    <text x="185" y="45" text-anchor="middle" font-size="9" fill="#94A3B8">(MoE)</text>
+    
+    <rect x="245" y="15" width="85" height="18" rx="3" fill="#10B981"/>
+    <text x="287" y="28" text-anchor="middle" font-size="8" fill="white" font-weight="bold">GQA + Sliding</text>
+    
+    <rect x="355" y="20" width="75" height="22" rx="4" fill="#F97316"/>
+    <text x="392" y="36" text-anchor="middle" font-size="9" fill="white" font-weight="bold">MoE (32)</text>
+    
+    <rect x="475" y="20" width="55" height="20" rx="3" fill="#06B6D4"/>
+    <text x="502" y="35" text-anchor="middle" font-size="9" fill="white">Pre-Norm</text>
+    
+    <rect x="620" y="20" width="60" height="20" rx="3" fill="#EF4444"/>
+    <text x="650" y="35" text-anchor="middle" font-size="9" fill="white">RoPE</text>
+    
+    <text x="790" y="30" text-anchor="middle" font-size="9" fill="#475569">32 large experts, 4 active</text>
+    <text x="790" y="45" text-anchor="middle" font-size="9" fill="#475569">Attention sinks + bias</text>
+    
+    <text x="1050" y="30" text-anchor="middle" font-size="10" fill="#1F2937" font-weight="bold">OpenAI Open-Source</text>
+    <text x="1050" y="45" text-anchor="middle" font-size="9" fill="#64748B">First since GPT-2!</text>
+  </g>
+  
+  <!-- Row 10: Grok 2.5 -->
+  <g transform="translate(50, 835)">
+    <rect x="0" y="0" width="1300" height="65" fill="#F8FAFC" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="65" fill="#FDF4FF" rx="4"/>
+    <text x="70" y="28" text-anchor="middle" font-size="12" font-weight="bold" fill="#86198F">Grok 2.5</text>
+    <text x="70" y="45" text-anchor="middle" font-size="9" fill="#A855F7">Sep 2025</text>
+    
+    <text x="185" y="35" text-anchor="middle" font-size="11" fill="#475569">270B</text>
+    
+    <rect x="255" y="20" width="65" height="22" rx="4" fill="#10B981"/>
+    <text x="287" y="36" text-anchor="middle" font-size="10" fill="white" font-weight="bold">GQA</text>
+    
+    <rect x="355" y="15" width="75" height="18" rx="3" fill="#F97316"/>
+    <text x="392" y="28" text-anchor="middle" font-size="8" fill="white" font-weight="bold">MoE (8)</text>
+    <rect x="355" y="36" width="75" height="18" rx="3" fill="#FBBF24"/>
+    <text x="392" y="49" text-anchor="middle" font-size="8" fill="#1E293B" font-weight="bold">+Shared Exp</text>
+    
+    <rect x="475" y="20" width="55" height="20" rx="3" fill="#06B6D4"/>
+    <text x="502" y="35" text-anchor="middle" font-size="9" fill="white">Pre-Norm</text>
+    
+    <rect x="620" y="20" width="60" height="20" rx="3" fill="#EF4444"/>
+    <text x="650" y="35" text-anchor="middle" font-size="9" fill="white">RoPE</text>
+    
+    <text x="790" y="30" text-anchor="middle" font-size="9" fill="#475569">8 large experts + shared</text>
+    <text x="790" y="45" text-anchor="middle" font-size="9" fill="#475569">xAI production model</text>
+    
+    <text x="1050" y="30" text-anchor="middle" font-size="10" fill="#86198F" font-weight="bold">Prod Model Open</text>
+    <text x="1050" y="45" text-anchor="middle" font-size="9" fill="#64748B">Real production arch</text>
+  </g>
+  
+  <!-- Row 11: GLM-4.5 -->
+  <g transform="translate(50, 905)">
+    <rect x="0" y="0" width="1300" height="65" fill="white" filter="url(#shadow)" rx="4"/>
+    <rect x="0" y="0" width="140" height="65" fill="#CFFAFE" rx="4"/>
+    <text x="70" y="28" text-anchor="middle" font-size="12" font-weight="bold" fill="#0E7490">GLM-4.5</text>
+    <text x="70" y="45" text-anchor="middle" font-size="9" fill="#06B6D4">Sep 2025</text>
+    
+    <text x="185" y="30" text-anchor="middle" font-size="11" fill="#475569">106B / 355B</text>
+    <text x="185" y="45" text-anchor="middle" font-size="9" fill="#94A3B8">(MoE)</text>
+    
+    <rect x="255" y="20" width="65" height="22" rx="4" fill="#10B981"/>
+    <text x="287" y="36" text-anchor="middle" font-size="10" fill="white" font-weight="bold">GQA</text>
+    
+    <rect x="355" y="15" width="75" height="18" rx="3" fill="#F97316"/>
+    <text x="392" y="28" text-anchor="middle" font-size="8" fill="white" font-weight="bold">MoE (64)</text>
+    <rect x="355" y="36" width="75" height="18" rx="3" fill="#FBBF24"/>
+    <text x="392" y="49" text-anchor="middle" font-size="8" fill="#1E293B" font-weight="bold">+Shared Exp</text>
+    
+    <rect x="475" y="20" width="55" height="20" rx="3" fill="#06B6D4"/>
+    <text x="502" y="35" text-anchor="middle" font-size="9" fill="white">Pre-Norm</text>
+    
+    <rect x="620" y="20" width="60" height="20" rx="3" fill="#EF4444"/>
+    <text x="650" y="35" text-anchor="middle" font-size="9" fill="white">RoPE</text>
+    
+    <text x="790" y="30" text-anchor="middle" font-size="9" fill="#475569">3 dense + MoE layers</text>
+    <text x="790" y="45" text-anchor="middle" font-size="9" fill="#475569">Agent-optimized</text>
+    
+    <text x="1050" y="30" text-anchor="middle" font-size="10" fill="#0E7490" font-weight="bold">Function Calling</text>
+    <text x="1050" y="45" text-anchor="middle" font-size="9" fill="#64748B">Best for agents</text>
+  </g>
+  
+  <!-- Footer summary -->
+  <g transform="translate(50, 985)">
+    <rect x="0" y="0" width="1300" height="100" rx="8" fill="#1E293B"/>
+    <text x="650" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="white">
+      🎯 2025 Architecture Trends
+    </text>
+    <g transform="translate(80, 50)">
+      <circle cx="8" cy="8" r="6" fill="#F97316"/>
+      <text x="22" y="13" font-size="12" fill="#E2E8F0">MoE is dominant for large models</text>
+      
+      <circle cx="330" cy="8" r="6" fill="#8B5CF6"/>
+      <text x="344" y="13" font-size="12" fill="#E2E8F0">MLA outperforms GQA</text>
+      
+      <circle cx="580" cy="8" r="6" fill="#EC4899"/>
+      <text x="594" y="13" font-size="12" fill="#E2E8F0">Sliding window saves memory</text>
+      
+      <circle cx="880" cy="8" r="6" fill="#FBBF24"/>
+      <text x="894" y="13" font-size="12" fill="#E2E8F0">Shared experts help</text>
+    </g>
+    <text x="650" y="85" text-anchor="middle" font-size="11" fill="#94A3B8">
+      Based on Sebastian Raschka's "The Big LLM Architecture Comparison" (magazine.sebastianraschka.com)
+    </text>
+  </g>
+</svg>

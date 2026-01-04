@@ -16,7 +16,7 @@ I'm a **Data Scientist** specializing in GenAI and production ML systems. With o
 ### Data Scientist
 **Fidelity Investments** | Bangalore, India | *October 2022 - Present*
 
-- **Led AgentBot 3.0 development**: Built an enterprise GenAI pipeline where LLM-extracted structured JSON from call transcripts powered downstream pre-call insights, in-call assistance, and post-call rep note/email generation—driving **$32M annual cost savings**, **44% reduction in after-call work**, and **1% increased appointment rate**
+- **Led AgentBot 3.0 development**: Built an enterprise scalable LLM evaluation pipeline where LLM-extracted structured JSON from call transcripts powered downstream pre-call insights, in-call assistance, and post-call rep note/email generation—driving **$32M annual cost savings**, **44% reduction in after-call work**, and **1% increased appointment rate**
 - Developed the **Workplace Seminar Recommendation System** for over 15 million participants using two stage architecture utilizing LightGBM and
 neural network, delivering a **2.3× lift in event attendance**, adding 64,600+ participants, and generating over **$197 Million in incremental P/W flows**.
 - **Deployed Helios Collections recommender** to production using LinGreedy contextual multi-armed bandits, modeling each collection as an arm and learning context-aware rewards via ridge regression, resulting in a **2.13× lift in CTR@1** over the baseline in the Helios mobile app

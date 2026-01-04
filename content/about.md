@@ -13,7 +13,7 @@ I'm a **Data Scientist** specializing in GenAI and production ML systems. With o
 
 ## 💼 Professional Experience
 
-### Lead AI/ML Engineer
+### Data Scientist
 **Fidelity Investments** | Bangalore, India | *October 2022 - Present*
 
 - **Led AgentBot 3.0 development**: Built an enterprise GenAI pipeline where LLM-extracted structured JSON from call transcripts powered downstream pre-call insights, in-call assistance, and post-call rep note/email generation—driving **$32M annual cost savings**, **44% reduction in after-call work**, and **1% increased appointment rate**
@@ -45,6 +45,7 @@ I'm a **Data Scientist** specializing in GenAI and production ML systems. With o
 
 ---
 
+<!--
 ## 🚀 Key Projects
 
 ### AgentBot 3.0 - Contact Centre Automation with GenAI
@@ -74,6 +75,7 @@ Identified the most relevant seminar topics for each participant and aggregated 
 - Designed **two-stage modeling approach**: Stage 1 predicts likelihood of attending any seminar; Stage 2 predicts likelihood of attending a particular theme
 - Implemented a **LightGBM binary classifier** for Stage 1 and a **neural network–based multi-label classifier** for Stage 2
 - Trained on **two years of historical attendance data** and validated on out-of-time datasets with consistent performance
+-->
 
 ---
 

@@ -1732,7 +1732,7 @@ The system is open-source and production-ready:
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-org/document-generator
+git clone https://github.com/nitishkmr005/PrismDocs
 
 # Install dependencies
 make setup-prismdocs
@@ -1743,18 +1743,16 @@ python scripts/run_generator.py input.pdf --output pdf
 
 **Resources**:
 
-- [GitHub Repository](https://github.com/your-org/document-generator)
-- [Full Documentation](https://docs.example.com)
-- [API Reference](https://api.example.com/docs)
-- [Example Outputs](https://examples.example.com)
+- [GitHub Repository](https://github.com/nitishkmr005/PrismDocs)
+- [Example Outputs](https://github.com/nitishkmr005/PrismDocs/tree/main/sampleOutputs/Generated%20Documents)
 
 ---
 
 ## About the Author
 
-This system was built by a team passionate about making professional content creation accessible to everyone. We believe that great ideas shouldn't be held back by formatting challenges.
+This system was built for making professional content creation accessible to everyone. I believe that great ideas shouldn't be held back by formatting challenges.
 
-**Questions? Feedback?** Open an issue on GitHub or reach out on Twitter [@prismdocs](https://twitter.com/prismdocs).
+**Questions? Feedback?** Open an issue on GitHub.
 
 ---
 

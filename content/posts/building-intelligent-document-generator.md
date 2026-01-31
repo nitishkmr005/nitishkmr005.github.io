@@ -1717,15 +1717,6 @@ Building this document generator taught us that **intelligent automation is abou
 3. **Observability over Guesswork**: Measure everything
 4. **Flexibility over Lock-in**: Multi-provider, multi-format
 
-### Impact
-
-For teams using this system:
-
-- **500+ hours saved per year** on document formatting
-- **$25,000-50,000 cost savings** (vs. manual labor)
-- **Consistent quality** across all documents
-- **Faster decision-making** with instant summaries
-
 ### Try It Yourself
 
 The system is open-source and production-ready:

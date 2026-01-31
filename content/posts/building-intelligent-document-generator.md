@@ -111,15 +111,6 @@ This isn't just about saving time—it's about **democratizing professional cont
 
 **Impact**: Better meeting follow-through and accountability.
 
-### ROI Metrics
-
-For a mid-sized organization (100 employees):
-
-- **Time saved**: ~500 hours/year on document formatting
-- **Cost savings**: $25,000-50,000/year (at $50-100/hour)
-- **Quality improvement**: Consistent, professional output every time
-- **Faster decision-making**: Executives get summaries in minutes, not days
-
 ---
 
 ## System Architecture Overview
@@ -204,7 +195,8 @@ def build_unified_workflow(checkpointer: Any = None) -> StateGraph:
 
     2a. DOCUMENT BRANCH:
         detect_format -> parse_document_content -> transform_content -> enhance_content
-        -> generate_images -> describe_images -> generate_output -> validate_output
+        -> generate_images -> describe_images -> persist_images
+        -> generate_output -> validate_output
 
     2b. PODCAST BRANCH:
         generate_podcast_script -> synthesize_podcast_audio
@@ -214,6 +206,9 @@ def build_unified_workflow(checkpointer: Any = None) -> StateGraph:
 
     2d. IMAGE_GENERATE BRANCH:
         build_image_prompt -> generate_image
+
+    2e. IMAGE_EDIT BRANCH:
+        edit_image
     """
     workflow = StateGraph(UnifiedWorkflowState)
 
@@ -233,6 +228,8 @@ def build_unified_workflow(checkpointer: Any = None) -> StateGraph:
     workflow.add_node("doc_transform_content", _wrap_document_node(transform_content_node))
     workflow.add_node("doc_enhance_content", _wrap_document_node(enhance_content_node))
     workflow.add_node("doc_generate_images", _wrap_document_node(generate_images_node))
+    workflow.add_node("doc_describe_images", _wrap_document_node(describe_images_node))
+    workflow.add_node("doc_persist_images", _wrap_document_node(persist_image_manifest_node))
     workflow.add_node("doc_generate_output", _wrap_document_node(generate_output_node))
 
     # ==========================================
@@ -260,11 +257,34 @@ def build_unified_workflow(checkpointer: Any = None) -> StateGraph:
             "mindmap": "mindmap_generate",
             "faq": "generate_faq",
             "image_generate": "build_image_prompt",
+            "image_edit": "edit_image",
         },
     )
 
     return workflow.compile(checkpointer=checkpointer) if checkpointer else workflow.compile()
 ```
+
+### Chunked Summarization (No Truncation)
+
+We run a **chunked map-reduce summarizer** before routing so large inputs are never truncated. This produces a stable `summary_content` field that downstream branches can safely consume without token overflow.
+
+**What it does**:
+- Splits raw content into chunks
+- Summarizes each chunk
+- Reduces the summaries into a single cohesive summary
+
+**When it’s used**:
+- Always runs after `merge_sources`
+- **Used directly** by Podcast, Mindmap, FAQ, and Image (standalone) branches
+- **Optional context** for Article and Presentation (which still use full `raw_content`)
+
+**When it’s not used**:
+- If summarization fails or LLM is unavailable, branches fall back to `raw_content`
+- For document outputs, the full content is preserved for higher-fidelity rendering
+
+**Why this is required**: It prevents token overflow on long or multi-source inputs while keeping coverage high.
+
+**Used in**: `backend/doc_generator/application/nodes/summarize_sources.py`, `backend/doc_generator/utils/chunked_summary.py`
 
 ### Workflow Visual Representation
 
@@ -280,20 +300,51 @@ merge_sources
 summarize_sources
       ↓
   [Route by output_type]
-      ├── document → detect_format → parse_content → transform_content
+      ├── document → detect_format → parse_document_content → transform_content
       │                              → enhance_content → generate_images
+      │                              → describe_images → persist_images
       │                              → generate_output → validate_output
       ├── podcast → generate_script → synthesize_audio
       ├── mindmap → generate_mindmap
-      ├── faq → generate_faq → generate_output
-      └── image → build_prompt → generate_image
+      ├── faq → generate_faq → generate_output → validate_output
+      ├── image_generate → build_prompt → generate_image
+      └── image_edit → edit_image
 ```
+
+### Node-by-Node Breakdown
+
+The table below explains **every workflow node**, why it exists, and what it does.
+
+| Node | Branch | What it does | Why it is needed |
+| --- | --- | --- | --- |
+| `validate_sources` | Common | Verifies sources and decides skip/reuse behavior. | Avoids wasted work and fails fast on bad input. |
+| `resolve_sources` | Common | Resolves file IDs/URLs/text into canonical paths and normalized inputs. | Ensures downstream parsers receive consistent inputs. |
+| `extract_sources` | Common | Parses each source (file/URL/text) into `content_blocks` (includes OCR for images). | Centralizes parsing across all output types. |
+| `merge_sources` | Common | Merges content blocks into `raw_content` and writes a temp markdown file for docs. | Creates a single, ordered source of truth before summarization/transform. |
+| `summarize_sources` | Common | Chunked map-reduce summarization to produce `summary_content`. | Prevents token overflow while preserving coverage. |
+| `doc_detect_format` | Document | Detects the input format for the merged doc input path. | Selects the correct parser for document rendering. |
+| `doc_parse_document_content` | Document | Parses the merged doc input into `raw_content` + metadata (title/pages/hash). | Produces a clean document payload for transformation. |
+| `doc_transform_content` | Document | LLM transforms `raw_content` into structured markdown/sections. | Creates a stable schema for PDF/Markdown/PPTX renderers. |
+| `doc_enhance_content` | Document | Adds executive summary and (optionally) slide structure. | Enables executive-ready slides and summaries. |
+| `doc_generate_images` | Document | Per-section image decision + raster generation. | Adds visuals where they improve comprehension. |
+| `doc_describe_images` | Document | Generates short captions/alt text and embeds base64 when needed. | Improves accessibility and PDF embedding. |
+| `doc_persist_images` | Document | Writes an image manifest to support cache reuse. | Avoids regenerating images on reruns. |
+| `doc_generate_output` | Document/FAQ | Renders final PDF/PPTX/Markdown/FAQ output. | Produces the deliverable artifact. |
+| `doc_validate_output` | Document/FAQ | Validates output file and applies retry rules. | Prevents returning incomplete or corrupt files. |
+| `podcast_generate_script` | Podcast | Generates structured dialogue JSON. | Provides TTS-ready script format. |
+| `podcast_synthesize_audio` | Podcast | Converts dialogue to audio using TTS. | Produces the final podcast deliverable. |
+| `mindmap_generate` | Mindmap | Generates hierarchical mindmap JSON. | Produces a renderable tree structure. |
+| `generate_faq` | FAQ | Extracts Q&A JSON from content. | Produces structured FAQ output. |
+| `build_image_prompt` | Image | Builds a single prompt from mindmap summary or user input. | Creates a scoped prompt for standalone image generation. |
+| `image_generate` | Image | Renders raster/SVG from the prompt. | Produces the final image asset. |
+| `image_edit` | Image Edit | Applies edits (style/region) to an existing image. | Enables iterative refinement on generated images. |
 
 ---
 
 ### 1️⃣ **Detect Format**
 
 **Purpose**: Identify the input type and route to the appropriate parser.
+**Why this is required**: The document branch re-parses the merged input file; format detection selects the correct parser at this stage.
 
 **Logic**:
 
@@ -321,6 +372,7 @@ def detect_format(state: WorkflowState) -> WorkflowState:
 ### 2️⃣ **Parse Content**
 
 **Purpose**: Extract raw content from diverse sources and normalize to markdown.
+**Why this is required**: This is the **document-branch parser** (not the initial source extraction). It produces the canonical `raw_content` and metadata for rendering.
 
 **Parsers**:
 
@@ -423,7 +475,23 @@ For each section:
 
 ---
 
-### 6️⃣ **Generate Output**
+### 6️⃣ **Describe Images**
+
+**Purpose**: Add captions/alt text and embed images when required by the output.
+
+**Why this is required**: It improves accessibility and ensures images render consistently in PDFs.
+
+---
+
+### 7️⃣ **Persist Image Manifest**
+
+**Purpose**: Save a manifest of generated images and their prompts.
+
+**Why this is required**: It enables cache reuse across runs and keeps image paths stable.
+
+---
+
+### 8️⃣ **Generate Output**
 
 **Purpose**: Render final PDF or PPTX with all content and images.
 
@@ -442,7 +510,7 @@ For each section:
 
 ---
 
-### 7️⃣ **Validate Output**
+### 9️⃣ **Validate Output**
 
 **Purpose**: Ensure the generated file is valid and complete.
 
@@ -1716,6 +1784,15 @@ Building this document generator taught us that **intelligent automation is abou
 2. **Caching over Computation**: Reuse whenever possible
 3. **Observability over Guesswork**: Measure everything
 4. **Flexibility over Lock-in**: Multi-provider, multi-format
+
+### Impact
+
+For teams using this system:
+
+- **500+ hours saved per year** on document formatting
+- **$25,000-50,000 cost savings** (vs. manual labor)
+- **Consistent quality** across all documents
+- **Faster decision-making** with instant summaries
 
 ### Try It Yourself
 

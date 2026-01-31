@@ -663,7 +663,7 @@ class LLMService:
 
 ## LLM Prompts: The Heart of Intelligence
 
-We keep prompts grouped by output format so each deliverable has a clear, scoped set of instructions and an easy-to-follow flow. Image generation is shared across **Article**, **Presentation**, and **Image** outputs, so the full image prompt stack is documented once in the Image section and referenced where it is used.
+We keep prompts grouped by output format so each deliverable has a clear, scoped set of instructions and an easy-to-follow flow. Image generation is shared across **Article** and **Presentation** (document branch) and **Image** (standalone branch), but the prompt paths differ, so both are documented in the Image section below.
 
 ### Article (PDF + Markdown)
 
@@ -671,18 +671,19 @@ We keep prompts grouped by output format so each deliverable has a clear, scoped
 
 **Flow**:
 1. Transform raw content into structured sections
-2. Suggest visuals for the article (optional)
-3. Generate images using the shared image pipeline (if enabled)
+2. Decide per-section visuals (optional)
+3. Generate section images and descriptions (if enabled)
 4. Render to PDF or Markdown
 
 **How the prompts connect**:
-The document branch first transforms raw text into structured JSON (title, sections, takeaways). That JSON becomes the single source of truth for rendering PDF or Markdown. If visuals are enabled, the structured sections are analyzed for visual opportunities, then routed through the shared image pipeline before rendering.
+The document branch first transforms raw text into structured JSON (title, sections, takeaways). That JSON becomes the single source of truth for rendering PDF or Markdown. If visuals are enabled, each section is passed through the image decision prompt, then rendered via the shared image pipeline and optionally described for captions.
 
 **Why this is required**: PDF/Markdown renderers need a stable, structured representation; without it, formatting becomes inconsistent and visuals cannot be reliably attached to the right sections.
 #### Content Transformation System Prompt
 
 This is the baseline system instruction used by the document branch. It enforces strict source fidelity and sets formatting rules for the article structure.
 **Why this is required**: It prevents hallucinations and guarantees consistent structure for downstream renderers.
+**Used in**: `backend/doc_generator/infrastructure/llm/content_generator.py`
 
 ```python
 def get_content_system_prompt() -> str:
@@ -721,6 +722,7 @@ Output format:
 
 This is the user prompt paired with the system prompt above. It supplies the raw content and defines the output JSON schema that downstream renderers consume.
 **Why this is required**: The renderer expects a fixed schema; this prompt is what produces that schema.
+**Used in**: `backend/doc_generator/infrastructure/llm/content_generator.py`
 
 ````python
 def build_generation_prompt(
@@ -801,6 +803,7 @@ Return ONLY the JSON object. No surrounding commentary."""
 
 This helper injects audience-specific constraints into the generation prompt, shaping tone without changing the structure or schema.
 **Why this is required**: It adapts the voice for different audiences without breaking the required JSON structure.
+**Used in**: `backend/doc_generator/infrastructure/llm/content_generator.py`
 
 ```python
 def _audience_guidance(audience: str | None) -> str:
@@ -815,48 +818,7 @@ def _audience_guidance(audience: str | None) -> str:
     return guidance_map.get(audience_key, guidance_map["technical"])
 ```
 
-#### Visualization Suggestions Prompt
-
-If visuals are enabled for article output, this prompt scans the structured content and proposes diagram candidates. Those candidates then flow into the shared image pipeline for actual image generation.
-**Why this is required**: It avoids generating random visuals by only suggesting images when they improve comprehension.
-
-```python
-def visualization_suggestions_system_prompt() -> str:
-    return (
-        "You are a visual communication expert who creates clear, informative diagrams. "
-        "You identify the best visualization type for each concept and structure data precisely. "
-        "Keep all text labels SHORT (under 20 chars) to prevent overlap in diagrams."
-    )
-
-def visualization_suggestions_prompt(content: str, max_visuals: int) -> str:
-    return f"""Analyze this content and suggest visual diagrams that would help explain key concepts.
-Look for:
-1. System architectures or component relationships → architecture diagram
-2. Step-by-step processes or decision flows → flowchart
-3. Comparisons between options/features → comparison_visual
-4. Hierarchical concept relationships → concept_map
-5. Topic overviews with subtopics → mind_map
-
-Content:
-{content[:6000]}
-
-For each visualization opportunity (maximum {max_visuals}), provide structured data.
-IMPORTANT: Keep text labels short (max 20 characters) to prevent overlap.
-
-Return JSON with "visualizations" array. Each visualization must have:
-- type: "architecture", "flowchart", "comparison_visual", "concept_map", or "mind_map"
-- title: Short descriptive title
-- data: Type-specific structured data
-
-Data formats:
-For architecture: {{"components": [...], "connections": [...]}}
-For flowchart: {{"nodes": [...], "edges": [...]}}
-For comparison_visual: {{"items": [...], "categories": [...]}}
-For concept_map: {{"concepts": [...], "relationships": [...]}}
-For mind_map: {{"central": "...", "branches": [...]}}
-
-If no good visualization opportunities exist, return {{"visualizations": []}}"""
-```
+**Implementation note**: A visualization-suggestions prompt exists in the codebase, but the current workflow does not call it. Article visuals are decided by the image decision prompt in the Image section below.
 
 ### Presentation (PPTX)
 
@@ -869,13 +831,14 @@ If no good visualization opportunities exist, return {{"visualizations": []}}"""
 4. Render PPTX
 
 **How the prompts connect**:
-The workflow generates a concise executive summary, then produces a slide-by-slide structure. The slide structure drives the PPTX renderer and also provides context for optional slide visuals, which are generated using the same image pipeline as articles.
+The workflow generates a concise executive summary, then produces a slide-by-slide structure. For PPTX rendering, the generator may re-derive slide structure from extracted sections to ensure titles and bullets align to the final markdown. Slide visuals use the same image pipeline as articles.
 
 **Why this is required**: PPTX generation depends on structured slide definitions; without them, layout, bullet limits, and narrative flow drift.
 #### Executive Summary Prompt
 
 This prompt condenses the full content into a short set of leadership-ready bullets. The summary is reused in the title slide and narrative framing.
 **Why this is required**: Executives need fast context; the summary ensures the deck starts with a clear, consistent narrative.
+**Used in**: `backend/doc_generator/infrastructure/llm/service.py`
 
 ```python
 def executive_summary_system_prompt() -> str:
@@ -902,6 +865,7 @@ Respond with ONLY the bullet points, no introduction or conclusion."""
 
 This prompt converts content into slide titles, bullets, and speaker notes. The resulting JSON drives PPTX layout and, if enabled, also informs which slides should receive visuals.
 **Why this is required**: The PPTX renderer needs explicit slide metadata to build decks consistently.
+**Used in**: `backend/doc_generator/infrastructure/llm/service.py`
 
 ```python
 def slide_structure_system_prompt() -> str:
@@ -940,6 +904,60 @@ Respond in JSON format:
 }}"""
 ```
 
+#### Section Slide Structure Prompt (PPTX Section-Based Rendering)
+
+When the PPTX generator builds slides from extracted sections, it uses a section-aligned prompt to keep slide titles and bullets tightly coupled to the markdown sections.
+**Why this is required**: Section-based generation prevents drift between document headings and slide titles.
+**Used in**: `backend/doc_generator/infrastructure/generators/pptx/generator.py`
+
+```python
+def section_slide_structure_system_prompt() -> str:
+    return "You are a presentation designer creating concise, slide-ready content. Always respond with valid JSON."
+
+def section_slide_structure_prompt(sections: list[dict], max_slides: int) -> str:
+    section_blocks = []
+    for idx, section in enumerate(sections[:max_slides], 1):
+        title = section.get("title", f"Section {idx}")
+        content = section.get("content", "")
+        image_hint = section.get("image_hint", "")
+        snippet = content[:1200]
+        section_blocks.append(
+            f"Section {idx}: {title}\n"
+            f"Image hint: {image_hint or 'None'}\n"
+            f"Content:\n{snippet}\n"
+        )
+
+    return f"""Create a presentation outline aligned to the sections below.
+
+Requirements:
+- One slide per section (maximum {max_slides})
+- Title must match the section title exactly
+- 3-4 bullet points per slide, 7-10 words max each
+- Bullets should be parallel, action-led, and slide-ready
+- Avoid filler phrases and long sentences
+- Bullets should align to the section content and image hint
+- Avoid copying sentences verbatim; condense into executive-ready bullets
+- Do NOT include numeric prefixes like "1." or "2.1" in titles or bullets
+- Do not include markdown formatting, only plain text
+- Provide 1-2 sentence speaker notes per slide
+- Use ONLY information from each section; do not add new facts or examples
+
+Sections:
+{chr(10).join(section_blocks)}
+
+Respond in JSON format:
+{{
+  "slides": [
+    {{
+      "section_title": "Exact Section Title",
+      "title": "Exact Section Title",
+      "bullets": ["Point 1", "Point 2"],
+      "speaker_notes": "Brief speaker notes"
+    }}
+  ]
+}}"""
+```
+
 ### Mindmap
 
 **Purpose**: Produce hierarchical topic trees for rapid understanding and planning.
@@ -957,6 +975,7 @@ The system prompt defines a strict JSON shape and labeling rules. The user promp
 
 The system prompt enforces structure and constraints; the user prompt provides the content and sizing guidelines. Together they produce a stable JSON mindmap tree.
 **Why this is required**: It keeps mindmaps balanced and parseable across different content sizes.
+**Used in**: `backend/doc_generator/application/nodes/mindmap_nodes.py`, `backend/doc_generator/application/nodes/image_prompt.py`
 
 ```python
 def mindmap_system_prompt(mode: str) -> str:
@@ -1040,95 +1059,27 @@ CONTENT:
 Generate the mind map JSON now. Return ONLY valid JSON."""
 ```
 
-### Image (Shared Pipeline for Article + Presentation + Image Outputs)
+### Image
 
-**Purpose**: Generate visual assets for standalone images or embedded document visuals.
+**Purpose**: Generate visual assets for embedded document visuals (article/presentation) and standalone image requests.
+
+#### Document Images (Article + Presentation)
 
 **Flow**:
-1. Decide if an image is needed (article/presentation) or accept a user request (image output)
-2. Extract visual concepts from content
-3. Build a high-fidelity image prompt
-4. Generate the image
-5. Optionally add a short description for accessibility and captions
+1. Decide if each section needs a visual and what type it should be
+2. Generate the image prompt and render the raster image
+3. Optionally add a short description for captions and accessibility
 
 **How the prompts connect**:
-For articles and presentations, the pipeline first decides if a visual is warranted. If yes, it extracts specific visual concepts, then builds a detailed generation prompt and creates the image. For the image output format, the pipeline starts directly at concept extraction and prompt building based on the user’s request.
+For articles and presentations, each section is passed through a decision prompt that returns JSON (`needs_image`, `image_type`, `prompt`). If a visual is needed, the prompt is converted into a Gemini image-generation prompt and rendered. A follow-up step can add short descriptions for captions or alt text.
 
-**Why this is required**: It prevents unnecessary image generation, keeps visuals grounded in the source, and standardizes outputs across formats.
-#### Image Detection Prompt
+**Why this is required**: It prevents unnecessary image generation, keeps visuals grounded in the source, and standardizes outputs across document formats.
 
-This prompt is the gatekeeper for article/presentation visuals. It decides whether a section actually needs a visual and what type it should be.
+#### Image Decision Prompt (Per-Section)
+
+This prompt decides whether a section needs a visual and produces the prompt used for generation.
 **Why this is required**: It reduces noise and cost by generating images only when they add value.
-
-```python
-IMAGE_DETECTION_SYSTEM_PROMPT = """You are an expert visual designer who analyzes document sections
-and recommends the best type of visual illustration for each section.
-
-Your goal is to enhance reader understanding by suggesting images that:
-- Clarify complex concepts through visual explanation
-- Set appropriate mood/tone for section introductions
-- Visualize data, processes, and relationships
-- Know when NO image is needed (simple text sections)
-- Use ONLY concepts explicitly present in the section content
-
-You always respond with valid JSON."""
-
-IMAGE_DETECTION_PROMPT = """Analyze this section and decide the best image type to help readers understand the content.
-
-## Section Information
-**Title:** {section_title}
-**Content Preview:** {content_preview}
-
-## Available Image Types
-
-1. **infographic** - Use when:
-   - Complex concept that benefits from visual explanation
-   - Process or system that can be illustrated
-   - Example: "How neural networks work", "The software development lifecycle"
-
-2. **decorative** - Use when:
-   - Section introduction or overview that needs mood-setting
-   - Abstract topic that benefits from thematic imagery
-   - Example: "Introduction to Machine Learning", "Conclusion and Next Steps"
-
-3. **diagram** - Use when:
-   - System architecture with components and connections
-   - Technical relationships between entities
-   - Example: "Database schema", "API architecture"
-
-4. **chart** - Use when:
-   - Data comparison or metrics
-   - Feature comparison between options
-   - Example: "Performance benchmarks", "Feature comparison"
-
-5. **mermaid** - Use when:
-   - Sequential process or workflow
-   - State machines or decision trees
-   - Example: "User authentication flow", "Order processing steps"
-
-6. **none** - Use when:
-   - Simple explanatory text
-   - Already has visual markers/diagrams
-   - Short transitional section
-
-## Response Format
-Return ONLY valid JSON:
-{{
-    "image_type": "infographic|decorative|diagram|chart|mermaid|none",
-    "prompt": "Detailed description for generating the image",
-    "confidence": 0.0 to 1.0
-}}
-
-Important:
-- Use ONLY information present in the section content
-- Do NOT add new concepts, entities, or labels
-- If the section lacks concrete visuals, choose "none" """
-```
-
-#### Image Prompt Decision Logic
-
-This prompt provides stricter decision rules for when to create a visual, minimizing noisy or unnecessary images.
-**Why this is required**: It enforces deterministic criteria so visuals remain intentional, not decorative filler.
+**Used in**: `backend/doc_generator/application/nodes/generate_images.py`
 
 ```python
 def build_prompt_generator_prompt(section_title: str, content_preview: str) -> str:
@@ -1159,60 +1110,11 @@ Return ONLY valid JSON with no extra text:
 If needs_image is false, set image_type to "none" and prompt to ""."""
 ```
 
-#### Concept Extraction Prompt
-
-Once a visual is approved, this prompt extracts concrete entities and relationships from the text so the final image prompt stays grounded in the content.
-**Why this is required**: It preserves source fidelity and avoids invented labels or components.
-
-```python
-CONCEPT_EXTRACTION_SYSTEM_PROMPT = """You are an expert at analyzing technical content and identifying
-concepts that would benefit from visual illustration.
-
-Your task is to extract SPECIFIC visual concepts from the content - not generic descriptions,
-but actual components, relationships, formulas, and comparisons mentioned in the text.
-
-Hard constraint: Use ONLY information explicitly present in the content. Do not infer or invent.
-
-You always respond with valid JSON."""
-
-CONCEPT_EXTRACTION_PROMPT = """Analyze this technical section and identify SPECIFIC concepts that should be visualized.
-
-## Section Information
-**Title:** {section_title}
-**Content:** {content}
-
-## What to Extract
-
-1. **Architecture concepts**: Systems, components, layers, data flows mentioned
-2. **Comparisons**: Features, methods, or approaches being compared
-3. **Processes/Algorithms**: Step-by-step procedures or computations
-4. **Mathematical concepts**: Formulas, equations, or calculations to illustrate
-5. **Hierarchies/Classifications**: Categories, types, or taxonomies
-
-## Response Format
-Return ONLY valid JSON:
-{{
-    "primary_concept": {{
-        "type": "architecture|comparison|process|formula|hierarchy",
-        "title": "Specific title for the visual",
-        "elements": ["List of specific components/items to show"],
-        "relationships": ["How elements connect or relate"],
-        "details": "Key technical details from the content to include"
-    }},
-    "secondary_concepts": [...],
-    "recommended_style": "architecture_diagram|comparison_chart|process_flow|formula_illustration|handwritten_notes",
-    "key_terms": ["Technical terms that must appear in the visual"]
-}}
-
-Important:
-- Use ONLY information present in the section content
-- Do NOT add new concepts, entities, or labels"""
-```
-
 #### Gemini Image Generation Prompts
 
-This step converts extracted concepts into high-fidelity image prompts tailored to the requested visual type.
+This step converts the decision prompt into a high-fidelity image-generation instruction.
 **Why this is required**: Image models need explicit, structured instructions to produce usable, on-brand visuals.
+**Used in**: `backend/doc_generator/infrastructure/image/gemini.py`
 
 ```python
 _STYLE_GUIDANCE = {
@@ -1283,6 +1185,7 @@ Style requirements:
 
 After an image is generated, this prompt creates a short description used for captions or accessibility text.
 **Why this is required**: It provides consistent captions and improves accessibility without manual writing.
+**Used in**: `backend/doc_generator/application/nodes/describe_images.py`
 
 ```python
 def build_image_description_prompt(section_title: str, content: str) -> str:
@@ -1295,6 +1198,44 @@ def build_image_description_prompt(section_title: str, content: str) -> str:
     )
 ```
 
+#### Standalone Image Output (image_generate)
+
+**Flow**:
+1. Build a single prompt from content (mindmap) or user input
+2. Render the image in raster or SVG format
+
+**How the prompts connect**:
+The image output branch first builds a consolidated prompt. If source content exists, it generates a mindmap summary (summarize mode from the Mindmap section) and turns it into a compact prompt; otherwise it uses the user prompt directly. That final prompt is then passed to the image generator.
+
+**Why this is required**: Standalone image requests need a single, well-scoped prompt instead of per-section decisions.
+**Used in**: `backend/doc_generator/application/nodes/generate_image.py`
+
+#### Image Prompt Builder (Mindmap-Based)
+
+**Used in**: `backend/doc_generator/application/nodes/image_prompt.py`
+
+```python
+def _build_image_prompt_from_tree(tree: dict, user_prompt: str) -> str:
+    outline = _build_mindmap_outline(tree.get("nodes", {}))
+    parts: list[str] = []
+
+    parts.append("Create an image that strictly reflects the source content.")
+    if user_prompt:
+        parts.append(f"User focus: {user_prompt}")
+    if tree.get("title"):
+        parts.append(f"Title: {tree['title']}")
+    if tree.get("summary"):
+        parts.append(f"Summary: {tree['summary']}")
+    nodes = tree.get("nodes", {}) or {}
+    if nodes.get("label"):
+        parts.append(f"Central topic: {nodes['label']}")
+    if outline:
+        parts.append(f"Key points:\n{chr(10).join(outline)}")
+    parts.append("Use only these points. Do not add extra concepts or labels.")
+
+    return _clamp_text("\n".join(parts), MAX_IMAGE_PROMPT_CHARS)
+```
+
 ### Podcast
 
 **Purpose**: Generate structured, multi-speaker scripts suitable for TTS synthesis.
@@ -1305,72 +1246,56 @@ def build_image_description_prompt(section_title: str, content: str) -> str:
 3. Return script + audio metadata
 
 **How the prompts connect**:
-The system prompt sets strict JSON structure and speaker rules. The user prompt supplies content and duration targets. The resulting dialogue is then passed to TTS for audio synthesis.
+The podcast branch currently uses a single combined prompt to generate JSON dialogue. That JSON is parsed into speaker/text pairs, then passed to TTS for audio synthesis.
 
 **Why this is required**: TTS expects clean, structured dialogue; consistent JSON prevents synthesis errors and timing drift.
 #### Podcast Script Prompts
 
-These prompts work together to produce a machine-parseable dialogue script that can be used for audio synthesis.
+The prompt below is the exact template used in the podcast script node.
 **Why this is required**: Audio generation depends on predictable speaker tags and chunked dialogue.
+**Used in**: `backend/doc_generator/application/nodes/podcast_script.py`
 
 ```python
-def podcast_system_prompt(style: str, speakers: list[dict]) -> str:
-    """Generate system prompt for podcast script creation."""
-    speaker_names = [s["name"] for s in speakers]
-    speaker_list = ", ".join([f"{s['name']} ({s.get('role', 'host')})" for s in speakers])
-
-    base_prompt = f"""You are an expert podcast scriptwriter who creates engaging dialogue.
-
-Transform content into a podcast script with {len(speakers)} speakers: {speaker_list}.
-
-Return JSON structure:
-- "title": Episode title
-- "description": Brief description (1-2 sentences)
-- "dialogue": Array of {{"speaker": "Name", "text": "Dialogue..."}}
-
-CRITICAL RULES:
-1. Each dialogue entry has exactly two fields: "speaker" and "text"
-2. Speaker names must match exactly: {', '.join(speaker_names)}
-3. Keep "text" to 1-3 sentences (natural speaking chunks)
-4. Include natural speech patterns: "you know", "I mean", "right?"
-5. Return ONLY JSON, no markdown code blocks
-6. ALL information must come from the provided content"""
-
-    # Style-specific instructions added based on style parameter
-    style_instructions = {
-        "conversational": "Friendly, casual chat with humor and personality",
-        "interview": "Host asks questions, expert provides detailed answers",
-        "educational": "One leads explanation, other asks clarifying questions",
-    }
-
-    return base_prompt + f"\n\nSTYLE: {style_instructions.get(style, 'conversational')}"
-
-
-def podcast_script_prompt(content: str, duration_minutes: int, source_count: int) -> str:
-    """Generate user prompt for podcast script."""
-    target_words = duration_minutes * 140   # ~140 words/minute speech rate
-    target_exchanges = duration_minutes * 8  # ~8 exchanges/minute
-
-    return f"""Transform the following content into an engaging podcast script.
-
-TARGET LENGTH:
-- Duration: ~{duration_minutes} minutes
-- Word count: ~{target_words} words
-- Dialogue exchanges: ~{target_exchanges}
-
-CONTENT SOURCES: {source_count}
-
-GUIDELINES:
-1. Cover ALL key points - don't skip important information
-2. Hook the listener from the first line
-3. Natural transitions between topics
-4. Clear conclusion or call-to-action
-5. Both speakers contribute meaningfully
+prompt = f"""Generate a podcast script about the following content.
 
 CONTENT:
-{content}
+{raw_content}
 
-Return ONLY valid JSON with speaker names from the system prompt."""
+REQUIREMENTS:
+- Style: {style}
+- Target duration: {duration_minutes} minutes
+- Speakers: {speaker_list}
+- Based on {source_count} source document(s)
+
+OUTPUT FORMAT (JSON):
+{{
+  "title": "Episode title",
+  "description": "Brief episode description",
+  "dialogue": [
+    {{"speaker": "SpeakerName", "text": "What they say..."}},
+    {{"speaker": "OtherSpeaker", "text": "Their response..."}}
+  ]
+}}
+
+Create an engaging dialogue that covers the key points from the content.
+The dialogue should feel natural and conversational."""
+```
+
+#### TTS Prompt Builder
+
+Once dialogue is generated, the TTS prompt is built by concatenating speaker lines.
+**Used in**: `backend/doc_generator/utils/podcast_utils.py`
+
+```python
+def build_tts_prompt(dialogue: list[dict], speakers: list[dict]) -> str:
+    """Build the TTS prompt from dialogue."""
+    lines = []
+    for entry in dialogue:
+        speaker = entry.get("speaker", "Speaker")
+        text = entry.get("text", "")
+        if text.strip():
+            lines.append(f"{speaker}: {text}")
+    return "\n".join(lines)
 ```
 
 ### FAQ
@@ -1389,6 +1314,7 @@ The prompt takes content and FAQ configuration (count, detail level, audience) a
 
 This prompt is the sole source of truth for FAQ output structure and content.
 **Why this is required**: It ensures consistent schema and avoids post-processing ambiguity.
+**Used in**: `backend/doc_generator/application/nodes/generate_faq.py`
 
 ```python
 def build_faq_extraction_prompt(
@@ -1440,6 +1366,16 @@ Return ONLY valid JSON, no other text."""
 ```
 
 ---
+
+### Wiring Notes (Current Backend)
+
+The following prompts or outputs exist in the codebase but are not currently wired into the main workflow:
+
+- `visualization_suggestions_prompt`: Defined in text prompts, not invoked by any node.
+- `IMAGE_DETECTION_PROMPT`, `CONCEPT_EXTRACTION_PROMPT`, and `IMAGE_DESCRIPTION_PROMPT`: Defined in image prompts, but the active image pipeline uses `build_prompt_generator_prompt` and `build_image_description_prompt` instead.
+- `podcast_system_prompt` and `podcast_script_prompt`: Defined in podcast prompts, while the podcast node uses a combined inline prompt.
+- `enhance_bullets_prompt` and `speaker_notes_prompt`: Defined in LLM service, but PPTX generation does not call them.
+- `structured_content.slides`: Generated by `enhance_content`, but PPTX rendering currently derives slides from markdown sections instead.
 
 ## Intelligent Caching Strategy
 
@@ -1823,4 +1759,3 @@ This system was built by a team passionate about making professional content cre
 ---
 
 _Last updated: January 31, 2026_
-

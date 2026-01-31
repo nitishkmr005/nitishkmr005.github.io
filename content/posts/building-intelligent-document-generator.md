@@ -319,23 +319,23 @@ The table below explains **every workflow node**, why it exists, and what it doe
 | --- | --- | --- | --- |
 | `validate_sources` | Common | Verifies sources and decides skip/reuse behavior. | Avoids wasted work and fails fast on bad input. |
 | `resolve_sources` | Common | Resolves file IDs/URLs/text into canonical paths and normalized inputs. | Ensures downstream parsers receive consistent inputs. |
-| `extract_sources` | Common | Parses each source (file/URL/text) into `content_blocks` (includes OCR for images). | Centralizes parsing across all output types. |
+| Parse Sources (`extract_sources`) | Common | Parses each source (file/URL/text) into `content_blocks` (includes OCR for images). | Centralizes parsing across all output types. |
 | `merge_sources` | Common | Merges content blocks into `raw_content` and writes a temp markdown file for docs. | Creates a single, ordered source of truth before summarization/transform. |
 | `summarize_sources` | Common | Chunked map-reduce summarization to produce `summary_content`. | Prevents token overflow while preserving coverage. |
 | `doc_detect_format` | Document | Detects the input format for the merged doc input path. | Selects the correct parser for document rendering. |
-| `doc_parse_document_content` | Document | Parses the merged doc input into `raw_content` + metadata (title/pages/hash). | Produces a clean document payload for transformation. |
+| Parse Document Input (`doc_parse_document_content`) | Document | Parses the merged doc input into `raw_content` + metadata (title/pages/hash). | Produces a clean document payload for transformation. |
 | `doc_transform_content` | Document | LLM transforms `raw_content` into structured markdown/sections. | Creates a stable schema for PDF/Markdown/PPTX renderers. |
 | `doc_enhance_content` | Document | Adds executive summary and (optionally) slide structure. | Enables executive-ready slides and summaries. |
-| `doc_generate_images` | Document | Per-section image decision + raster generation. | Adds visuals where they improve comprehension. |
+| Generate Section Images (`doc_generate_images`) | Document | Per-section image decision + raster generation. | Adds visuals where they improve comprehension. |
 | `doc_describe_images` | Document | Generates short captions/alt text and embeds base64 when needed. | Improves accessibility and PDF embedding. |
 | `doc_persist_images` | Document | Writes an image manifest to support cache reuse. | Avoids regenerating images on reruns. |
-| `doc_generate_output` | Document/FAQ | Renders final PDF/PPTX/Markdown/FAQ output. | Produces the deliverable artifact. |
+| Render Output (`doc_generate_output`) | Document/FAQ | Renders final PDF/PPTX/Markdown/FAQ output. | Produces the deliverable artifact. |
 | `doc_validate_output` | Document/FAQ | Validates output file and applies retry rules. | Prevents returning incomplete or corrupt files. |
 | `podcast_generate_script` | Podcast | Generates structured dialogue JSON. | Provides TTS-ready script format. |
 | `podcast_synthesize_audio` | Podcast | Converts dialogue to audio using TTS. | Produces the final podcast deliverable. |
 | `mindmap_generate` | Mindmap | Generates hierarchical mindmap JSON. | Produces a renderable tree structure. |
 | `generate_faq` | FAQ | Extracts Q&A JSON from content. | Produces structured FAQ output. |
-| `build_image_prompt` | Image | Builds a single prompt from mindmap summary or user input. | Creates a scoped prompt for standalone image generation. |
+| Build Standalone Image Prompt (`build_image_prompt`) | Image | Builds a single prompt from mindmap summary or user input. | Creates a scoped prompt for standalone image generation. |
 | `image_generate` | Image | Renders raster/SVG from the prompt. | Produces the final image asset. |
 | `image_edit` | Image Edit | Applies edits (style/region) to an existing image. | Enables iterative refinement on generated images. |
 
@@ -369,9 +369,9 @@ def detect_format(state: WorkflowState) -> WorkflowState:
 
 ---
 
-### 2️⃣ **Parse Content**
+### 2️⃣ **Parse Document Input**
 
-**Purpose**: Extract raw content from diverse sources and normalize to markdown.
+**Purpose**: Parse the merged document input and normalize it to markdown.
 **Why this is required**: This is the **document-branch parser** (not the initial source extraction). It produces the canonical `raw_content` and metadata for rendering.
 
 **Parsers**:
@@ -459,7 +459,7 @@ def transform_content_node(state: WorkflowState) -> WorkflowState:
 
 ---
 
-### 5️⃣ **Generate Images**
+### 5️⃣ **Generate Section Images**
 
 **Purpose**: Create relevant, high-quality images for each section.
 
@@ -491,7 +491,7 @@ For each section:
 
 ---
 
-### 8️⃣ **Generate Output**
+### 8️⃣ **Render Output**
 
 **Purpose**: Render final PDF or PPTX with all content and images.
 
@@ -1437,12 +1437,8 @@ Return ONLY valid JSON, no other text."""
 
 ### Wiring Notes (Current Backend)
 
-The following prompts or outputs exist in the codebase but are not currently wired into the main workflow:
+The following output exists in the codebase but is not currently used by the renderer:
 
-- `visualization_suggestions_prompt`: Defined in text prompts, not invoked by any node.
-- `IMAGE_DETECTION_PROMPT`, `CONCEPT_EXTRACTION_PROMPT`, and `IMAGE_DESCRIPTION_PROMPT`: Defined in image prompts, but the active image pipeline uses `build_prompt_generator_prompt` and `build_image_description_prompt` instead.
-- `podcast_system_prompt` and `podcast_script_prompt`: Defined in podcast prompts, while the podcast node uses a combined inline prompt.
-- `enhance_bullets_prompt` and `speaker_notes_prompt`: Defined in LLM service, but PPTX generation does not call them.
 - `structured_content.slides`: Generated by `enhance_content`, but PPTX rendering currently derives slides from markdown sections instead.
 
 ## Intelligent Caching Strategy
@@ -1825,3 +1821,4 @@ This system was built for making professional content creation accessible to eve
 ---
 
 _Last updated: January 31, 2026_
+

@@ -40,7 +40,7 @@ In today's knowledge economy, organizations face a critical challenge: **content
 - **Manual conversion**: Hours spent reformatting content for different audiences
 - **Inconsistent presentation**: No unified visual language across documents
 - **Lost context**: Important information buried in poorly structured files
-- **Time waste**: Developers and content creators spending 20-30% of their time on document formatting
+- **Time waste**: Developers and content creators spending their time on document formatting
 
 ### The Real Cost
 
@@ -322,8 +322,8 @@ The table below explains **every workflow node**, why it exists, and what it doe
 | Parse Sources (`extract_sources`) | Common | Parses each source (file/URL/text) into `content_blocks` (includes OCR for images). | Centralizes parsing across all output types. |
 | `merge_sources` | Common | Merges content blocks into `raw_content` and writes a temp markdown file for docs. | Creates a single, ordered source of truth before summarization/transform. |
 | `summarize_sources` | Common | Chunked map-reduce summarization to produce `summary_content`. | Prevents token overflow while preserving coverage. |
-| `doc_detect_format` | Document | Detects the input format for the merged doc input path. | Selects the correct parser for document rendering. |
-| Parse Document Input (`doc_parse_document_content`) | Document | Parses the merged doc input into `raw_content` + metadata (title/pages/hash). | Produces a clean document payload for transformation. |
+| `doc_detect_format` | Document | Detects the format of the **merged document input** (temp markdown or source file). | Required because this step operates on the merged document file, not the original sources. |
+| Parse Document Input (`doc_parse_document_content`) | Document | Parses the merged doc input into `raw_content` + metadata (title/pages/hash). | Required to generate canonical content and metadata for rendering and caching. |
 | `doc_transform_content` | Document | LLM transforms `raw_content` into structured markdown/sections. | Creates a stable schema for PDF/Markdown/PPTX renderers. |
 | `doc_enhance_content` | Document | Adds executive summary and (optionally) slide structure. | Enables executive-ready slides and summaries. |
 | Generate Section Images (`doc_generate_images`) | Document | Per-section image decision + raster generation. | Adds visuals where they improve comprehension. |
@@ -344,7 +344,7 @@ The table below explains **every workflow node**, why it exists, and what it doe
 ### 1️⃣ **Detect Format**
 
 **Purpose**: Identify the input type and route to the appropriate parser.
-**Why this is required**: The document branch re-parses the merged input file; format detection selects the correct parser at this stage.
+**Why this is required**: The document branch re-parses the **merged input file**, which may be different from individual sources. This step ensures the correct parser is used for rendering and metadata extraction.
 
 **Logic**:
 
@@ -372,7 +372,7 @@ def detect_format(state: WorkflowState) -> WorkflowState:
 ### 2️⃣ **Parse Document Input**
 
 **Purpose**: Parse the merged document input and normalize it to markdown.
-**Why this is required**: This is the **document-branch parser** (not the initial source extraction). It produces the canonical `raw_content` and metadata for rendering.
+**Why this is required**: This is the **document-branch parser** (not the initial source extraction). It produces canonical `raw_content`, title, page count, and content hash needed for rendering and caching.
 
 **Parsers**:
 

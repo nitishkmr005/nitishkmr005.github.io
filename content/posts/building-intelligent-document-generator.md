@@ -1752,8 +1752,8 @@ log_llm_call(
 
 **2. Caching is Not Optional**
 
-- 73% cost reduction
-- 63% time reduction
+- X% cost reduction
+- Y% time reduction
 - Better user experience
 
 **3. Observability from Day One**
@@ -1772,7 +1772,7 @@ log_llm_call(
 
 ## Conclusion
 
-Building this document generator taught us that **intelligent automation is about augmentation, not replacement**. The system doesn't try to be a human writer—it's a tool that handles the tedious parts (formatting, image creation, structure) so humans can focus on the creative parts (ideas, strategy, storytelling).
+Building this document generator taught me that **intelligent automation is about augmentation, not replacement**. The system doesn't try to be a human writer—it's a tool that handles the tedious parts (formatting, image creation, structure) so humans can focus on the creative parts (ideas, strategy, storytelling).
 
 ### Core Principles
 
@@ -1780,15 +1780,6 @@ Building this document generator taught us that **intelligent automation is abou
 2. **Caching over Computation**: Reuse whenever possible
 3. **Observability over Guesswork**: Measure everything
 4. **Flexibility over Lock-in**: Multi-provider, multi-format
-
-### Impact
-
-For teams using this system:
-
-- **500+ hours saved per year** on document formatting
-- **$25,000-50,000 cost savings** (vs. manual labor)
-- **Consistent quality** across all documents
-- **Faster decision-making** with instant summaries
 
 ### Try It Yourself
 

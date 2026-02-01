@@ -479,9 +479,14 @@ Raw Content
 
 **Sample Output** (Image Generation + Editing):
 
-| Original Generated Image | Area Selection for Edit | Edited Result |
-|:---:|:---:|:---:|
-| ![Original](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Original%20Generated%20Image.png) | ![Selection](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Image%20Editing%20By%20Selecting%20area%20to%20edit.png) | ![Edited](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Edited%20Image.png) |
+**Original Generated Image:**
+![Original Generated Image](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Original%20Generated%20Image.png)
+
+**Area Selection for Edit:**
+![Area Selection for Edit](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Image%20Editing%20By%20Selecting%20area%20to%20edit.png)
+
+**Edited Result:**
+![Edited Result](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Edited%20Image.png)
 
 *Context-aware image generation with region-based editing capabilities*
 

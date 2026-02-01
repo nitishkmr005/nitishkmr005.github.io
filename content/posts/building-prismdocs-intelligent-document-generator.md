@@ -13,6 +13,8 @@ cover:
 
 *How we built a production-ready system that transforms research papers, web articles, and documents into multiple accessible formats—PDFs, presentations, mind maps, podcasts, and FAQs—using LangGraph and modern LLMs*
 
+> **Try it live**: [PrismDocs Web App](https://prism-docs-pink.vercel.app/) | [GitHub Repository](https://github.com/nitishkmr005/PrismDocs)
+
 ---
 
 ## Table of Contents
@@ -872,7 +874,11 @@ The system doesn't try to be a human writer—it's a tool that handles the tedio
 
 ### Try It Yourself
 
-The system is open-source and production-ready:
+**🚀 Web App**: [Try PrismDocs Live](https://prism-docs-pink.vercel.app/)
+
+Upload your documents and generate PDFs, presentations, mind maps, podcasts, and FAQs directly in your browser—no installation required.
+
+**💻 Self-Hosted**: The system is open-source and production-ready:
 
 ```bash
 # Clone the repo
@@ -887,8 +893,9 @@ python scripts/run_generator.py input.pdf --output pdf
 
 **Resources**:
 
-- [GitHub Repository](https://github.com/nitishkmr005/PrismDocs)
-- [Example Outputs](https://github.com/nitishkmr005/PrismDocs/tree/main/sampleOutputs/Generated%20Documents)
+- 🌐 [Web App](https://prism-docs-pink.vercel.app/)
+- 💻 [GitHub Repository](https://github.com/nitishkmr005/PrismDocs)
+- 📁 [Example Outputs](https://github.com/nitishkmr005/PrismDocs/tree/main/sampleOutputs/Generated%20Documents)
 
 ---
 

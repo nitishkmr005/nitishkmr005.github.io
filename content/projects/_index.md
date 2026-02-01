@@ -1,5 +1,5 @@
 ---
-title: "Projects"
-description: "Showcase of data science and machine learning projects"
+title: "Personal Projects"
+description: "Showcase of data science and machine learning personal projects"
 ---
 

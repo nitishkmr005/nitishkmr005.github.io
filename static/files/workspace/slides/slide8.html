@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex;
+}
+.container {
+  margin: 24pt;
+  width: 672pt;
+  height: 357pt;
+  background: #F8F9FA;
+  border-radius: 12pt;
+  position: relative;
+}
+.accent-bar {
+  position: absolute;
+  left: 0; top: 0;
+  width: 8pt; height: 100%;
+  background: #16A085;
+  border-radius: 12pt 0 0 12pt;
+}
+.header-badge {
+  position: absolute;
+  top: 28pt; left: 40pt;
+  background: #1C2833;
+  padding: 6pt 16pt;
+  border-radius: 4pt;
+}
+.header-badge p {
+  margin: 0;
+  color: #ffffff;
+  font-size: 10pt;
+  font-weight: bold;
+  letter-spacing: 1pt;
+}
+.section-tag {
+  position: absolute;
+  top: 28pt; right: 40pt;
+  background: #E67E22;
+  padding: 6pt 14pt;
+  border-radius: 4pt;
+}
+.section-tag p {
+  margin: 0;
+  color: #ffffff;
+  font-size: 10pt;
+  font-weight: bold;
+}
+.title {
+  position: absolute;
+  top: 75pt; left: 40pt;
+}
+.title h1 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: 24pt;
+  font-weight: bold;
+  color: #1C2833;
+}
+.content {
+  position: absolute;
+  top: 120pt; left: 40pt; right: 40pt;
+  display: flex;
+  gap: 20pt;
+}
+.left-panel {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 10pt;
+  padding: 18pt;
+  box-shadow: 0 2pt 8pt rgba(0,0,0,0.06);
+}
+.left-panel h2 {
+  margin: 0 0 14pt 0;
+  font-size: 14pt;
+  font-weight: bold;
+  color: #1C2833;
+}
+.left-panel p {
+  margin: 0 0 10pt 0;
+  font-size: 11pt;
+  color: #5D6D7E;
+  line-height: 1.5;
+}
+.right-panel {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 10pt;
+  padding: 18pt;
+  box-shadow: 0 2pt 8pt rgba(0,0,0,0.06);
+}
+.right-panel h2 {
+  margin: 0 0 14pt 0;
+  font-size: 14pt;
+  font-weight: bold;
+  color: #1C2833;
+}
+.right-panel p {
+  margin: 0 0 10pt 0;
+  font-size: 11pt;
+  color: #5D6D7E;
+  line-height: 1.5;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="accent-bar"></div>
+  <div class="header-badge"><p>TRANSFORMER INTERNALS</p></div>
+  <div class="section-tag"><p>CONTEXT LENGTH</p></div>
+  <div class="title">
+    <h1>Sparse attention and sliding windows</h1>
+  </div>
+  <div class="content">
+    <div class="left-panel">
+      <h2>Local Windows</h2>
+      <p>Each token attends only to nearby positions. O(n) instead of O(n^2).</p>
+      <p>Works well for most language patterns where locality matters.</p>
+    </div>
+    <div class="right-panel">
+      <h2>Global Tokens</h2>
+      <p>Special positions attend everywhere. Helps long-range dependencies.</p>
+      <p>Longformer and BigBird pioneered this hybrid approach.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

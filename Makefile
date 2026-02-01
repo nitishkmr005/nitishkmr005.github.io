@@ -73,4 +73,3 @@ stats: ## Show site statistics
 preview: ## Build and open site in browser
 	@make build
 	@open public/index.html
-

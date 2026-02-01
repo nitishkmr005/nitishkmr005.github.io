@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { width: 720pt; height: 405pt; margin: 0; display: flex; background: #F6F1E7; font-family: Arial, Helvetica, sans-serif; color: #1C1C1C; }
+  .slide { margin: 24pt; padding: 24pt 28pt; background: #FFFDF8; border: 1pt solid #E2D7C9; border-radius: 16pt; box-sizing: border-box; width: calc(100% - 48pt); height: calc(100% - 48pt); display: flex; flex-direction: column; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; }
+  .kicker { font-size: 10pt; text-transform: uppercase; letter-spacing: 2.5pt; color: #1E5D5A; font-weight: bold; }
+  .section { font-size: 10pt; text-transform: uppercase; letter-spacing: 2pt; color: #D76B38; font-weight: bold; }
+  h2 { font-family: Georgia, "Times New Roman", serif; font-size: 23pt; margin: 12pt 0 6pt; }
+  .timeline { margin-top: 6pt; }
+  .row { display: flex; gap: 12pt; margin: 6pt 0; padding: 6pt 10pt; background: #F9F2E6; border-radius: 10pt; border: 1pt solid #E2D7C9; }
+  .year { font-weight: bold; color: #D76B38; width: 52pt; }
+  .desc { font-size: 12pt; color: #4E4E4E; line-height: 1.3; }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <div class="topbar">
+      <p class="kicker">Transformer Internals</p>
+      <p class="section">Position Embeddings</p>
+    </div>
+    <h2>Four generations of position encoding</h2>
+    <div class="timeline">
+      <div class="row">
+        <p class="year">2017</p>
+        <p class="desc">Learned and sinusoidal embeddings at the input layer. Limited extrapolation.</p>
+      </div>
+      <div class="row">
+        <p class="year">2021</p>
+        <p class="desc">RoPE rotates Q/K vectors, encoding relative position where attention happens.</p>
+      </div>
+      <div class="row">
+        <p class="year">2022</p>
+        <p class="desc">ALiBi adds linear distance bias inside attention; strong length generalization.</p>
+      </div>
+      <div class="row">
+        <p class="year">2024</p>
+        <p class="desc">NoPE experiments drop explicit position signals to reduce overfitting.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

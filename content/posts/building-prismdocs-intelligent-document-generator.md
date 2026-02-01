@@ -409,9 +409,13 @@ Raw Content
 └─────────────────────────────────────────────────────────────┘
 ```
 
-**Sample Outputs**:
-- [Article PDF](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Article%5BPDF%5D.pdf)
-- [Article Markdown](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Article%5BMarkdown%5D.md)
+**Sample Output**:
+
+![Article PDF Sample](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Article%5BPDF%5D.png)
+
+*Professional PDF with AI-generated images, captions, and structured sections*
+
+**Download**: [Article PDF](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Article%5BPDF%5D.pdf) | [Article Markdown](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Article%5BMarkdown%5D.md)
 
 ### 2. Presentation (PPTX)
 
@@ -419,9 +423,13 @@ Raw Content
 
 **What it produces**: Executive-ready PowerPoint decks with title slides, agenda, executive summary, content slides, and embedded visuals.
 
-**Sample Outputs**:
-- [Slides PPTX](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Slides%5BPPTX%5D.pptx)
-- [Slides PDF](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Slides%5BPDF%5D.pdf)
+**Sample Output**:
+
+![Presentation Sample](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Slides%5BPDF%5D.png)
+
+*Executive-ready PowerPoint with title slides, agenda, summary, and embedded visuals*
+
+**Download**: [Slides PPTX](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Slides%5BPPTX%5D.pptx) | [Slides PDF](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Slides%5BPDF%5D.pdf)
 
 ### 3. Mindmap
 
@@ -429,7 +437,13 @@ Raw Content
 
 **What it produces**: Hierarchical JSON tree structures (up to 20 levels deep) with central concepts and nested branches.
 
-**Sample Output**: [Mindmap](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Mindmap.png)
+**Sample Output**:
+
+![Mindmap Sample](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Mindmap.png)
+
+*Hierarchical tree structure visualizing concept relationships and dependencies*
+
+**Download**: [Mindmap PNG](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Mindmap.png)
 
 ### 4. Podcast
 
@@ -437,7 +451,13 @@ Raw Content
 
 **What it produces**: Multi-speaker conversational scripts (JSON) + synthesized audio files (WAV) with natural dialogue flow.
 
-**Sample Output**: [Podcast Audio](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Podcast.wav)
+**Sample Output**:
+
+![Podcast Sample](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Podcast.png)
+
+*Multi-speaker conversational audio with natural dialogue flow*
+
+**Download**: [Podcast Audio WAV](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Podcast.wav)
 
 ### 5. FAQ
 
@@ -445,15 +465,27 @@ Raw Content
 
 **What it produces**: Structured Q&A documents (JSON) with configurable detail levels, answer formats, and audience-specific language.
 
-**Sample Output**: [FAQ Document](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/FAQ.md)
+**Sample Output**:
+
+![FAQ Sample](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/FAQ.png)
+
+*Structured Q&A with configurable detail levels and audience-specific language*
+
+**Download**: [FAQ Markdown](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/FAQ.md)
 
 ### 6. Image
 
 **Best for**: single visual assets like headers, diagrams, or infographics.
 
-**Sample Outputs**:
-- [Original Image](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Original%20Image.png)
-- [Edited Image](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Edited%20Image.png)
+**Sample Output** (Image Generation + Editing):
+
+| Original Generated Image | Area Selection for Edit | Edited Result |
+|:---:|:---:|:---:|
+| ![Original](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Original%20Generated%20Image.png) | ![Selection](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Image%20Editing%20By%20Selecting%20area%20to%20edit.png) | ![Edited](https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/sampleOutputs/Screenshots/Edited%20Image.png) |
+
+*Context-aware image generation with region-based editing capabilities*
+
+**Download**: [Original Image](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Original%20Image.png) | [Edited Image](https://github.com/nitishkmr005/PrismDocs/blob/main/sampleOutputs/Generated%20Documents/Edited%20Image.png)
 
 ---
 
@@ -508,8 +540,8 @@ class LLMService:
 
 **Why Multiple Providers**:
 
-1. **Cost optimization**: Gemini is 10x cheaper than GPT-4 for content
-2. **Capability matching**: Claude excels at visual reasoning
+1. **Cost optimization**: Different providers offer different pricing models
+2. **Capability matching**: Each provider has unique strengths (e.g., Claude for visual reasoning)
 3. **Redundancy**: Fallback if one provider has issues
 4. **Flexibility**: Easy to swap providers per use case
 
@@ -517,7 +549,7 @@ class LLMService:
 
 ## Intelligent Caching Strategy
 
-Our three-layer caching system dramatically reduces costs and latency.
+Our three-layer caching system reduces costs and latency by avoiding redundant LLM calls and image generation.
 
 ### Layer 1: API Request Cache
 
@@ -535,9 +567,7 @@ cache_key = hash({
 })
 ```
 
-**Hit Rate**: ~40% for repeated requests
-
-**Savings**: Full workflow skip—saves 30-60 seconds and $0.20-2.00
+**Benefit**: Full workflow skip for identical requests—eliminates all processing time and API costs
 
 ### Layer 2: Structured Content Cache
 
@@ -545,9 +575,7 @@ cache_key = hash({
 
 **Cache Key**: SHA-256 of normalized markdown
 
-**Hit Rate**: ~25% when content hasn't changed but output format differs
-
-**Savings**: Skips LLM transformation—saves 10-30 seconds and $0.10-0.50
+**Benefit**: Reuses transformed content when only output format changes—skips expensive LLM transformation step
 
 ### Layer 3: Image Cache + Manifest
 
@@ -562,23 +590,14 @@ cache_key = hash({
 }
 ```
 
-**Hit Rate**: ~60% for documents with stable content
-
-**Savings**: Skips image generation—saves 20-40 seconds and $0.50-1.50
+**Benefit**: Avoids regenerating images for unchanged content—saves significant time and image generation costs
 
 ### Combined Impact
 
-For a document processed 5 times with minor edits:
-
-| Run | Request Cache     | Content Cache | Image Cache | Time | Cost  |
-| --- | ----------------- | ------------- | ----------- | ---- | ----- |
-| 1   | Miss              | Miss          | Miss        | 60s  | $2.00 |
-| 2   | Hit               | -             | -           | 1s   | $0.00 |
-| 3   | Miss (new format) | Hit           | Hit         | 15s  | $0.20 |
-| 4   | Miss (edit)       | Miss          | Hit         | 35s  | $0.50 |
-| 5   | Hit               | -             | -           | 1s   | $0.00 |
-
-**Total**: 112s and $2.70 vs. 300s and $10.00 without caching (63% time saved, 73% cost saved)
+The three-layer caching architecture means:
+- **Request cache**: Instant responses for repeated identical requests
+- **Content cache**: Fast regeneration when only format changes (PDF → PPTX)
+- **Image cache**: Stable images across runs with same content
 
 ---
 
@@ -768,8 +787,8 @@ log_llm_call(
 
 **2. Multi-Provider LLM Strategy**
 
-- Cost savings: 70% cheaper than GPT-4 only
-- Flexibility: Can switch providers per use case
+- Cost optimization: Flexibility to choose most cost-effective provider per use case
+- Capability matching: Can leverage each provider's strengths
 - Resilience: Fallback when one provider is down
 
 **3. Content Hash for Caching**
@@ -790,19 +809,19 @@ log_llm_call(
 
 - **Problem**: Generated images sometimes didn't match section content
 - **Solution**: Added image description step that analyzes the actual generated image
-- **Result**: 90% relevance improvement
+- **Result**: Significantly improved image-section relevance
 
 **Challenge 2: Section Numbering Across Chunks**
 
 - **Problem**: Chunks had inconsistent numbering (1, 2, 1, 2 instead of 1, 2, 3, 4)
 - **Solution**: Pass section counter and outline to each chunk
-- **Result**: Perfect numbering consistency
+- **Result**: Consistent numbering across all sections
 
 **Challenge 3: LLM Hallucination**
 
 - **Problem**: LLM occasionally added facts not in source content
-- **Solution**: Explicit system prompt: "No new facts—only restructure"
-- **Result**: 95% fidelity to source content
+- **Solution**: Explicit system prompt: "Use ONLY information present in the source. Do not add new facts."
+- **Result**: High fidelity to source content with minimal hallucinations
 
 **Challenge 4: Rate Limiting**
 
@@ -820,9 +839,9 @@ log_llm_call(
 
 **2. Caching is Not Optional**
 
-- 63% time reduction
-- 73% cost reduction
-- Better user experience
+- Significant time reduction for repeated requests
+- Substantial cost savings on LLM and image generation APIs
+- Better user experience with faster response times
 
 **3. Observability from Day One**
 

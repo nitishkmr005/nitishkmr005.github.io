@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { width: 720pt; height: 405pt; margin: 0; display: flex; background: #F6F1E7; font-family: Arial, Helvetica, sans-serif; color: #1C1C1C; }
+  .slide { margin: 24pt; padding: 24pt 28pt; background: #FFFDF8; border: 1pt solid #E2D7C9; border-radius: 16pt; box-sizing: border-box; width: calc(100% - 48pt); height: calc(100% - 48pt); display: flex; flex-direction: column; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; }
+  .kicker { font-size: 10pt; text-transform: uppercase; letter-spacing: 2.5pt; color: #1E5D5A; font-weight: bold; }
+  .section { font-size: 10pt; text-transform: uppercase; letter-spacing: 2pt; color: #D76B38; font-weight: bold; }
+  h2 { font-family: Georgia, "Times New Roman", serif; font-size: 24pt; margin: 14pt 0 12pt; }
+  .grid { display: flex; gap: 16pt; }
+  .card { flex: 1; background: #F9F2E6; border: 1pt solid #E2D7C9; border-radius: 12pt; padding: 14pt; }
+  .label { font-size: 10pt; letter-spacing: 2pt; text-transform: uppercase; color: #6B6B6B; }
+  .stat { font-size: 24pt; color: #D76B38; font-weight: bold; margin: 6pt 0; }
+  .note { font-size: 12pt; color: #4E4E4E; }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <div class="topbar">
+      <p class="kicker">Transformer Internals</p>
+      <p class="section">Scale Shift</p>
+    </div>
+    <h2>From 512 tokens to 128K</h2>
+    <div class="grid">
+      <div class="card">
+        <p class="label">2017 Baseline</p>
+        <p class="stat">65M params</p>
+        <p class="note">Context length: 512 tokens</p>
+        <p class="note">Full attention, post-norm</p>
+      </div>
+      <div class="card">
+        <p class="label">2024-2025 Scale</p>
+        <p class="stat">100B+ params</p>
+        <p class="note">Context length: 128K tokens</p>
+        <p class="note">Sparse attention + GQA</p>
+      </div>
+      <div class="card">
+        <p class="label">Key Enablers</p>
+        <p class="stat">3 upgrades</p>
+        <p class="note">Position, norm, attention mechanics</p>
+        <p class="note">Efficiency over raw compute</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

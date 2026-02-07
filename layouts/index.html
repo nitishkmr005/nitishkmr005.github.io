@@ -1,0 +1,67 @@
+{{- define "main" }}
+
+<div class="three-column-layout">
+  <!-- Left Sidebar: Profile -->
+  <aside class="left-sidebar">
+    {{ partial "profile-sidebar.html" . }}
+  </aside>
+
+  <!-- Main Content: Posts List -->
+  <main class="main-content" aria-label="Main content">
+    {{- if .Content }}
+    <div class="page-content">{{ .Content }}</div>
+    {{- end }}
+
+    {{- $pages := where site.RegularPages "Section" "posts" }}
+    {{- $paginator := .Paginate $pages }}
+
+    {{- range $index, $page := $paginator.Pages }}
+      {{- $class := "post-entry post-entry-with-thumbnail" }}
+
+      <article class="{{ $class }}">
+        {{- $isHidden := ($page.Param "cover.hiddenInList") | default ($page.Param "cover.hidden") | default false }}
+        {{- if and ($page.Param "cover.image") (not $isHidden) }}
+        <div class="entry-thumbnail">
+          {{- partial "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden) }}
+        </div>
+        {{- end }}
+        
+        <div class="entry-text">
+          <header class="entry-header">
+            <h2>
+              <a href="{{ $page.Permalink }}">{{ $page.Title }}</a>
+              {{- if $page.Draft }}<sup><span class="entry-isdraft">&nbsp;&nbsp;[draft]</span></sup>{{- end }}
+            </h2>
+          </header>
+          
+          {{- if (ne ($page.Param "hideSummary") true) }}
+          <div class="entry-content">
+            <p>{{ $page.Summary | plainify | htmlUnescape | truncate 200 }}{{ if $page.Truncated }}...{{ end }}</p>
+          </div>
+          {{- end }}
+        </div>
+      </article>
+    {{- end }}
+
+    {{- if gt $paginator.TotalPages 1 }}
+    <footer class="page-footer">
+      <nav class="pagination">
+        {{- if $paginator.HasPrev }}
+        <a class="prev" href="{{ $paginator.Prev.URL | absURL }}">« {{ i18n "prev_page" }}</a>
+        {{- end }}
+        {{- if $paginator.HasNext }}
+        <a class="next" href="{{ $paginator.Next.URL | absURL }}">{{ i18n "next_page" }} »</a>
+        {{- end }}
+      </nav>
+    </footer>
+    {{- end }}
+  </main>
+
+  <!-- Right Sidebar: Widgets -->
+  <aside class="right-sidebar">
+    {{ partial "sidebar-widgets.html" . }}
+  </aside>
+</div>
+
+{{- end }}{{/* end main */}}
+

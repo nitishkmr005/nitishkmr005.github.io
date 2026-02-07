@@ -1,0 +1,280 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <defs>
+    <linearGradient id="moeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EA580C;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="routerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06B6D4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0891B2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="expertGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#A855F7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sharedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FBBF24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.2"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="1000" fill="#FDF4FF"/>
+  
+  <!-- Title -->
+  <text x="600" y="45" text-anchor="middle" font-size="34" font-weight="bold" fill="#1E293B">
+    Mixture of Experts (MoE) Architecture
+  </text>
+  <text x="600" y="78" text-anchor="middle" font-size="16" fill="#64748B">
+    Scaling model capacity without proportionally scaling compute: 671B params → 37B active!
+  </text>
+  <text x="600" y="100" text-anchor="middle" font-size="14" fill="#9333EA">
+    Used in: DeepSeek V3/R1, Llama 4, Qwen3 MoE, Kimi K2, gpt-oss, Grok 2.5
+  </text>
+  
+  <!-- Main Comparison: Dense vs MoE -->
+  <g transform="translate(50, 130)">
+    <!-- Dense Model -->
+    <rect x="0" y="0" width="480" height="380" rx="16" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="480" height="55" rx="16" fill="#64748B"/>
+    <rect x="0" y="40" width="480" height="15" fill="#64748B"/>
+    <text x="240" y="38" text-anchor="middle" font-size="20" font-weight="bold" fill="white">
+      Dense Model (Traditional)
+    </text>
+    
+    <!-- Dense architecture -->
+    <g transform="translate(100, 80)">
+      <!-- Input -->
+      <rect x="90" y="0" width="100" height="35" rx="8" fill="#E2E8F0" stroke="#64748B" stroke-width="2"/>
+      <text x="140" y="24" text-anchor="middle" font-size="12" font-weight="600" fill="#475569">Token Input</text>
+      
+      <path d="M 140 35 L 140 60" stroke="#64748B" stroke-width="2" marker-end="url(#arrowGray)"/>
+      
+      <!-- Attention -->
+      <rect x="40" y="60" width="200" height="45" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/>
+      <text x="140" y="88" text-anchor="middle" font-size="13" font-weight="600" fill="#1D4ED8">Attention Layer</text>
+      
+      <path d="M 140 105 L 140 130" stroke="#64748B" stroke-width="2" marker-end="url(#arrowGray)"/>
+      
+      <!-- FFN (Single, large) -->
+      <rect x="20" y="130" width="240" height="80" rx="10" fill="url(#expertGrad)" filter="url(#shadow)"/>
+      <text x="140" y="160" text-anchor="middle" font-size="14" font-weight="bold" fill="white">Feed-Forward Network</text>
+      <text x="140" y="180" text-anchor="middle" font-size="11" fill="#DDD6FE">Single FFN block</text>
+      <text x="140" y="198" text-anchor="middle" font-size="10" fill="#E9D5FF">ALL parameters used!</text>
+      
+      <path d="M 140 210 L 140 235" stroke="#64748B" stroke-width="2" marker-end="url(#arrowGray)"/>
+      
+      <!-- Output -->
+      <rect x="90" y="235" width="100" height="35" rx="8" fill="#E2E8F0" stroke="#64748B" stroke-width="2"/>
+      <text x="140" y="259" text-anchor="middle" font-size="12" font-weight="600" fill="#475569">Output</text>
+    </g>
+    
+    <!-- Dense stats -->
+    <rect x="20" y="300" width="440" height="65" rx="8" fill="#F1F5F9"/>
+    <text x="240" y="325" text-anchor="middle" font-size="13" fill="#475569">
+      <tspan font-weight="bold">Example:</tspan> 70B model = 70B params active per token
+    </text>
+    <text x="240" y="348" text-anchor="middle" font-size="12" fill="#DC2626">
+      ⚠️ Compute scales linearly with total parameters
+    </text>
+  </g>
+  
+  <!-- Arrow between -->
+  <g transform="translate(545, 280)">
+    <path d="M 0 0 L 60 0" stroke="#9333EA" stroke-width="4" stroke-dasharray="8,4"/>
+    <polygon points="60,0 50,-10 50,10" fill="#9333EA"/>
+    <text x="30" y="-15" text-anchor="middle" font-size="12" fill="#9333EA" font-weight="bold">vs</text>
+  </g>
+  
+  <!-- MoE Model -->
+  <g transform="translate(620, 130)">
+    <rect x="0" y="0" width="530" height="380" rx="16" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="530" height="55" rx="16" fill="url(#moeGrad)"/>
+    <rect x="0" y="40" width="530" height="15" fill="url(#moeGrad)"/>
+    <text x="265" y="38" text-anchor="middle" font-size="20" font-weight="bold" fill="white">
+      Mixture of Experts (MoE)
+    </text>
+    
+    <!-- MoE architecture -->
+    <g transform="translate(40, 75)">
+      <!-- Input -->
+      <rect x="185" y="0" width="80" height="30" rx="6" fill="#FED7AA" stroke="#F97316" stroke-width="2"/>
+      <text x="225" y="21" text-anchor="middle" font-size="11" font-weight="600" fill="#C2410C">Token</text>
+      
+      <path d="M 225 30 L 225 55" stroke="#F97316" stroke-width="2" marker-end="url(#arrowOrange)"/>
+      
+      <!-- Attention -->
+      <rect x="140" y="55" width="170" height="35" rx="6" fill="#CFFAFE" stroke="#06B6D4" stroke-width="2"/>
+      <text x="225" y="78" text-anchor="middle" font-size="12" font-weight="600" fill="#0E7490">Attention</text>
+      
+      <path d="M 225 90 L 225 115" stroke="#F97316" stroke-width="2" marker-end="url(#arrowOrange)"/>
+      
+      <!-- Router -->
+      <rect x="155" y="115" width="140" height="40" rx="8" fill="url(#routerGrad)" filter="url(#glow)"/>
+      <text x="225" y="135" text-anchor="middle" font-size="11" font-weight="bold" fill="white">🎯 Router (Gating)</text>
+      <text x="225" y="148" text-anchor="middle" font-size="9" fill="#E0F2FE">Selects top-K experts</text>
+      
+      <!-- Routing arrows -->
+      <path d="M 155 145 L 40 175" stroke="#06B6D4" stroke-width="2" stroke-dasharray="4,2"/>
+      <path d="M 200 155 L 145 175" stroke="#06B6D4" stroke-width="2"/>
+      <path d="M 250 155 L 305 175" stroke="#06B6D4" stroke-width="2"/>
+      <path d="M 295 145 L 410 175" stroke="#06B6D4" stroke-width="2" stroke-dasharray="4,2"/>
+      
+      <!-- Experts (Multiple FFNs) -->
+      <g transform="translate(0, 175)">
+        <!-- Expert 1 (inactive) -->
+        <rect x="0" y="0" width="70" height="55" rx="6" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="35" y="22" text-anchor="middle" font-size="10" fill="#9CA3AF">Expert 1</text>
+        <text x="35" y="35" text-anchor="middle" font-size="8" fill="#9CA3AF">(inactive)</text>
+        
+        <!-- Expert 2 (ACTIVE) -->
+        <rect x="80" y="0" width="70" height="55" rx="6" fill="url(#expertGrad)" filter="url(#glow)"/>
+        <text x="115" y="22" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Expert 2</text>
+        <text x="115" y="37" text-anchor="middle" font-size="8" fill="#DDD6FE">✓ ACTIVE</text>
+        <text x="115" y="48" text-anchor="middle" font-size="7" fill="#E9D5FF">w=0.6</text>
+        
+        <!-- Expert 3 (ACTIVE) -->
+        <rect x="160" y="0" width="70" height="55" rx="6" fill="url(#expertGrad)" filter="url(#glow)"/>
+        <text x="195" y="22" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Expert 3</text>
+        <text x="195" y="37" text-anchor="middle" font-size="8" fill="#DDD6FE">✓ ACTIVE</text>
+        <text x="195" y="48" text-anchor="middle" font-size="7" fill="#E9D5FF">w=0.4</text>
+        
+        <!-- Shared Expert -->
+        <rect x="240" y="0" width="70" height="55" rx="6" fill="url(#sharedGrad)" filter="url(#glow)"/>
+        <text x="275" y="22" text-anchor="middle" font-size="9" fill="#1E293B" font-weight="bold">Shared</text>
+        <text x="275" y="35" text-anchor="middle" font-size="9" fill="#1E293B" font-weight="bold">Expert</text>
+        <text x="275" y="48" text-anchor="middle" font-size="7" fill="#713F12">Always ON</text>
+        
+        <!-- Expert N (inactive) -->
+        <rect x="320" y="0" width="70" height="55" rx="6" fill="#F3F4F6" stroke="#D1D5DB" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="355" y="22" text-anchor="middle" font-size="10" fill="#9CA3AF">Expert N</text>
+        <text x="355" y="35" text-anchor="middle" font-size="8" fill="#9CA3AF">(inactive)</text>
+        
+        <!-- More experts indicator -->
+        <text x="400" y="30" font-size="16" fill="#9CA3AF">...</text>
+      </g>
+      
+      <!-- Weighted sum -->
+      <path d="M 115 230 L 225 265" stroke="#7C3AED" stroke-width="2"/>
+      <path d="M 195 230 L 225 265" stroke="#7C3AED" stroke-width="2"/>
+      <path d="M 275 230 L 225 265" stroke="#F59E0B" stroke-width="2"/>
+      
+      <!-- Output -->
+      <rect x="175" y="265" width="100" height="30" rx="6" fill="#FED7AA" stroke="#F97316" stroke-width="2"/>
+      <text x="225" y="285" text-anchor="middle" font-size="11" font-weight="600" fill="#C2410C">Σ Output</text>
+    </g>
+    
+    <!-- MoE stats -->
+    <rect x="20" y="300" width="490" height="65" rx="8" fill="#FFF7ED"/>
+    <text x="265" y="325" text-anchor="middle" font-size="13" fill="#C2410C">
+      <tspan font-weight="bold">DeepSeek V3:</tspan> 671B total → only 37B active (9 experts)
+    </text>
+    <text x="265" y="348" text-anchor="middle" font-size="12" fill="#16A34A">
+      ✓ 18x more capacity at similar compute cost!
+    </text>
+  </g>
+  
+  <!-- Detailed Explanation Section -->
+  <g transform="translate(50, 530)">
+    <rect x="0" y="0" width="1100" height="280" rx="16" fill="white" filter="url(#shadow)"/>
+    
+    <!-- Section headers -->
+    <text x="30" y="35" font-size="18" font-weight="bold" fill="#1E293B">🔍 How MoE Works</text>
+    
+    <!-- Router explanation -->
+    <g transform="translate(30, 55)">
+      <rect x="0" y="0" width="340" height="200" rx="10" fill="#ECFEFF" stroke="#06B6D4" stroke-width="1"/>
+      <text x="170" y="25" text-anchor="middle" font-size="14" font-weight="bold" fill="#0E7490">The Router (Gating Network)</text>
+      
+      <text x="15" y="55" font-size="11" fill="#475569">1. Takes input token embedding</text>
+      <text x="15" y="75" font-size="11" fill="#475569">2. Computes affinity score for each expert</text>
+      <text x="15" y="95" font-size="11" fill="#475569">3. Selects top-K experts (e.g., K=2 or K=8)</text>
+      <text x="15" y="115" font-size="11" fill="#475569">4. Normalizes weights via softmax</text>
+      
+      <text x="15" y="145" font-size="11" fill="#0E7490" font-weight="bold">Formula:</text>
+      <text x="15" y="165" font-size="10" fill="#475569">g_i = softmax(TopK(W_router · h))</text>
+      <text x="15" y="185" font-size="10" fill="#475569">output = Σ g_i × Expert_i(h)</text>
+    </g>
+    
+    <!-- Shared Expert explanation -->
+    <g transform="translate(390, 55)">
+      <rect x="0" y="0" width="340" height="200" rx="10" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1"/>
+      <text x="170" y="25" text-anchor="middle" font-size="14" font-weight="bold" fill="#B45309">Shared Expert (DeepSeek Innovation)</text>
+      
+      <text x="15" y="55" font-size="11" fill="#475569">• Always active, regardless of routing</text>
+      <text x="15" y="75" font-size="11" fill="#475569">• Captures common patterns (grammar,</text>
+      <text x="15" y="92" font-size="11" fill="#475569">  frequent words, basic formatting)</text>
+      <text x="15" y="115" font-size="11" fill="#475569">• Frees routed experts to specialize</text>
+      
+      <text x="15" y="145" font-size="11" fill="#B45309" font-weight="bold">Analogy:</text>
+      <text x="15" y="165" font-size="10" fill="#475569">Like having a "general knowledge" assistant</text>
+      <text x="15" y="182" font-size="10" fill="#475569">plus domain specialists you call on demand!</text>
+    </g>
+    
+    <!-- Model comparison -->
+    <g transform="translate(750, 55)">
+      <rect x="0" y="0" width="320" height="200" rx="10" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1"/>
+      <text x="160" y="25" text-anchor="middle" font-size="14" font-weight="bold" fill="#6D28D9">Model Configurations</text>
+      
+      <text x="15" y="55" font-size="11" fill="#6D28D9" font-weight="bold">DeepSeek V3:</text>
+      <text x="25" y="72" font-size="10" fill="#475569">256 experts, 8+1 shared active, 671B→37B</text>
+      
+      <text x="15" y="95" font-size="11" fill="#6D28D9" font-weight="bold">Llama 4 Maverick:</text>
+      <text x="25" y="112" font-size="10" fill="#475569">128 experts, 2 active, 400B→17B</text>
+      
+      <text x="15" y="135" font-size="11" fill="#6D28D9" font-weight="bold">Qwen3 235B:</text>
+      <text x="25" y="152" font-size="10" fill="#475569">128 experts, 8 active, no shared expert</text>
+      
+      <text x="15" y="175" font-size="11" fill="#6D28D9" font-weight="bold">Kimi K2:</text>
+      <text x="25" y="192" font-size="10" fill="#475569">384 experts, 8+1 active, 1T→32B</text>
+    </g>
+  </g>
+  
+  <!-- Key Insights Bottom -->
+  <g transform="translate(50, 830)">
+    <rect x="0" y="0" width="1100" height="150" rx="16" fill="#1E293B"/>
+    
+    <text x="550" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="white">
+      💡 Key Insights About MoE
+    </text>
+    
+    <g transform="translate(60, 55)">
+      <circle cx="10" cy="8" r="6" fill="#10B981"/>
+      <text x="25" y="13" font-size="13" fill="#E2E8F0">
+        <tspan font-weight="bold">Sparse Activation:</tspan> Only K experts process each token, rest stay idle
+      </text>
+      
+      <circle cx="10" cy="38" r="6" fill="#F59E0B"/>
+      <text x="25" y="43" font-size="13" fill="#E2E8F0">
+        <tspan font-weight="bold">Capacity vs Compute:</tspan> Huge model capacity for knowledge storage, efficient inference
+      </text>
+      
+      <circle cx="10" cy="68" r="6" fill="#8B5CF6"/>
+      <text x="25" y="73" font-size="13" fill="#E2E8F0">
+        <tspan font-weight="bold">Expert Specialization:</tspan> Different experts learn different skills (code, math, languages...)
+      </text>
+      
+      <circle cx="10" cy="98" r="6" fill="#EC4899"/>
+      <text x="25" y="103" font-size="13" fill="#E2E8F0">
+        <tspan font-weight="bold">Training Challenge:</tspan> Load balancing needed to prevent expert collapse (all tokens → 1 expert)
+      </text>
+    </g>
+  </g>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748B"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#F97316"/>
+    </marker>
+  </defs>
+</svg>

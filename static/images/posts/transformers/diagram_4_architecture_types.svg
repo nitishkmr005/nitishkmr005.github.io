@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 700">
+  <defs>
+    <linearGradient id="encoderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#14b8a6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d9488;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="decoderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="modernGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1400" height="700" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="700" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1e293b" text-anchor="middle">
+    Transformer Architecture Types
+  </text>
+  <text x="700" y="70" font-family="Arial, sans-serif" font-size="16" fill="#64748b" text-anchor="middle">
+    Three Variants: Encoder-Only, Decoder-Only, and Encoder-Decoder
+  </text>
+
+  <!-- Encoder-Only (BERT) -->
+  <g id="encoder-only">
+    <rect x="50" y="110" width="400" height="540" rx="12" fill="white" stroke="#14b8a6" stroke-width="3"/>
+
+    <!-- Header -->
+    <rect x="50" y="110" width="400" height="60" rx="12" fill="#14b8a6"/>
+    <text x="250" y="145" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="white" text-anchor="middle">Encoder-Only</text>
+
+    <!-- Bidirectional badge -->
+    <rect x="150" y="190" width="200" height="30" rx="15" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+    <text x="250" y="210" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#065f46" text-anchor="middle">↔️ Bidirectional</text>
+
+    <!-- Input -->
+    <rect x="100" y="510" width="300" height="35" rx="5" fill="#e0e7ff" stroke="#64748b" stroke-width="1"/>
+    <text x="250" y="532" font-family="Arial, sans-serif" font-size="13" fill="#334155" text-anchor="middle">Input: Text or Sentence</text>
+
+    <!-- Encoder block -->
+    <rect x="120" y="350" width="260" height="140" rx="8" fill="url(#encoderGrad)" stroke="#0d9488" stroke-width="2"/>
+    <text x="250" y="385" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">ENCODER</text>
+    <text x="250" y="410" font-family="Arial, sans-serif" font-size="13" fill="#d1fae5" text-anchor="middle">Self-Attention</text>
+    <text x="250" y="430" font-family="Arial, sans-serif" font-size="13" fill="#d1fae5" text-anchor="middle">↕</text>
+    <text x="250" y="450" font-family="Arial, sans-serif" font-size="13" fill="#d1fae5" text-anchor="middle">Feed Forward</text>
+    <text x="250" y="475" font-family="Arial, sans-serif" font-size="12" fill="#ccfbf1" text-anchor="middle">(×12 layers)</text>
+
+    <!-- Arrow -->
+    <path d="M 250 350 L 250 280" stroke="#14b8a6" stroke-width="3" fill="none" marker-end="url(#arrow-teal)"/>
+
+    <!-- Output -->
+    <rect x="100" y="240" width="300" height="35" rx="5" fill="#d1fae5" stroke="#14b8a6" stroke-width="2"/>
+    <text x="250" y="262" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#065f46" text-anchor="middle">[CLS] → Classification</text>
+
+    <!-- Use cases -->
+    <rect x="70" y="580" width="360" height="50" rx="6" fill="#f0fdfa" stroke="#99f6e4" stroke-width="1"/>
+    <text x="250" y="598" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#134e4a">Use Cases:</text>
+    <text x="250" y="615" font-family="Arial, sans-serif" font-size="11" fill="#134e4a">Classification • Sentiment • NER</text>
+
+    <!-- Examples -->
+    <text x="250" y="640" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0f766e">BERT, RoBERTa</text>
+  </g>
+
+  <!-- Decoder-Only (GPT) - MODERN -->
+  <g id="decoder-only">
+    <rect x="500" y="110" width="400" height="540" rx="12" fill="white" stroke="#10b981" stroke-width="4"/>
+
+    <!-- Header -->
+    <rect x="500" y="110" width="400" height="60" rx="12" fill="url(#modernGrad)"/>
+    <text x="700" y="137" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="white" text-anchor="middle">Decoder-Only ⭐</text>
+    <text x="700" y="158" font-family="Arial, sans-serif" font-size="13" fill="#d1fae5" text-anchor="middle">MODERN STANDARD</text>
+
+    <!-- Causal badge -->
+    <rect x="600" y="190" width="200" height="30" rx="15" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="700" y="210" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#78350f" text-anchor="middle">→ Causal (Masked)</text>
+
+    <!-- Input -->
+    <rect x="550" y="510" width="300" height="35" rx="5" fill="#e0e7ff" stroke="#64748b" stroke-width="1"/>
+    <text x="700" y="532" font-family="Arial, sans-serif" font-size="13" fill="#334155" text-anchor="middle">Input: Prompt or Context</text>
+
+    <!-- Decoder block -->
+    <rect x="570" y="350" width="260" height="140" rx="8" fill="url(#decoderGrad)" stroke="#1e40af" stroke-width="2"/>
+    <text x="700" y="385" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">DECODER</text>
+    <text x="700" y="410" font-family="Arial, sans-serif" font-size="13" fill="#dbeafe" text-anchor="middle">Causal Self-Attention</text>
+    <text x="700" y="430" font-family="Arial, sans-serif" font-size="13" fill="#dbeafe" text-anchor="middle">↕</text>
+    <text x="700" y="450" font-family="Arial, sans-serif" font-size="13" fill="#dbeafe" text-anchor="middle">Feed Forward</text>
+    <text x="700" y="475" font-family="Arial, sans-serif" font-size="12" fill="#bfdbfe" text-anchor="middle">(×32+ layers)</text>
+
+    <!-- Arrow -->
+    <path d="M 700 350 L 700 280" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrow-green)"/>
+
+    <!-- Output -->
+    <rect x="550" y="240" width="300" height="35" rx="5" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+    <text x="700" y="262" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#065f46" text-anchor="middle">Next Token Prediction</text>
+
+    <!-- Use cases -->
+    <rect x="520" y="580" width="360" height="50" rx="6" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1"/>
+    <text x="700" y="598" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#064e3b">Use Cases:</text>
+    <text x="700" y="615" font-family="Arial, sans-serif" font-size="11" fill="#064e3b">Generation • Chat • Completion</text>
+
+    <!-- Examples -->
+    <text x="700" y="640" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#047857">GPT-4, Claude, LLaMA, Mistral</text>
+  </g>
+
+  <!-- Encoder-Decoder -->
+  <g id="encoder-decoder">
+    <rect x="950" y="110" width="400" height="540" rx="12" fill="white" stroke="#a855f7" stroke-width="3"/>
+
+    <!-- Header -->
+    <rect x="950" y="110" width="400" height="60" rx="12" fill="#a855f7"/>
+    <text x="1150" y="145" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="white" text-anchor="middle">Encoder-Decoder</text>
+
+    <!-- Dual attention badge -->
+    <rect x="1030" y="190" width="240" height="30" rx="15" fill="#fae8ff" stroke="#c084fc" stroke-width="2"/>
+    <text x="1150" y="210" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#581c87" text-anchor="middle">Bi + Cross + Causal</text>
+
+    <!-- Source Input -->
+    <rect x="1000" y="510" width="130" height="35" rx="5" fill="#e0e7ff" stroke="#64748b" stroke-width="1"/>
+    <text x="1065" y="532" font-family="Arial, sans-serif" font-size="12" fill="#334155" text-anchor="middle">Source</text>
+
+    <!-- Target Input -->
+    <rect x="1220" y="510" width="130" height="35" rx="5" fill="#e0e7ff" stroke="#64748b" stroke-width="1"/>
+    <text x="1285" y="532" font-family="Arial, sans-serif" font-size="12" fill="#334155" text-anchor="middle">Target</text>
+
+    <!-- Encoder block -->
+    <rect x="985" y="390" width="140" height="100" rx="8" fill="url(#encoderGrad)" stroke="#0d9488" stroke-width="2"/>
+    <text x="1055" y="420" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="white" text-anchor="middle">ENC</text>
+    <text x="1055" y="440" font-family="Arial, sans-serif" font-size="11" fill="#d1fae5" text-anchor="middle">Bidirectional</text>
+    <text x="1055" y="455" font-family="Arial, sans-serif" font-size="11" fill="#d1fae5" text-anchor="middle">Self-Attention</text>
+    <text x="1055" y="475" font-family="Arial, sans-serif" font-size="10" fill="#ccfbf1" text-anchor="middle">(×6 layers)</text>
+
+    <!-- Decoder block -->
+    <rect x="1225" y="390" width="140" height="100" rx="8" fill="url(#decoderGrad)" stroke="#1e40af" stroke-width="2"/>
+    <text x="1295" y="420" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="white" text-anchor="middle">DEC</text>
+    <text x="1295" y="440" font-family="Arial, sans-serif" font-size="11" fill="#dbeafe" text-anchor="middle">Causal</text>
+    <text x="1295" y="455" font-family="Arial, sans-serif" font-size="11" fill="#dbeafe" text-anchor="middle">Self-Attention</text>
+    <text x="1295" y="475" font-family="Arial, sans-serif" font-size="10" fill="#bfdbfe" text-anchor="middle">(×6 layers)</text>
+
+    <!-- Arrows -->
+    <path d="M 1065 510 L 1065 490" stroke="#14b8a6" stroke-width="2" fill="none" marker-end="url(#arrow-teal)"/>
+    <path d="M 1285 510 L 1285 490" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+
+    <!-- Cross attention connection -->
+    <path d="M 1125 440 L 1225 440" stroke="#a855f7" stroke-width="3" fill="none" marker-end="url(#arrow-purple)"/>
+    <text x="1175" y="430" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#a855f7" text-anchor="middle">Cross</text>
+    <text x="1175" y="442" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#a855f7" text-anchor="middle">Attention</text>
+
+    <!-- Arrow to output -->
+    <path d="M 1295 390 L 1295 280" stroke="#a855f7" stroke-width="3" fill="none" marker-end="url(#arrow-purple)"/>
+
+    <!-- Output -->
+    <rect x="1000" y="240" width="300" height="35" rx="5" fill="#fae8ff" stroke="#a855f7" stroke-width="2"/>
+    <text x="1150" y="262" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#581c87" text-anchor="middle">Output Sequence</text>
+
+    <!-- Use cases -->
+    <rect x="970" y="580" width="360" height="50" rx="6" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1"/>
+    <text x="1150" y="598" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#581c87">Use Cases:</text>
+    <text x="1150" y="615" font-family="Arial, sans-serif" font-size="11" fill="#581c87">Translation • Summarization</text>
+
+    <!-- Examples -->
+    <text x="1150" y="640" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#7e22ce">T5, BART, mT5</text>
+  </g>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrow-teal" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#14b8a6" />
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#3b82f6" />
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#10b981" />
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#a855f7" />
+    </marker>
+  </defs>
+</svg>

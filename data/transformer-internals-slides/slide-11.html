@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { width: 720pt; height: 405pt; margin: 0; display: flex; background: #F6F1E7; font-family: Arial, Helvetica, sans-serif; color: #1C1C1C; }
+  .slide { margin: 24pt; padding: 24pt 28pt; background: #FFFDF8; border: 1pt solid #E2D7C9; border-radius: 16pt; box-sizing: border-box; width: calc(100% - 48pt); height: calc(100% - 48pt); display: flex; flex-direction: column; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; }
+  .kicker { font-size: 10pt; text-transform: uppercase; letter-spacing: 2.5pt; color: #1E5D5A; font-weight: bold; }
+  .section { font-size: 10pt; text-transform: uppercase; letter-spacing: 2pt; color: #D76B38; font-weight: bold; }
+  h2 { font-family: Georgia, "Times New Roman", serif; font-size: 24pt; margin: 14pt 0 8pt; }
+  .grid { display: flex; gap: 16pt; margin-top: 6pt; }
+  .card { flex: 1; background: #F9F2E6; border: 1pt solid #E2D7C9; border-radius: 12pt; padding: 12pt; }
+  .card h3 { margin: 0 0 6pt; font-size: 15pt; }
+  .card p { margin: 0; font-size: 12.5pt; color: #4E4E4E; line-height: 1.35; }
+  .code { font-family: "Courier New", monospace; font-size: 11pt; background: #F1E9DD; border: 1pt solid #E2D7C9; border-radius: 8pt; padding: 6pt; margin-top: 6pt; }
+  .code p { margin: 0; }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <div class="topbar">
+      <p class="kicker">Transformer Internals</p>
+      <p class="section">BERT</p>
+    </div>
+    <h2>Encoder-only pipeline</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Input Format</h3>
+        <p>Token + position + segment embeddings summed.</p>
+        <div class="code"><p>[CLS] sentence A [SEP] sentence B [SEP]</p></div>
+      </div>
+      <div class="card">
+        <h3>Pre-training</h3>
+        <p>MLM masks 15% tokens; NSP predicts sentence order.</p>
+        <p>RoBERTa drops NSP and trains longer.</p>
+      </div>
+      <div class="card">
+        <h3>Variants</h3>
+        <p>DistilBERT keeps 97% of accuracy with 60% speedup.</p>
+        <p>RoBERTa improves GLUE with more data.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

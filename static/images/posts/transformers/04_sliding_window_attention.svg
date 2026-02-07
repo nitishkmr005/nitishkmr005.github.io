@@ -1,0 +1,262 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <defs>
+    <linearGradient id="globalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1D4ED8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="localGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gemmaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#EC4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#BE185D;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="850" fill="#F0FDF4"/>
+  
+  <!-- Title -->
+  <text x="600" y="45" text-anchor="middle" font-size="32" font-weight="bold" fill="#1E293B">
+    Sliding Window Attention
+  </text>
+  <text x="600" y="78" text-anchor="middle" font-size="16" fill="#64748B">
+    Reducing KV cache memory by limiting attention to local context windows
+  </text>
+  <text x="600" y="100" text-anchor="middle" font-size="14" fill="#EC4899">
+    Used in: Gemma 2/3, LongFormer | Similar concept in: Mistral (disabled by default)
+  </text>
+  
+  <!-- Global Attention Section -->
+  <g transform="translate(50, 130)">
+    <rect x="0" y="0" width="520" height="420" rx="16" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="520" height="55" rx="16" fill="url(#globalGrad)"/>
+    <rect x="0" y="40" width="520" height="15" fill="url(#globalGrad)"/>
+    <text x="260" y="38" text-anchor="middle" font-size="20" font-weight="bold" fill="white">
+      Global (Full) Attention
+    </text>
+    
+    <!-- Attention matrix visualization -->
+    <g transform="translate(60, 80)">
+      <text x="200" y="0" text-anchor="middle" font-size="14" font-weight="600" fill="#475569">
+        Attention Pattern (n × n matrix)
+      </text>
+      
+      <!-- Keys label -->
+      <text x="200" y="25" text-anchor="middle" font-size="12" fill="#64748B">Keys →</text>
+      
+      <!-- Queries label -->
+      <text x="15" y="145" text-anchor="middle" font-size="12" fill="#64748B" transform="rotate(-90, 15, 145)">Queries →</text>
+      
+      <!-- Matrix grid -->
+      <g transform="translate(50, 40)">
+        <!-- Full attention - all cells filled -->
+        <rect x="0" y="0" width="300" height="200" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+        
+        <!-- Grid lines -->
+        <g stroke="#BFDBFE" stroke-width="1">
+          <line x1="50" y1="0" x2="50" y2="200"/>
+          <line x1="100" y1="0" x2="100" y2="200"/>
+          <line x1="150" y1="0" x2="150" y2="200"/>
+          <line x1="200" y1="0" x2="200" y2="200"/>
+          <line x1="250" y1="0" x2="250" y2="200"/>
+          <line x1="0" y1="40" x2="300" y2="40"/>
+          <line x1="0" y1="80" x2="300" y2="80"/>
+          <line x1="0" y1="120" x2="300" y2="120"/>
+          <line x1="0" y1="160" x2="300" y2="160"/>
+        </g>
+        
+        <!-- Causal mask (lower triangle) -->
+        <path d="M 0 0 L 0 200 L 300 200 L 300 0 Z" fill="url(#globalGrad)" opacity="0.3"/>
+        <!-- Upper triangle (masked) -->
+        <path d="M 0 0 L 300 0 L 300 200 Z" fill="#F1F5F9"/>
+        <text x="200" y="60" text-anchor="middle" font-size="10" fill="#94A3B8">Masked</text>
+        <text x="200" y="75" text-anchor="middle" font-size="10" fill="#94A3B8">(future tokens)</text>
+        
+        <!-- Active region label -->
+        <text x="75" y="160" text-anchor="middle" font-size="10" fill="#1D4ED8" font-weight="bold">
+          All past tokens
+        </text>
+        <text x="75" y="175" text-anchor="middle" font-size="10" fill="#1D4ED8" font-weight="bold">
+          accessible!
+        </text>
+        
+        <!-- Token labels -->
+        <text x="25" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₁</text>
+        <text x="75" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₂</text>
+        <text x="125" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₃</text>
+        <text x="175" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₄</text>
+        <text x="225" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₅</text>
+        <text x="275" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₆</text>
+      </g>
+    </g>
+    
+    <!-- Explanation -->
+    <g transform="translate(30, 310)">
+      <rect x="0" y="0" width="460" height="90" rx="8" fill="#EFF6FF"/>
+      <text x="20" y="25" font-size="13" font-weight="bold" fill="#1D4ED8">📊 Complexity:</text>
+      <text x="20" y="48" font-size="12" fill="#475569">• Memory: O(n²) for attention scores</text>
+      <text x="20" y="68" font-size="12" fill="#475569">• KV Cache: O(n) - stores all past tokens</text>
+      <text x="250" y="48" font-size="12" fill="#DC2626">• Problem: Grows quadratically!</text>
+      <text x="250" y="68" font-size="12" fill="#DC2626">• Long sequences = huge memory</text>
+    </g>
+  </g>
+  
+  <!-- Sliding Window Section -->
+  <g transform="translate(630, 130)">
+    <rect x="0" y="0" width="520" height="420" rx="16" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="520" height="55" rx="16" fill="url(#localGrad)"/>
+    <rect x="0" y="40" width="520" height="15" fill="url(#localGrad)"/>
+    <text x="260" y="38" text-anchor="middle" font-size="20" font-weight="bold" fill="white">
+      Sliding Window (Local) Attention
+    </text>
+    
+    <!-- Attention matrix visualization -->
+    <g transform="translate(60, 80)">
+      <text x="200" y="0" text-anchor="middle" font-size="14" font-weight="600" fill="#475569">
+        Attention Pattern (sparse)
+      </text>
+      
+      <text x="200" y="25" text-anchor="middle" font-size="12" fill="#64748B">Keys →</text>
+      <text x="15" y="145" text-anchor="middle" font-size="12" fill="#64748B" transform="rotate(-90, 15, 145)">Queries →</text>
+      
+      <!-- Matrix grid -->
+      <g transform="translate(50, 40)">
+        <rect x="0" y="0" width="300" height="200" fill="#F1F5F9" stroke="#10B981" stroke-width="2"/>
+        
+        <!-- Grid lines -->
+        <g stroke="#D1FAE5" stroke-width="1">
+          <line x1="50" y1="0" x2="50" y2="200"/>
+          <line x1="100" y1="0" x2="100" y2="200"/>
+          <line x1="150" y1="0" x2="150" y2="200"/>
+          <line x1="200" y1="0" x2="200" y2="200"/>
+          <line x1="250" y1="0" x2="250" y2="200"/>
+          <line x1="0" y1="40" x2="300" y2="40"/>
+          <line x1="0" y1="80" x2="300" y2="80"/>
+          <line x1="0" y1="120" x2="300" y2="120"/>
+          <line x1="0" y1="160" x2="300" y2="160"/>
+        </g>
+        
+        <!-- Sliding window bands (diagonal) -->
+        <!-- Window size = 3 tokens back -->
+        <path d="M 0 0 L 50 0 L 50 40 L 0 40 Z" fill="url(#localGrad)" opacity="0.6"/>
+        <path d="M 0 40 L 100 40 L 100 80 L 0 80 Z" fill="url(#localGrad)" opacity="0.6"/>
+        <path d="M 0 80 L 150 80 L 150 120 L 50 120 L 50 80 Z" fill="url(#localGrad)" opacity="0.6"/>
+        <path d="M 100 120 L 200 120 L 200 160 L 100 160 Z" fill="url(#localGrad)" opacity="0.6"/>
+        <path d="M 150 160 L 250 160 L 250 200 L 150 200 Z" fill="url(#localGrad)" opacity="0.6"/>
+        
+        <!-- Window annotation -->
+        <path d="M 155 122 L 155 158" stroke="#059669" stroke-width="2"/>
+        <path d="M 195 122 L 195 158" stroke="#059669" stroke-width="2"/>
+        <text x="175" y="145" text-anchor="middle" font-size="8" fill="#047857" font-weight="bold">window</text>
+        
+        <!-- Beyond window (not accessible) -->
+        <text x="30" y="160" text-anchor="middle" font-size="8" fill="#DC2626">×</text>
+        <text x="30" y="190" text-anchor="middle" font-size="8" fill="#9CA3AF">too far</text>
+        
+        <!-- Token labels -->
+        <text x="25" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₁</text>
+        <text x="75" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₂</text>
+        <text x="125" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₃</text>
+        <text x="175" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₄</text>
+        <text x="225" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₅</text>
+        <text x="275" y="-8" text-anchor="middle" font-size="9" fill="#64748B">t₆</text>
+      </g>
+    </g>
+    
+    <!-- Explanation -->
+    <g transform="translate(30, 310)">
+      <rect x="0" y="0" width="460" height="90" rx="8" fill="#ECFDF5"/>
+      <text x="20" y="25" font-size="13" font-weight="bold" fill="#059669">📊 Complexity:</text>
+      <text x="20" y="48" font-size="12" fill="#475569">• Memory: O(n × w) where w = window</text>
+      <text x="20" y="68" font-size="12" fill="#475569">• KV Cache: O(w) - only window tokens!</text>
+      <text x="250" y="48" font-size="12" fill="#16A34A">✓ Linear scaling with n</text>
+      <text x="250" y="68" font-size="12" fill="#16A34A">✓ Huge memory savings!</text>
+    </g>
+  </g>
+  
+  <!-- Gemma 3 Hybrid Approach -->
+  <g transform="translate(50, 570)">
+    <rect x="0" y="0" width="1100" height="260" rx="16" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="1100" height="55" rx="16" fill="url(#gemmaGrad)"/>
+    <rect x="0" y="40" width="1100" height="15" fill="url(#gemmaGrad)"/>
+    <text x="550" y="38" text-anchor="middle" font-size="20" font-weight="bold" fill="white">
+      🔷 Gemma 3 Hybrid: 5 Local : 1 Global Ratio
+    </text>
+    
+    <!-- Layer visualization -->
+    <g transform="translate(50, 75)">
+      <text x="0" y="0" font-size="14" font-weight="bold" fill="#1E293B">Transformer Block Pattern:</text>
+      
+      <!-- Layer blocks -->
+      <g transform="translate(0, 20)">
+        <!-- Layer 1-5: Sliding Window -->
+        <rect x="0" y="0" width="120" height="50" rx="6" fill="url(#localGrad)"/>
+        <text x="60" y="22" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Layer 1</text>
+        <text x="60" y="38" text-anchor="middle" font-size="9" fill="#D1FAE5">Sliding (w=1024)</text>
+        
+        <rect x="130" y="0" width="120" height="50" rx="6" fill="url(#localGrad)"/>
+        <text x="190" y="22" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Layer 2</text>
+        <text x="190" y="38" text-anchor="middle" font-size="9" fill="#D1FAE5">Sliding</text>
+        
+        <rect x="260" y="0" width="120" height="50" rx="6" fill="url(#localGrad)"/>
+        <text x="320" y="22" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Layer 3</text>
+        <text x="320" y="38" text-anchor="middle" font-size="9" fill="#D1FAE5">Sliding</text>
+        
+        <rect x="390" y="0" width="120" height="50" rx="6" fill="url(#localGrad)"/>
+        <text x="450" y="22" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Layer 4</text>
+        <text x="450" y="38" text-anchor="middle" font-size="9" fill="#D1FAE5">Sliding</text>
+        
+        <rect x="520" y="0" width="120" height="50" rx="6" fill="url(#localGrad)"/>
+        <text x="580" y="22" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Layer 5</text>
+        <text x="580" y="38" text-anchor="middle" font-size="9" fill="#D1FAE5">Sliding</text>
+        
+        <!-- Layer 6: Global -->
+        <rect x="650" y="0" width="120" height="50" rx="6" fill="url(#globalGrad)" filter="url(#shadow)"/>
+        <text x="710" y="22" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Layer 6</text>
+        <text x="710" y="38" text-anchor="middle" font-size="9" fill="#BFDBFE">GLOBAL ★</text>
+        
+        <!-- Repeat indicator -->
+        <text x="800" y="30" text-anchor="middle" font-size="24" fill="#9CA3AF">→ ...</text>
+        <text x="880" y="35" text-anchor="middle" font-size="11" fill="#64748B">(repeat)</text>
+      </g>
+      
+      <!-- Gemma 2 comparison -->
+      <g transform="translate(0, 95)">
+        <text x="0" y="0" font-size="12" fill="#64748B">Gemma 2: 1:1 ratio (alternating), window=4096</text>
+        <text x="0" y="18" font-size="12" fill="#10B981" font-weight="bold">Gemma 3: 5:1 ratio, window=1024 → even more memory savings!</text>
+      </g>
+    </g>
+    
+    <!-- Why it works -->
+    <g transform="translate(550, 85)">
+      <rect x="0" y="0" width="480" height="150" rx="10" fill="#FDF2F8"/>
+      <text x="240" y="25" text-anchor="middle" font-size="15" font-weight="bold" fill="#BE185D">💡 Why This Works</text>
+      
+      <g transform="translate(20, 45)">
+        <circle cx="10" cy="8" r="5" fill="#EC4899"/>
+        <text x="25" y="12" font-size="12" fill="#475569">Most language dependencies are LOCAL (nearby words)</text>
+        
+        <circle cx="10" cy="35" r="5" fill="#EC4899"/>
+        <text x="25" y="39" font-size="12" fill="#475569">Occasional GLOBAL layers capture long-range patterns</text>
+        
+        <circle cx="10" cy="62" r="5" fill="#EC4899"/>
+        <text x="25" y="66" font-size="12" fill="#475569">KV cache drops significantly with minimal quality loss</text>
+        
+        <circle cx="10" cy="89" r="5" fill="#10B981"/>
+        <text x="25" y="93" font-size="12" fill="#16A34A" font-weight="bold">Ablation: Perplexity barely changes! (see Gemma 3 paper)</text>
+      </g>
+    </g>
+  </g>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3B82F6"/>
+    </marker>
+  </defs>
+</svg>

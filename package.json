@@ -1,0 +1,29 @@
+{
+  "name": "1.portfolio",
+  "version": "1.0.0",
+  "description": "A modern, fast, and beautiful portfolio website built with Hugo and the PaperMod theme. Perfect for data scientists, ML engineers, and AI researchers to showcase their work.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nitishkmr005/nitishkmr005.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nitishkmr005/nitishkmr005.github.io/issues"
+  },
+  "homepage": "https://github.com/nitishkmr005/nitishkmr005.github.io#readme",
+  "dependencies": {
+    "playwright": "^1.57.0",
+    "pptxgenjs": "^4.0.1",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.12.0"
+  }
+}

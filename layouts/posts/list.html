@@ -1,0 +1,70 @@
+{{- define "main" }}
+
+<div class="three-column-layout">
+  <!-- Left Sidebar: Profile -->
+  <aside class="left-sidebar">
+    {{ partial "profile-sidebar.html" . }}
+  </aside>
+
+  <!-- Main Content: Timeline Posts List -->
+  <main class="main-content timeline-main" aria-label="Main content">
+    <header class="page-header">
+      <h1>{{ .Title }}</h1>
+      {{- if .Description }}
+      <div class="post-description">
+        {{ .Description | markdownify }}
+      </div>
+      {{- end }}
+    </header>
+
+    <div class="timeline-layout">
+      <div class="timeline-container">
+        {{- $posts := .Pages }}
+        {{- $currentYear := "" }}
+        
+        {{- range $posts }}
+          {{- $year := .Date.Format "2006" }}
+          
+          {{- if ne $year $currentYear }}
+            {{- $currentYear = $year }}
+            <div class="timeline-year">{{ $year }}</div>
+          {{- end }}
+          
+          <div class="timeline-item">
+            <div class="timeline-date">
+              <span class="timeline-day">{{ .Date.Format "02" }}</span>
+              <span class="timeline-month">{{ .Date.Format "Jan" }}</span>
+            </div>
+            <div class="timeline-marker">
+              <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-content">
+              <header class="timeline-header">
+                <h2>
+                  <a href="{{ .Permalink }}">{{ .Title }}</a>
+                  {{- if .Draft }}
+                  <span class="draft-badge">Draft</span>
+                  {{- end }}
+                </h2>
+              </header>
+              
+              {{- if (ne (.Param "hideSummary") true) }}
+              <div class="timeline-summary">
+                <p>{{ .Summary | plainify | htmlUnescape | truncate 150 }}{{ if .Truncated }}...{{ end }}</p>
+              </div>
+              {{- end }}
+            </div>
+          </div>
+        {{- end }}
+      </div>
+    </div>
+  </main>
+
+  <!-- Right Sidebar: Widgets -->
+  <aside class="right-sidebar">
+    {{ partial "sidebar-widgets.html" . }}
+  </aside>
+</div>
+
+{{- end }}{{/* end main */}}
+

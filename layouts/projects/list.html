@@ -1,0 +1,64 @@
+{{- define "main" }}
+
+<div class="three-column-layout">
+  <!-- Left Sidebar: Profile -->
+  <aside class="left-sidebar">
+    {{ partial "profile-sidebar.html" . }}
+  </aside>
+
+  <!-- Main Content: Projects List -->
+  <main class="main-content timeline-main" aria-label="Main content">
+    <header class="page-header">
+      <h1>{{ .Title }}</h1>
+      {{- if .Description }}
+      <div class="post-description">
+        {{ .Description | markdownify }}
+      </div>
+      {{- end }}
+    </header>
+
+    <div class="projects-grid">
+      {{- range .Pages }}
+      <article class="project-card">
+        {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
+        {{- if and (.Param "cover.image") (not $isHidden) }}
+        <div class="project-cover">
+          {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
+        </div>
+        {{- end }}
+        
+        <div class="project-content">
+          <header>
+            <h2>
+              <a href="{{ .Permalink }}">{{ .Title }}</a>
+              {{- if .Draft }}
+              <span class="draft-badge">Draft</span>
+              {{- end }}
+            </h2>
+          </header>
+          
+          {{- if (ne (.Param "hideSummary") true) }}
+          <div class="project-summary">
+            <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
+          </div>
+          {{- end }}
+          
+          {{- if not (.Param "hideMeta") }}
+          <footer class="project-footer">
+            {{- partial "post_meta.html" . -}}
+          </footer>
+          {{- end }}
+        </div>
+      </article>
+      {{- end }}
+    </div>
+  </main>
+
+  <!-- Right Sidebar: Widgets -->
+  <aside class="right-sidebar">
+    {{ partial "sidebar-widgets.html" . }}
+  </aside>
+</div>
+
+{{- end }}{{/* end main */}}
+

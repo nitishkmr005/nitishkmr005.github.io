@@ -1,0 +1,356 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 850" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <defs>
+    <linearGradient id="preGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4F46E5;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="postGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="olmoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gemmaGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#EC4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#BE185D;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="normGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#A855F7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="850" fill="#FAFBFC"/>
+  
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" font-size="28" font-weight="bold" fill="#1E293B">
+    Normalization Layer Placement in Modern LLMs
+  </text>
+  <text x="600" y="68" text-anchor="middle" font-size="14" fill="#64748B">
+    Where you place RMSNorm significantly impacts training stability and convergence
+  </text>
+  
+  <!-- Pre-Norm (GPT-style) -->
+  <g transform="translate(30, 100)">
+    <rect x="0" y="0" width="270" height="460" rx="12" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="270" height="42" rx="12" fill="url(#preGrad)"/>
+    <rect x="0" y="30" width="270" height="12" fill="url(#preGrad)"/>
+    <text x="135" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="white">
+      Pre-Norm (GPT-2 Style)
+    </text>
+    <text x="135" y="60" text-anchor="middle" font-size="10" fill="#4338CA">
+      GPT-2, Llama, Qwen, Mistral
+    </text>
+    
+    <!-- Architecture diagram -->
+    <g transform="translate(40, 80)">
+      <!-- Input -->
+      <rect x="55" y="0" width="80" height="28" rx="5" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+      <text x="95" y="18" text-anchor="middle" font-size="10" fill="#475569">Input x</text>
+      
+      <line x1="95" y1="28" x2="95" y2="45" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- RMSNorm BEFORE Attention -->
+      <rect x="40" y="45" width="110" height="25" rx="5" fill="url(#normGrad)"/>
+      <text x="95" y="62" text-anchor="middle" font-size="9" fill="white" font-weight="bold">RMSNorm</text>
+      
+      <line x1="95" y1="70" x2="95" y2="85" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- Attention -->
+      <rect x="35" y="85" width="120" height="30" rx="5" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.5"/>
+      <text x="95" y="105" text-anchor="middle" font-size="10" fill="#1D4ED8">Attention</text>
+      
+      <line x1="95" y1="115" x2="95" y2="130" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- Add (residual) -->
+      <circle cx="95" cy="140" r="12" fill="#E0E7FF" stroke="#6366F1" stroke-width="1.5"/>
+      <text x="95" y="144" text-anchor="middle" font-size="10" fill="#4338CA" font-weight="bold">+</text>
+      
+      <!-- Residual connection -->
+      <path d="M 15 14 L 15 140 L 83 140" stroke="#6366F1" stroke-width="1.5" fill="none" stroke-dasharray="4,2"/>
+      
+      <line x1="95" y1="152" x2="95" y2="170" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- RMSNorm BEFORE FFN -->
+      <rect x="40" y="170" width="110" height="25" rx="5" fill="url(#normGrad)"/>
+      <text x="95" y="187" text-anchor="middle" font-size="9" fill="white" font-weight="bold">RMSNorm</text>
+      
+      <line x1="95" y1="195" x2="95" y2="210" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- FFN -->
+      <rect x="35" y="210" width="120" height="30" rx="5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="95" y="230" text-anchor="middle" font-size="10" fill="#92400E">FFN</text>
+      
+      <line x1="95" y1="240" x2="95" y2="255" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- Add (residual) -->
+      <circle cx="95" cy="265" r="12" fill="#E0E7FF" stroke="#6366F1" stroke-width="1.5"/>
+      <text x="95" y="269" text-anchor="middle" font-size="10" fill="#4338CA" font-weight="bold">+</text>
+      
+      <!-- Residual connection 2 -->
+      <path d="M 175 140 L 175 265 L 107 265" stroke="#6366F1" stroke-width="1.5" fill="none" stroke-dasharray="4,2"/>
+    </g>
+    
+    <!-- Description -->
+    <g transform="translate(15, 370)">
+      <rect x="0" y="0" width="240" height="75" rx="6" fill="#EEF2FF"/>
+      <text x="10" y="20" font-size="10" fill="#4338CA" font-weight="bold">✓ Better gradients at init</text>
+      <text x="10" y="38" font-size="10" fill="#4338CA" font-weight="bold">✓ Works without warmup</text>
+      <text x="10" y="56" font-size="10" fill="#475569">Norm BEFORE each sublayer</text>
+    </g>
+  </g>
+  
+  <!-- OLMo 2 Post-Norm Flavor -->
+  <g transform="translate(320, 100)">
+    <rect x="0" y="0" width="270" height="460" rx="12" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="270" height="42" rx="12" fill="url(#olmoGrad)"/>
+    <rect x="0" y="30" width="270" height="12" fill="url(#olmoGrad)"/>
+    <text x="135" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="white">
+      OLMo 2 Post-Norm
+    </text>
+    <text x="135" y="60" text-anchor="middle" font-size="10" fill="#047857">
+      Inside residual, after sublayer
+    </text>
+    
+    <!-- Architecture diagram -->
+    <g transform="translate(40, 80)">
+      <!-- Input -->
+      <rect x="55" y="0" width="80" height="28" rx="5" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+      <text x="95" y="18" text-anchor="middle" font-size="10" fill="#475569">Input x</text>
+      
+      <line x1="95" y1="28" x2="95" y2="55" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- Attention -->
+      <rect x="35" y="55" width="120" height="30" rx="5" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.5"/>
+      <text x="95" y="75" text-anchor="middle" font-size="10" fill="#1D4ED8">Attention</text>
+      
+      <line x1="95" y1="85" x2="95" y2="100" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- RMSNorm AFTER Attention (inside residual!) -->
+      <rect x="40" y="100" width="110" height="25" rx="5" fill="url(#normGrad)"/>
+      <text x="95" y="117" text-anchor="middle" font-size="9" fill="white" font-weight="bold">RMSNorm</text>
+      
+      <line x1="95" y1="125" x2="95" y2="140" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- Add (residual) -->
+      <circle cx="95" cy="150" r="12" fill="#D1FAE5" stroke="#10B981" stroke-width="1.5"/>
+      <text x="95" y="154" text-anchor="middle" font-size="10" fill="#047857" font-weight="bold">+</text>
+      
+      <!-- Residual connection (note: INSIDE includes norm) -->
+      <path d="M 15 14 L 15 150 L 83 150" stroke="#10B981" stroke-width="1.5" fill="none" stroke-dasharray="4,2"/>
+      
+      <line x1="95" y1="162" x2="95" y2="180" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- FFN -->
+      <rect x="35" y="180" width="120" height="30" rx="5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="95" y="200" text-anchor="middle" font-size="10" fill="#92400E">FFN</text>
+      
+      <line x1="95" y1="210" x2="95" y2="225" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- RMSNorm AFTER FFN -->
+      <rect x="40" y="225" width="110" height="25" rx="5" fill="url(#normGrad)"/>
+      <text x="95" y="242" text-anchor="middle" font-size="9" fill="white" font-weight="bold">RMSNorm</text>
+      
+      <line x1="95" y1="250" x2="95" y2="265" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- Add (residual) -->
+      <circle cx="95" cy="275" r="12" fill="#D1FAE5" stroke="#10B981" stroke-width="1.5"/>
+      <text x="95" y="279" text-anchor="middle" font-size="10" fill="#047857" font-weight="bold">+</text>
+      
+      <path d="M 175 150 L 175 275 L 107 275" stroke="#10B981" stroke-width="1.5" fill="none" stroke-dasharray="4,2"/>
+    </g>
+    
+    <!-- Description -->
+    <g transform="translate(15, 370)">
+      <rect x="0" y="0" width="240" height="75" rx="6" fill="#ECFDF5"/>
+      <text x="10" y="20" font-size="10" fill="#047857" font-weight="bold">✓ Improved training stability</text>
+      <text x="10" y="38" font-size="10" fill="#047857" font-weight="bold">✓ Smoother loss curves</text>
+      <text x="10" y="56" font-size="10" fill="#475569">Norm AFTER but inside residual</text>
+    </g>
+  </g>
+  
+  <!-- Gemma 3 Pre+Post Norm -->
+  <g transform="translate(610, 100)">
+    <rect x="0" y="0" width="270" height="460" rx="12" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="270" height="42" rx="12" fill="url(#gemmaGrad2)"/>
+    <rect x="0" y="30" width="270" height="12" fill="url(#gemmaGrad2)"/>
+    <text x="135" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="white">
+      Gemma Pre+Post Norm
+    </text>
+    <text x="135" y="60" text-anchor="middle" font-size="10" fill="#9D174D">
+      Best of both worlds!
+    </text>
+    
+    <!-- Architecture diagram -->
+    <g transform="translate(40, 80)">
+      <!-- Input -->
+      <rect x="55" y="0" width="80" height="28" rx="5" fill="#F1F5F9" stroke="#64748B" stroke-width="1.5"/>
+      <text x="95" y="18" text-anchor="middle" font-size="10" fill="#475569">Input x</text>
+      
+      <line x1="95" y1="28" x2="95" y2="42" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- RMSNorm BEFORE -->
+      <rect x="50" y="42" width="90" height="22" rx="4" fill="url(#normGrad)"/>
+      <text x="95" y="57" text-anchor="middle" font-size="8" fill="white" font-weight="bold">Pre-RMSNorm</text>
+      
+      <line x1="95" y1="64" x2="95" y2="75" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- Attention -->
+      <rect x="35" y="75" width="120" height="28" rx="5" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.5"/>
+      <text x="95" y="93" text-anchor="middle" font-size="10" fill="#1D4ED8">Attention</text>
+      
+      <line x1="95" y1="103" x2="95" y2="115" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- RMSNorm AFTER -->
+      <rect x="50" y="115" width="90" height="22" rx="4" fill="url(#normGrad)"/>
+      <text x="95" y="130" text-anchor="middle" font-size="8" fill="white" font-weight="bold">Post-RMSNorm</text>
+      
+      <line x1="95" y1="137" x2="95" y2="150" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- Add (residual) -->
+      <circle cx="95" cy="160" r="12" fill="#FCE7F3" stroke="#EC4899" stroke-width="1.5"/>
+      <text x="95" y="164" text-anchor="middle" font-size="10" fill="#BE185D" font-weight="bold">+</text>
+      
+      <!-- Residual connection -->
+      <path d="M 15 14 L 15 160 L 83 160" stroke="#EC4899" stroke-width="1.5" fill="none" stroke-dasharray="4,2"/>
+      
+      <line x1="95" y1="172" x2="95" y2="186" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- Pre-RMSNorm for FFN -->
+      <rect x="50" y="186" width="90" height="22" rx="4" fill="url(#normGrad)"/>
+      <text x="95" y="201" text-anchor="middle" font-size="8" fill="white" font-weight="bold">Pre-RMSNorm</text>
+      
+      <line x1="95" y1="208" x2="95" y2="220" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- FFN -->
+      <rect x="35" y="220" width="120" height="28" rx="5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="95" y="238" text-anchor="middle" font-size="10" fill="#92400E">FFN</text>
+      
+      <line x1="95" y1="248" x2="95" y2="260" stroke="#64748B" stroke-width="1.5"/>
+      
+      <!-- Post-RMSNorm -->
+      <rect x="50" y="260" width="90" height="22" rx="4" fill="url(#normGrad)"/>
+      <text x="95" y="275" text-anchor="middle" font-size="8" fill="white" font-weight="bold">Post-RMSNorm</text>
+    </g>
+    
+    <!-- Description -->
+    <g transform="translate(15, 370)">
+      <rect x="0" y="0" width="240" height="75" rx="6" fill="#FCE7F3"/>
+      <text x="10" y="20" font-size="10" fill="#BE185D" font-weight="bold">✓ Double normalization</text>
+      <text x="10" y="38" font-size="10" fill="#BE185D" font-weight="bold">✓ Extra stability (can't hurt!)</text>
+      <text x="10" y="56" font-size="10" fill="#475569">Norm both BEFORE and AFTER</text>
+    </g>
+  </g>
+  
+  <!-- QK-Norm Section -->
+  <g transform="translate(900, 100)">
+    <rect x="0" y="0" width="270" height="460" rx="12" fill="white" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="270" height="42" rx="12" fill="#1E293B"/>
+    <text x="135" y="28" text-anchor="middle" font-size="14" font-weight="bold" fill="white">
+      QK-Norm (Inside Attn)
+    </text>
+    <text x="135" y="60" text-anchor="middle" font-size="10" fill="#64748B">
+      OLMo 2, Gemma, SmolLM3
+    </text>
+    
+    <!-- Architecture diagram showing inside attention -->
+    <g transform="translate(25, 85)">
+      <rect x="0" y="0" width="220" height="250" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+      <text x="110" y="20" text-anchor="middle" font-size="11" font-weight="bold" fill="#475569">Inside Attention Module</text>
+      
+      <!-- Q, K, V projections -->
+      <rect x="15" y="40" width="55" height="30" rx="4" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1"/>
+      <text x="42" y="60" text-anchor="middle" font-size="10" fill="#1D4ED8">W_Q</text>
+      
+      <rect x="82" y="40" width="55" height="30" rx="4" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+      <text x="110" y="60" text-anchor="middle" font-size="10" fill="#92400E">W_K</text>
+      
+      <rect x="150" y="40" width="55" height="30" rx="4" fill="#FCE7F3" stroke="#EC4899" stroke-width="1"/>
+      <text x="178" y="60" text-anchor="middle" font-size="10" fill="#BE185D">W_V</text>
+      
+      <!-- Arrows down -->
+      <line x1="42" y1="70" x2="42" y2="90" stroke="#64748B" stroke-width="1"/>
+      <line x1="110" y1="70" x2="110" y2="90" stroke="#64748B" stroke-width="1"/>
+      
+      <!-- QK-Norm boxes -->
+      <rect x="15" y="90" width="55" height="25" rx="4" fill="url(#normGrad)"/>
+      <text x="42" y="107" text-anchor="middle" font-size="8" fill="white" font-weight="bold">Q-Norm</text>
+      
+      <rect x="82" y="90" width="55" height="25" rx="4" fill="url(#normGrad)"/>
+      <text x="110" y="107" text-anchor="middle" font-size="8" fill="white" font-weight="bold">K-Norm</text>
+      
+      <!-- Arrow to RoPE -->
+      <line x1="42" y1="115" x2="42" y2="135" stroke="#64748B" stroke-width="1"/>
+      <line x1="110" y1="115" x2="110" y2="135" stroke="#64748B" stroke-width="1"/>
+      
+      <!-- RoPE -->
+      <rect x="35" y="135" width="90" height="25" rx="4" fill="#FEE2E2" stroke="#EF4444" stroke-width="1"/>
+      <text x="80" y="152" text-anchor="middle" font-size="9" fill="#B91C1C">Apply RoPE</text>
+      
+      <!-- Attention computation -->
+      <line x1="80" y1="160" x2="80" y2="180" stroke="#64748B" stroke-width="1"/>
+      <rect x="30" y="180" width="160" height="30" rx="4" fill="#E0E7FF" stroke="#6366F1" stroke-width="1"/>
+      <text x="110" y="200" text-anchor="middle" font-size="9" fill="#4338CA">softmax(QK^T/√d) · V</text>
+      
+      <!-- Note -->
+      <text x="110" y="235" text-anchor="middle" font-size="8" fill="#64748B">Norm applied BEFORE RoPE!</text>
+    </g>
+    
+    <!-- Description -->
+    <g transform="translate(15, 370)">
+      <rect x="0" y="0" width="240" height="75" rx="6" fill="#F1F5F9"/>
+      <text x="10" y="20" font-size="10" fill="#1E293B" font-weight="bold">✓ Prevents attention logit explosion</text>
+      <text x="10" y="38" font-size="10" fill="#1E293B" font-weight="bold">✓ Stabilizes training</text>
+      <text x="10" y="56" font-size="10" fill="#475569">From "Scaling Vision Transformers"</text>
+    </g>
+  </g>
+  
+  <!-- Bottom Summary -->
+  <g transform="translate(30, 580)">
+    <rect x="0" y="0" width="1140" height="250" rx="12" fill="#1E293B"/>
+    
+    <text x="570" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="white">
+      💡 Why Normalization Placement Matters
+    </text>
+    
+    <!-- Key insights -->
+    <g transform="translate(50, 60)">
+      <rect x="0" y="0" width="330" height="170" rx="8" fill="#374151"/>
+      <text x="165" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#A78BFA">Training Stability</text>
+      <text x="15" y="50" font-size="11" fill="#E2E8F0">• Pre-Norm: Better gradient flow at init</text>
+      <text x="15" y="70" font-size="11" fill="#E2E8F0">• Post-Norm: Needs careful warmup</text>
+      <text x="15" y="90" font-size="11" fill="#E2E8F0">• OLMo flavor: Smooth loss curves</text>
+      <text x="15" y="115" font-size="10" fill="#A78BFA">With proper setup, both work well!</text>
+      <text x="15" y="135" font-size="10" fill="#94A3B8">OLMo 2 showed Post-Norm inside</text>
+      <text x="15" y="150" font-size="10" fill="#94A3B8">residual eliminates training spikes</text>
+    </g>
+    
+    <g transform="translate(405, 60)">
+      <rect x="0" y="0" width="330" height="170" rx="8" fill="#374151"/>
+      <text x="165" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#F472B6">QK-Norm Benefits</text>
+      <text x="15" y="50" font-size="11" fill="#E2E8F0">• Normalizes Q and K before RoPE</text>
+      <text x="15" y="70" font-size="11" fill="#E2E8F0">• Prevents attention score explosion</text>
+      <text x="15" y="90" font-size="11" fill="#E2E8F0">• Especially helpful for long contexts</text>
+      <text x="15" y="115" font-size="10" fill="#94A3B8">Code example:</text>
+      <text x="15" y="135" font-size="9" fill="#6EE7B7" font-family="monospace">q = self.q_norm(queries)</text>
+      <text x="15" y="150" font-size="9" fill="#6EE7B7" font-family="monospace">k = self.k_norm(keys)</text>
+    </g>
+    
+    <g transform="translate(760, 60)">
+      <rect x="0" y="0" width="330" height="170" rx="8" fill="#374151"/>
+      <text x="165" y="25" text-anchor="middle" font-size="13" font-weight="bold" fill="#34D399">Model Choices</text>
+      <text x="15" y="50" font-size="11" fill="#E2E8F0">• GPT-2/Llama/Qwen: Pre-Norm</text>
+      <text x="15" y="70" font-size="11" fill="#E2E8F0">• OLMo 2: Post-Norm (inside residual)</text>
+      <text x="15" y="90" font-size="11" fill="#E2E8F0">• Gemma 2/3: Pre + Post Norm</text>
+      <text x="15" y="110" font-size="11" fill="#E2E8F0">• QK-Norm: OLMo 2, Gemma, SmolLM3</text>
+      <text x="15" y="140" font-size="10" fill="#34D399">Trend: More norms = more stability</text>
+      <text x="15" y="155" font-size="10" fill="#94A3B8">(RMSNorm is cheap, so why not?)</text>
+    </g>
+  </g>
+</svg>

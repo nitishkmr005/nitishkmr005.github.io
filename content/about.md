@@ -7,7 +7,7 @@ showToc: false
 
 ## Hi, I'm Nitishkumar Harsoor 👋
 
-I'm a **Data Scientist** at Fidelity Investments specializing in GenAI and recommender systems. With over 12 years of experience in technology and 5+ years focused on AI/ML, I build enterprise-grade solutions that deliver measurable business impact—from $32M annual cost savings through GenAI pipelines to $197M+ in quarterly impact from recommender platforms..
+I'm a **Data Scientist** at Fidelity Investments specializing in GenAI and recommender systems. With over 12 years of experience in technology and 5+ years focused on AI/ML, I build enterprise-grade solutions that deliver measurable business impact—from $32M annual cost savings through GenAI pipelines to $197M+ in quarterly impact from recommender platforms.
 
 ---
 
@@ -16,9 +16,9 @@ I'm a **Data Scientist** at Fidelity Investments specializing in GenAI and recom
 ### Data Scientist
 **Fidelity Investments** | Bangalore, India | *October 2022 - Present*
 
-- **Led AgentBot 3.0 development**: Built an enterprise scalable LLM evaluation pipeline where LLM-extracted structured JSON from call transcripts powered downstream pre-call insights, in-call assistance, and post-call rep note/email generation—driving **$32M annual cost savings**, **44% reduction in after-call work**, and **1% increased appointment rate**
+- **Led AgentBot 3.0 development**: Built an enterprise scalable LLM evaluation pipeline where LLM-extracted structured JSON from call transcripts powered downstream pre-call insights, in-call assistance, and post-call rep note/email generation
 - Developed the **Workplace Seminar Recommendation System** for over 15 million participants using two stage architecture utilizing LightGBM and
-neural network, delivering a **2.3× lift in event attendance**, adding 64,600+ participants, and generating over **$197 Million in incremental P/W flows**.
+neural network, delivering a **2.3× lift in event attendance**.
 - **Deployed Helios Collections recommender** to production using LinGreedy contextual multi-armed bandits, modeling each collection as an arm and learning context-aware rewards via ridge regression, resulting in a **2.13× lift in CTR@1** over the baseline in the Helios mobile app
 - **Fine-tuned T5 transformer models** for email summarization on noisy email chains, combining regex-based parsing and embedding-driven noise filtering to isolate salient content and improve summary quality
 - **Implemented model interpretability and fairness evaluation** for every recommender system using SHAP and Jurity libraries, improving transparency, reliability, and bias detection

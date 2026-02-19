@@ -1,10 +1,10 @@
 ---
-title: "Building PrismDocs: An Intelligent Document Generator for Making Complex Content Accessible"
+title: "Beyond NotebookLM: How We Built a Multi-Format AI Document Workflow with LangGraph"
 date: 2026-02-01
 draft: false
 tags: ["LangGraph", "LLM", "Document Generation", "Python", "FastAPI", "AI", "Production ML"]
 categories: ["AI Engineering", "Tutorial"]
-description: "How we built a production-ready system that transforms research papers, web articles, and documents into multiple accessible formats—PDFs, presentations, mind maps, podcasts, and FAQs—using LangGraph and modern LLMs"
+description: "NotebookLM showed the world what AI document workflows can do. We took it further—building PrismDocs, a production-ready LangGraph pipeline that transforms any source into PDFs, presentations, mind maps, podcasts, and FAQs."
 cover:
   image: "https://raw.githubusercontent.com/nitishkmr005/PrismDocs/main/.github/banner.svg"
   alt: "PrismDocs - AI-Powered Document Generation"

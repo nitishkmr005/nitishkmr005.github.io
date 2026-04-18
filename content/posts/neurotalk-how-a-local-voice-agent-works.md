@@ -1,6 +1,6 @@
 ---
 title: "NeuroTalk: How a Local Voice Agent Works"
-date: 2026-04-19
+date: 2026-04-18
 draft: false
 tags: ["voice-agents", "speech-to-text", "text-to-speech", "llm", "ollama", "whisper"]
 categories: ["AI Engineering", "Systems"]

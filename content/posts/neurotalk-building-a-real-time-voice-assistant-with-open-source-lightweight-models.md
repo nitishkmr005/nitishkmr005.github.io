@@ -1,18 +1,18 @@
 ---
-title: "NeuroTalk: How a Local Voice Agent Works"
+title: "NeuroTalk: Building a Real-Time Voice Assistant with Open-Source Lightweight Models"
 date: 2026-04-18
 draft: false
 tags: ["voice-agents", "speech-to-text", "text-to-speech", "llm", "ollama", "whisper"]
 categories: ["AI Engineering", "Systems"]
-description: "A practical breakdown of how a local voice agent works using open-source, low-latency models: streaming audio over WebSockets, transcribing with Whisper, generating replies with an Ollama-hosted LLM, and speaking back with Kokoro or Chatterbox."
-summary: "A step-by-step walkthrough of a local voice agent pipeline built around open-source, low-latency models for STT, LLM orchestration, TTS, and interruption handling."
+description: "A practical breakdown of building a real-time voice assistant with open-source lightweight models: streaming audio over WebSockets, transcribing with Whisper, generating replies with an Ollama-hosted LLM, and speaking back with Kokoro or Chatterbox."
+summary: "A step-by-step walkthrough of a real-time voice assistant pipeline built around open-source lightweight models for STT, LLM orchestration, TTS, and interruption handling."
 cover:
   image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80"
   alt: "Microphone and waveform visualizing a voice AI pipeline"
   caption: "How speech, text, and streaming orchestration combine to make a voice agent feel conversational"
 ---
 
-*A practical walkthrough of the architecture behind NeuroTalk, a local voice agent built around open-source, low-latency models for speech recognition, reply generation, and speech synthesis.*
+*A practical walkthrough of the architecture behind NeuroTalk, a real-time voice assistant built around open-source lightweight models for speech recognition, reply generation, and speech synthesis.*
 
 > **Source code**: [NeuroTalk on GitHub](https://github.com/nitishkmr005/neuroTalk)
 

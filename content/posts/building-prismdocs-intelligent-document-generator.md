@@ -15,6 +15,12 @@ cover:
 
 > **Try it live**: [PrismDocs Web App](https://prism-docs-pink.vercel.app/) | [GitHub Repository](https://github.com/nitishkmr005/PrismDocs)
 
+## Demo
+
+<video controls width="100%" style="border-radius: 8px; margin: 1rem 0;">
+  <source src="/videos/prismdocs-demo.mp4" type="video/mp4">
+</video>
+
 ---
 
 ## Table of Contents

@@ -16,6 +16,12 @@ cover:
 
 > **Source code**: [NeuroTalk on GitHub](https://github.com/nitishkmr005/neuroTalk)
 
+## Demo
+
+<video controls width="100%" style="border-radius: 8px; margin: 1rem 0;">
+  <source src="/videos/neurotalk-demo.mp4" type="video/mp4">
+</video>
+
 If you are new to voice agents, the cleanest mental model is this:
 
 1. The microphone captures audio.

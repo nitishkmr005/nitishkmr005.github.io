@@ -1,5 +1,5 @@
 ---
-title: "How Embedding Models Are Trained: From Word2Vec to State-of-the-Art"
+title: "The Complete Guide to Training Text Embedding Models"
 date: 2026-05-09
 draft: false
 tags: ["machine-learning", "nlp", "embeddings", "sentence-transformers", "deep-learning", "rag", "retrieval"]
@@ -11,9 +11,9 @@ cover:
   caption: "From Word2Vec to Matryoshka: how embedding models learn to map meaning into geometry"
 ---
 
-# How Embedding Models Are Trained: From Word2Vec to State-of-the-Art
+# The Complete Guide to Training Text Embedding Models
 
-*A complete guide to loss functions, dataset preparation, training, evaluation, and the MTEB benchmark.*
+*Loss functions, dataset preparation, training, evaluation, and the MTEB benchmark.*
 
 ---
 

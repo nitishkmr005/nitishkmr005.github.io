@@ -1,5 +1,5 @@
 ---
-title: "PrismDocs: Building a Multi-Format AI Document Workflow with LangGraph"
+title: "PrismDocs: Building a Multi-Modal AI Pipeline with LangGraph"
 date: 2026-02-01
 draft: false
 tags: ["LangGraph", "LLM", "Document Generation", "Python", "FastAPI", "AI", "Production ML"]

@@ -3,9 +3,6 @@ title: "About Me"
 date: 2025-12-23
 hidemeta: true
 showToc: false
-build:
-  render: never
-  list: never
 ---
 
 You can find me here:
